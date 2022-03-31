@@ -1,0 +1,21 @@
+syntax="proto3";
+option go_package ="./order";
+package order;
+// 子单下发绩效平台接口
+message ChildOrderPerf{
+    fixed32 Id              = 1;   // uint32
+    fixed32 AlgorithmType   = 2;   // -->uint16
+    fixed32 AlgorithmId     = 3;   // -->uint16
+    fixed32 USecurityId     = 4;   // uint32
+    string  SecurityId      = 5;   // -->char[8]
+    fixed64 OrderQty        = 6;   // uint64
+    fixed64 Price           = 7;   // uint64
+    fixed32 OrderType       = 8;   // -->uint8
+    fixed64 CumQty          = 9;   // uint64
+    fixed64 LastPx          = 10;  // uint64
+    fixed64 LastQty         = 11;  // uint64
+    fixed32 ChildOrdStatus  = 12;  // -->uint8
+    fixed64 TransactTime    = 13;  // uint64
+}
+
+

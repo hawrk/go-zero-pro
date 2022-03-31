@@ -1,0 +1,54 @@
+syntax = "v1"
+
+info (
+	title: "算法平台绩效服务"
+	desc: "算法平台绩效服务,api服务用于web端http服务接入，rpc服务用于处理后台逻辑处理"
+	author: "hawrk2012"
+	email: "hawrk2012@163.com"
+)
+
+type (
+	DemoReq {
+		Hello string `json:"hello"`
+	}
+	DemoRsp {
+		Reply string `json:"reply"`
+	}
+)
+
+type (
+	AssessInfo {
+		Date  string  `json:"date"`
+		Score float64 `json:"score"`
+	}
+	Data {
+		AlgoName   string       `json:"algo_name"`
+		AssessType int          `json:"assess_type"`
+		Info       []AssessInfo `json:"assess_info"`
+	}
+	OverviewReq {
+		BeginDate string `json:"begin_date"`
+		EndDate   string `json:"end_date"`
+		AlgoType  int    `json:"algo_type"`
+	}
+
+	OverviewRsp {
+		Code int    `json:"code"`
+		Msg  string `json:"msg"`
+		Data []Data `json:"data"`
+	}
+)
+
+@server(
+	prefix: algo-assess/v1
+)
+service assess-api {
+	@doc "demo"
+	@handler Demo
+	post /algo-demo(DemoReq) returns (DemoRsp)
+	
+	@doc "算法概况信息获取"
+	@handler Overview
+	post /algo-overview(OverviewReq) returns(OverviewRsp)
+	
+}

@@ -1,0 +1,6 @@
+{"@timestamp":"2022-03-22T11:03:09.510+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 1, pass: 1, drop: 0"}
+{"@timestamp":"2022-03-22T11:03:09.510+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=2.4Mi, TotalAlloc=5.2Mi, Sys=12.9Mi, NumGC=2"}
+{"@timestamp":"2022-03-22T11:03:25.644+08:00","level":"stat","content":"(assess.rpc) - qps: 0.0/s, drops: 0, avg time: 25.0ms, med: 25.4ms, 90th: 25.4ms, 99th: 25.4ms, 99.9th: 25.4ms"}
+{"@timestamp":"2022-03-22T11:04:09.501+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=2.6Mi, TotalAlloc=5.4Mi, Sys=12.9Mi, NumGC=2"}
+{"@timestamp":"2022-03-22T11:04:09.517+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 1, pass: 1, drop: 0"}
+{"@timestamp":"2022-03-22T11:04:25.646+08:00","level":"stat","content":"(assess.rpc) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
