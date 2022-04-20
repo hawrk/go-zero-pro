@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "proto";
+package market;
+
+message MarkReq {
+  int32 usecurity_id = 1;   // 证券ID
+}
+
+message MarkRsp {
+  int64 trade_qty = 1;     // 市场数量
+}
+
+service MarketService {
+  // 获取行情价格数量信息
+  rpc GetMarketInfo(MarkReq) returns (MarkRsp);
+}

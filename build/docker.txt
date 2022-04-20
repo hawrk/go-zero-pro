@@ -1,0 +1,47 @@
+1. 要把应用程序放在docker下运行，需要先编译好可执行程序，docker安装成功， Dockerfile放在与可执行程序 assess-api-server同等目录下
+   1)Dockerfile 编写
+   FROM alpine:latest
+
+   MAINTAINER hawrk
+
+   RUN mkdir -p "/data/assess/app" \
+   && ln -sf /dev/stdout  /data/assess/app/service.log
+
+   WORKDIR "/data/assess/app"
+
+   COPY assess-api-server assess-api-server
+   COPY etc /data/assess/app/etc/
+
+   ENTRYPOINT ["./assess-api-server"]
+
+   2) Dockerfile编写完成后， 开始构建镜像
+     docker build -t asssess-api:v1.0.0 .
+     -t 表示构建的镜像名和tag,该命令构建的镜像名为asssess-api， tag为v1.0.0
+     . 后面的这个. 表示执行当前目录的Dockerfile1
+   3)查看镜像是否构建成功   docker image ls (或 docker images)
+   hawrk@ubuntu:~/soft/redis-6.2.6/src$ docker image ls
+   REPOSITORY    TAG       IMAGE ID       CREATED        SIZE
+   assess-api    v1.0.5    c6b4aa2af416   14 hours ago   55.4MB
+   assess-api    v1.0.4    bb84c9587a09   14 hours ago   55.4MB
+   assess-api    v1.0.3    e2d123c74a88   15 hours ago   55.5MB
+   assess-api    v1.0.2    17b679cc588c   15 hours ago   55.5MB
+   assess-api    v1.0.1    bd65645cc6fe   15 hours ago   55.5MB
+   assess-api    v1.0.0    7a6250b02d7c   15 hours ago   55.5MB
+   alpine        latest    0ac33e5f5afa   9 days ago     5.57MB
+   redis         latest    bba24acba395   2 weeks ago    113MB
+  4)镜像产生成功后， 可以运行当前镜像 docker run -d -p 6088:8088 assess-api:v1.0.0
+   参数说明：
+      -d 表示后台demon的模式运行
+      -p 表示端口映射，表示宿主主机IP 6088映射到容器IP 8088，(可以认为容器内程序端口为8088，对外服务可以用6088进行访问)
+      assess-api:v1.0.0 表示运行该镜像，
+      后面还可以跟 --name my-assess-api-docker 指定容器名称，否则会随机生成一个容器名
+   有些启动容器命令为 docker run -it -p 6088:8088 /bin/bash
+   -it表示运行后直接进入到该容器，i为input， t为terminal，也就是输入终端为 /bin/bash， 如果底层镜像不支持/bin/bash的话，可以改为/bin/sh试试
+   it 必须配套使用，执行这个命令运行容器后，如果直接退出，会导致整个容器都停止，所以一般会使用docker run -d 进行后台运行
+ 5) 要查看容器运行情况，使用 docker ps -a 查看所有容器列表，看status是否在运行状态
+ 6) 如果容器没有起来，可以用 docker logs [容器ID] 查看启动日志，看报错信息
+    --standard_init_linux.go:228: exec user process caused: no such file or directory
+    --一般go程序如果运行不起来，可能是go程序在编译时依赖了底层的c库，而底层的镜像为最精简的镜像时，是没有这些c库的，go在编译时默认是会依赖c动态库的，
+     也就是CGO_ENABLED=1,需要改成CGO_ENABLED=0，重新编译生成可执行程序
+ 7) docker 后台启动后，如果要进入容器，使用 docker exec -it [容器ID] /bin/sh
+ 8) docker-compose

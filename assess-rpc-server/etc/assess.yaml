@@ -1,0 +1,25 @@
+Name: assess.rpc
+ListenOn: 127.0.0.1:6080
+#Etcd:
+#  Hosts:
+#  - 127.0.0.1:2379
+#  Key: assess.rpc
+Prometheus:
+  Host: 127.0.0.1
+  Port: 6081
+  Path: /metrics
+
+Mysql:
+  DataSource: root:Root_123@tcp(192.168.1.84:3306)/assess?charset=utf8mb4&parseTime=true&loc=Local
+  IdleConn : 10
+  MaxOpenConn : 100
+  EnablePrintSQL : 1      #是否允许打印Sql语句，1打印， 0 不打印
+
+Redis:
+  Host: 127.0.0.1:6379
+
+#日志
+Log:
+  ServiceName: assess.rpc
+  Mode: console
+  Level: info

@@ -1,0 +1,23 @@
+CREATE TABLE `tb_algo_assess` (
+                                  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+                                  `algorithm_type` int unsigned NOT NULL COMMENT '算法类型',
+                                  `algorithm_id` int unsigned NOT NULL COMMENT '算法ID',
+                                  `usecurity_id` int unsigned NOT NULL COMMENT '证券ID',
+                                  `security_id` varchar(8) DEFAULT NULL COMMENT '证券代码',
+                                  `time_dimension` tinyint NOT NULL COMMENT '时间维度  1-秒 2-分 3-小时 4-天 5-周 6-月',
+                                  `transact_time` bigint NOT NULL COMMENT '交易时间(精确到分)',
+                                  `arrived_price` bigint DEFAULT NULL COMMENT '交易最新价格(到达价格)',
+                                  `vwap` decimal(10,4) DEFAULT NULL COMMENT '成交量加权平均价',
+                                  `deal_rate` decimal(10,4) DEFAULT NULL COMMENT '成交进度',
+                                  `order_qty` bigint DEFAULT NULL COMMENT '委托订单数量',
+                                  `last_qty` bigint DEFAULT NULL COMMENT '成交数量',
+                                  `cancel_qty` bigint DEFAULT NULL COMMENT '撤销数量',
+                                  `rejected_qty` bigint DEFAULT NULL COMMENT '拒绝数量',
+                                  `market_rate` decimal(10,4) DEFAULT NULL COMMENT '市场参与率',
+                                  `vwap_deviation` decimal(10,4) DEFAULT NULL COMMENT 'vwap滑点',
+                                  `arrived_price_deviation` decimal(10,4) DEFAULT NULL COMMENT '到达价滑点',
+                                  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                  PRIMARY KEY (`id`),
+                                  KEY `algorithm_id` (`algorithm_id`,`usecurity_id`,`time_dimension`),
+                                  KEY `transact_time` (`transact_time`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='算法绩效信息表'

@@ -1,3 +1,0 @@
-{"@timestamp":"2022-03-22T11:02:25.608+08:00","level":"info","content":" into Demo, req:hawrk","trace":"78c3783f0162108aa848b68b19471073","span":"8a0cc8ac9324c64d"}
-{"@timestamp":"2022-03-22T11:02:25.636+08:00","level":"info","content":"get resp:\u0026{from rpc logic}","trace":"78c3783f0162108aa848b68b19471073","span":"8a0cc8ac9324c64d"}
-{"@timestamp":"2022-03-22T11:02:25.636+08:00","level":"info","duration":"28.1ms","content":"[HTTP] POST - 200 - /algo-assess/v1/algo-demo - 127.0.0.1:60866 - PostmanRuntime/7.29.0","trace":"78c3783f0162108aa848b68b19471073","span":"8a0cc8ac9324c64d"}

@@ -1,0 +1,49 @@
+syntax = "v1"
+
+info (
+	title: "算法平台绩效服务"
+	desc: "算法平台绩效服务,api服务用于web端http服务接入，rpc服务用于处理后台逻辑处理"
+	author: "hawrk2012"
+	email: "hawrk2012@163.com"
+)
+
+// 绩效汇总
+type (
+	GeneralData {
+		TransactTime          int64   `json:"transact_time"`
+		OrderQty              int64   `json:"order_qty"`
+		LastQty               int64   `json:"last_qty"`
+		CancelledQty          int64   `json:"cancelled_qty"`
+		RejectedQty           int64   `json:"rejected_qty"`
+		Vwap                  float64 `json:"vwap"`
+		VwapDeviation         float64 `json:"vwap_deviation"`
+		LastPrice             int64   `json:"last_price"`
+		ArrivedPrice          int64   `json:"arrived_price"`
+		ArrivedPriceDeviation float64 `json:"arrived_price_deviation"`
+		MarketRate            float64 `json:"market_rate"`
+		DealRate              float64 `json:"deal_rate"`
+	}
+	GeneralReq {
+		AlgoId          int32 `json:"algo_id"`
+		UseculityId     int32 `json:"useculity_id"`
+		TimeDemension   int32 `json:"time_demension,range=[1:6]"`
+		OrderStatusType int32 `json:"order_status_type,optional"`
+		StartTime       int64 `json:"start_time"`
+		EndTime         int64 `json:"end_time"`
+	}
+	GeneralRsp {
+		Code int           `json:"code"`
+		Msg  string        `json:"msg"`
+		Data []GeneralData `json:"data"`
+	}
+)
+
+@server(
+	prefix: algo-assess/v1
+)
+service assess-api {
+	@doc "算法绩效汇总"
+	@handler General
+	post /assess/general(GeneralReq) returns(GeneralRsp)
+	
+}

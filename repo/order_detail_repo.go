@@ -7,17 +7,17 @@
 package repo
 
 import (
+	"algo_assess/assess-mq-server/proto/order"
 	"algo_assess/models"
-	"algo_assess/mqueue/proto/order"
 	"context"
-	"github.com/spf13/cast"
 	"gorm.io/gorm"
 	"time"
 )
 
 type OrderDetailRepo interface {
-	CreateOrderDetail(ctx context.Context, t uint64, data *order.ChildOrderPerf) error
-	UpdateOrderDetail(transactAt uint64) error
+	CreateOrderDetail(ctx context.Context, t int64, data *order.ChildOrderPerf) error
+	UpdateOrderDetail(transactAt int64) error
+	QueryOrderDetail(t int64) (orders []*models.TbAlgoOrderDetail, err error)
 }
 
 type DefaultOrderDetail struct {
@@ -30,23 +30,25 @@ func NewOrderDetailRepo(conn *gorm.DB) OrderDetailRepo {
 	}
 }
 
-func (d *DefaultOrderDetail) CreateOrderDetail(ctx context.Context, t uint64, data *order.ChildOrderPerf) error {
+func (d *DefaultOrderDetail) CreateOrderDetail(ctx context.Context, t int64, data *order.ChildOrderPerf) error {
 	detail := &models.TbAlgoOrderDetail{
-		ChildOrderId:  cast.ToInt64(data.GetId()),
-		AlgorithmType: cast.ToUint(data.GetAlgorithmType()),
-		AlgorithmId:   cast.ToUint(data.GetAlgorithmId()),
-		UsecurityId:   cast.ToUint(data.USecurityId),
-		SecurityId:    data.SecurityId,
-		OrderQty:      cast.ToUint(data.GetOrderQty()),
-		Price:         cast.ToUint(data.GetPrice()),
-		OrderType:     cast.ToUint(data.GetOrderType()),
-		LastPx:        cast.ToUint(data.GetLastPx()),
-		LastQty:       cast.ToUint(data.GetLastQty()),
-		ComQty:        cast.ToUint(data.GetCumQty()),
-		OrdStatus:     cast.ToUint(data.GetChildOrdStatus()),
-		TransactTime:  cast.ToUint(data.GetTransactTime()),
+		ChildOrderId:  int64(data.GetId()),
+		AlgoOrderId:   uint(data.GetAlgoOrderId()),
+		AlgorithmType: uint(data.GetAlgorithmType()),
+		AlgorithmId:   uint(data.GetAlgorithmId()),
+		UsecurityId:   uint(data.GetUSecurityId()),
+		SecurityId:    data.GetSecurityId(),
+		OrderQty:      int64(data.GetOrderQty()),
+		Price:         int64(data.GetPrice()),
+		OrderType:     uint(data.GetOrderType()),
+		LastPx:        int64(data.GetLastPx()),
+		LastQty:       int64(data.GetLastQty()),
+		ComQty:        int64(data.GetCumQty()),
+		ArrivedPrice:  int64(data.GetArrivedPrice()),
+		OrdStatus:     uint(data.GetChildOrdStatus()),
+		TransactTime:  int64(data.GetTransactTime()),
 		TransactAt:    t,
-		ProcStatus: 0,
+		ProcStatus:    0,
 		CreateTime:    time.Now(),
 	}
 	result := d.DB.Create(detail)
@@ -56,7 +58,16 @@ func (d *DefaultOrderDetail) CreateOrderDetail(ctx context.Context, t uint64, da
 	return nil
 }
 
-func (d *DefaultOrderDetail) UpdateOrderDetail(transactAt uint64) error {
-	//TODO
-	return nil
+func (d *DefaultOrderDetail) UpdateOrderDetail(transactAt int64) error {
+	result := d.DB.Model(models.TbAlgoOrderDetail{}).Where("transact_at = ?", transactAt).
+		Updates(models.TbAlgoOrderDetail{ProcStatus: 1})
+	return result.Error
+}
+
+func (d *DefaultOrderDetail) QueryOrderDetail(t int64) (orders []*models.TbAlgoOrderDetail, err error) {
+	result := d.DB.Where("transact_at = ?", t).Find(&orders)
+	if result.Error != nil {
+		return nil, err
+	}
+	return orders, nil
 }

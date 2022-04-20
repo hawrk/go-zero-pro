@@ -1,4 +1,0 @@
-{"@timestamp":"2022-03-22T11:02:25.610+08:00","level":"info","content":" into rpc getdemo, req:hawrk","trace":"78c3783f0162108aa848b68b19471073","span":"e022843c92eb3a31"}
-{"@timestamp":"2022-03-22T11:02:25.635+08:00","level":"info","duration":"25.4ms","content":"127.0.0.1:60860 - /assess.Assess/GetDemo - {\"hello\":\"hawrk\"}","trace":"78c3783f0162108aa848b68b19471073","span":"e022843c92eb3a31"}
-{"@timestamp":"2022-03-22T11:03:53.584+08:00","level":"info","content":" into rpc getdemo, req:hawrk","trace":"04e1e1267b77e7dc37d0bc1eabbe42fa","span":"25aa904a44f84ac0"}
-{"@timestamp":"2022-03-22T11:03:53.584+08:00","level":"info","duration":"0.0ms","content":"127.0.0.1:54868 - /assess.Assess/GetDemo - {\"hello\":\"hawrk\"}","trace":"04e1e1267b77e7dc37d0bc1eabbe42fa","span":"25aa904a44f84ac0"}

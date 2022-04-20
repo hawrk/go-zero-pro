@@ -1,0 +1,29 @@
+Name: assess-api
+Host: 0.0.0.0
+Port: 8088
+MetricsUrl:
+
+Prometheus:
+  Host: 192.168.1.82
+  Port: 8089
+  Path: /metrics
+
+#rpc
+AssessRPC:
+  Endpoints:
+    - 127.0.0.1:6080
+  NonBlock: true
+  Timeout: 1000
+
+#mq rpc
+AssessMQRPC:
+  Endpoints:
+    - 127.0.0.1:5080
+  NonBlock: true
+  Timeout: 1000  #调用超时时间
+#日志
+Log:
+  ServiceName: assess-api
+  Mode: console  # console 终端打印      file 落地日志文件
+  Level: info
+  Encoding: plain   #options=[json,plain]

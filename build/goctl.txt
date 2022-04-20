@@ -1,0 +1,30 @@
+goctl 版本 1.3.3，不同版本可能产生规则和文件目录不一样
+1. api服务的生成，统一在项目目录 algo-assesss下
+进入assess-api-server (如无则创建)
+创建api协议文件,在 \api 目录下
+在algo-assess目录下执行：
+goctl api go -api .\assess-api-server\api\assess.api  -dir .\assess-api-server -style=go_zero
+说明：   -api 指定协议文件
+        -dir 指定生成目录存放路径
+        -style=go_zero 以snake case创建文件目录和文件名
+
+2. rpc服务的生成， 统一在项目目录 algo-assess下
+进入 assess-rpc-server (如无则创建）
+创建 proto 文件，在\proto目录下
+proto文件里要指定go_package = "proto"，生成的pb.go 文件与proto文件放在一起
+在algo-assess目录下执行：
+goctl rpc proto -src .\assess-rpc-server\proto\assess.proto -dir .\assess-rpc-server -style=go_zero
+
+3. assess mq服务的生成，统一在项目目录algo_assess下
+进入assess-mq-server(如无则创建）
+proto与rpc服务保持一致，直接用rpc下面的pb协议即可
+在algo-assess目录下执行：
+goctl rpc proto -src .\assess-mq-server\proto\mqassess.proto -dir .\assess-mq-server -style=go_zero
+生成rpc接口服务
+
+4. market mq 服务生成，统一在algo_assess下
+进入 market-mq-server (如无则创建)
+创建proto文件， 在\proto 目录下
+在algo-assess目录下执行：
+goctl rpc proto -src .\market-mq-server\proto\market.proto -dir .\market-mq-server -style=go_zero
+生成rpc服务

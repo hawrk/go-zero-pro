@@ -1,0 +1,28 @@
+1. prometheus 安装  下载：wget http://file.ethlink.cn/tools/prometheus.tar.gz ，或者官方github
+   安装很简单， 直接下载安装压缩包，然后解压，解压后有一个prometheus可执行文件和prometheus.yml 文件，
+   直接执行./prometheus 即可运行，默认端口9090
+   或者指定配置文件：./prometheus --config.file=prometheus.yml
+   指定IP端口：./prometheus --web.listen-address="192.168.1.82:9090"
+
+   如何把go-zero 的api, rpc 服务上报到prometheus呢, 很简单，直接在服务的配置文件里加上
+   Prometheus:
+     Host: 127.0.0.1
+     Port: 9092
+     Path: /metrics
+   注意：这里的服务host 指的是prometheus的Host，不是该服务的地址！！端口是上报给prometheus的端口，不是prometheus服务的端口，
+   每个服务都要自定义一个单独的端口，否则会报冲突
+   然后在prometheus配置文件prometheus.yml里加上
+     - job_name: 'assess-rpc'
+       static_configs:
+       - targets: ["127.0.0.1:9092"]
+         labels:
+            job: assess-rpc
+            app: assess-rpc
+            env: dev
+    说明：系统自带了一个 - job_name: "prometheus"，后面添加的数据源跟这个对齐即可
+    job_name表示监听该服务的名称，可自定义， targets 指的是该服务名地址和IP，与上面的配置对应，后面的就是自已写的了
+
+2. Grafana 安装 ， 到官网下载
+   下载完成后，解压， 得到grafana文件， 其中配置文件在/conf/default.ini里
+   直接执行/bin/grafana-server, 默认端口3000
+   用浏览器打开 localhost:3000, 默认用户名和密码 admin/admin

@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option go_package = "proto";
+package assess;
+
+message AssessInfo {
+  int64 transact_time = 1;                    // 交易时间
+  int64 order_qty = 2;                        // 委托数量
+  int64 last_qty = 3;                        //  成交数量
+  int64 cancelled_qty = 4;                   // 撤销数量
+  int64 rejected_qty = 5;                    // 拒绝数量
+  double vwap = 6;                           // vwap
+  double vwap_deviation = 7;                 // vwap 滑点
+  int64 last_price = 8;                      // 最新价格
+  int64 arrived_price = 9;                   // 到达价格
+  double arrived_price_deviation = 10;       // 到达价滑点
+  double market_rate = 11;                   // 市场参与率
+  double deal_rate = 12;                     // 成交量比重
+  double deal_progress = 13;                 // 成交进度
+}
+
+message GeneralReq {
+  int32 algo_id = 1;                        // 算法ID
+  int32 useculity_id = 2;                   // 证券ID
+  int32 time_demension = 3;                 // 时间维度
+  int32 order_status_type = 4;              // 订单状态
+  int64 start_time = 5;                     // 开始时间
+  int64 end_time = 6;                       // 结束时间
+}
+
+message GeneralRsp {
+  int32 code = 1;
+  string msg = 2;
+  repeated AssessInfo info = 3;
+}
+
+service AssessService {
+   // 获取绩效概况
+  rpc GetGeneral(GeneralReq) returns (GeneralRsp);
+}

@@ -1,0 +1,33 @@
+syntax="proto3";
+option go_package ="./order";
+package order;
+// 子单下发绩效平台接口
+message ChildOrderPerf{
+    fixed32 Id              = 1;   // uint32  子单号
+    fixed32 AlgoOrderId     = 2;   // uint32   母单号
+    fixed32 AlgorithmType   = 3;   // -->uint16 算法类型
+    fixed32 AlgorithmId     = 4;   // -->uint16 算法ID
+    fixed32 USecurityId     = 5;   // uint32 证券ID
+    string  SecurityId      = 6;   // -->char[8] 证券代码
+    fixed64 OrderQty        = 7;   // uint64 委托数量
+    fixed64 Price           = 8;   // uint64 委托价格
+    fixed32 OrderType       = 9;   // -->uint8 订单类型
+    fixed64 CumQty          = 10;   // uint64 总成交数量
+    fixed64 LastPx          = 11;  // uint64 成交金额
+    fixed64 LastQty         = 12;  // uint64 成交数量
+    fixed64 ArrivedPrice    = 13;  // uint64 到达价格
+    fixed32 ChildOrdStatus  = 14;  // -->uint8 子订单状态
+    fixed64 TransactTime    = 15;  // uint64 交易时间
+}
+
+// 母单下发绩效平台接口
+message AlgoOrderPerf{
+    fixed32 Id              = 1;   // uint32   母单ID
+    fixed32 AlgorithmType   = 2;   // -->uint16 算法类型
+    fixed32 AlgorithmId     = 3;   // -->uint16 算法ID
+    fixed32 USecurityId     = 4;   // uint32 证券ID
+    string  SecurityId      = 5;   // char[8] 证券代码
+    fixed64 AlgoOrderQty    = 6;   // uint64 母单数量
+    fixed64 TransactTime    = 7;   // uint64 交易时间
+}
+

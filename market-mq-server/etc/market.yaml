@@ -1,0 +1,37 @@
+Name: mqmarket.rpc
+ListenOn: 127.0.0.1:7080
+#Etcd:
+#  Hosts:
+#  - 127.0.0.1:2379
+#  Key: market.rpc
+Prometheus:
+  Host: 127.0.0.1
+  Port: 7081
+  Path: /metrics
+
+#日志
+Log:
+  ServiceName: mqmarket.rpc
+  Mode: console
+  Level: info
+
+Redis:
+  Host: 192.168.1.84:6379
+
+#mq rpc
+AssessMQRPC:
+  Endpoints:
+    - 127.0.0.1:5080
+  NonBlock: true
+  Timeout: 1000  #调用超时时间
+
+#行情信息推送
+AlgoPlatformMarketConf:
+  Name: AlgoPlatformMarket
+  Brokers:
+    - 192.168.1.85:9092
+  Group:
+  Topic: sz_quote
+  Offset: first
+  Consumers: 1
+  Processors: 1

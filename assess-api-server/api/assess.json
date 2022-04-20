@@ -1,0 +1,192 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "算法平台绩效服务",
+    "description": "算法平台绩效服务,api服务用于web端http服务接入，rpc服务用于处理后台逻辑处理",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "algo-assess/v1/assess/general": {
+      "post": {
+        "summary": "算法绩效汇总",
+        "operationId": "General",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GeneralRsp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GeneralReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "assess-api"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "GeneralData": {
+      "type": "object",
+      "properties": {
+        "transact_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "order_qty": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "last_qty": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "cancelled_qty": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "rejected_qty": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "vwap": {
+          "type": "number",
+          "format": "double"
+        },
+        "vwap_deviation": {
+          "type": "number",
+          "format": "double"
+        },
+        "last_price": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "arrived_price": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "arrived_price_deviation": {
+          "type": "number",
+          "format": "double"
+        },
+        "market_rate": {
+          "type": "number",
+          "format": "double"
+        },
+        "deal_rate": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "GeneralData",
+      "required": [
+        "transact_time",
+        "order_qty",
+        "last_qty",
+        "cancelled_qty",
+        "rejected_qty",
+        "vwap",
+        "vwap_deviation",
+        "last_price",
+        "arrived_price",
+        "arrived_price_deviation",
+        "market_rate",
+        "deal_rate"
+      ]
+    },
+    "GeneralReq": {
+      "type": "object",
+      "properties": {
+        "algo_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "useculity_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "time_demension": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "order_status_type": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "start_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "end_time": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "GeneralReq",
+      "required": [
+        "algo_id",
+        "useculity_id",
+        "time_demension",
+        "start_time",
+        "end_time"
+      ]
+    },
+    "GeneralRsp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GeneralData"
+          }
+        }
+      },
+      "title": "GeneralRsp",
+      "required": [
+        "code",
+        "msg",
+        "data"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

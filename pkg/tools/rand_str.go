@@ -7,6 +7,8 @@
 package tools
 
 import (
+	"bytes"
+	"encoding/binary"
 	"math/rand"
 	"time"
 )
@@ -31,4 +33,10 @@ func Krand(size int, kind int) string {
 		result[i] = uint8(base + rand.Intn(scope))
 	}
 	return string(result)
+}
+
+func IntToBytes(n uint64) []byte {
+	bytebuf := bytes.NewBuffer([]byte{})
+	binary.Write(bytebuf, binary.BigEndian, n)
+	return bytebuf.Bytes()
 }
