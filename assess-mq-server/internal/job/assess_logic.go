@@ -171,11 +171,10 @@ func (o *AssessJob) GetAssessWithCache() {
 		delete(global.GlobalAssess.CalAlgo, key)
 	}
 	global.GlobalAssess.RWMutex.Unlock()
-
 }
 
 func (o *AssessJob) CalculateAssess(transactAt int64, assess []*pb.ChildOrderPerf) error {
-	var orderQty, lastQty, cancelQty, rejectQty uint64 // 委托数量， 成交数量， 撤销数量， 拒绝数量
+	var orderQty, lastQty, cancelQty, rejectQty int64 // 委托数量， 成交数量， 撤销数量， 拒绝数量
 	var subVWap, subVWapEntrust, subVWapArrived uint64
 	var algoType, algoId, usecurityId uint32
 	securityId := ""
@@ -190,17 +189,17 @@ func (o *AssessJob) CalculateAssess(transactAt int64, assess []*pb.ChildOrderPer
 		subVWap += v.GetLastPx() * v.GetLastQty()       // 成交价格 * 成交笔数
 		subVWapEntrust += v.GetPrice() * v.GetLastQty() // 委托价格 * 成交笔数
 		subVWapArrived += 1 * v.GetLastQty()            // 到达价格 * 成交笔数   //TODO:
-		lastQty += v.GetLastQty()
+		lastQty += int64(v.GetLastQty())
 		// 委托数量需判断是否是同一个子订单
 		if _, exist := orderMap[v.GetId()]; !exist {
-			orderQty += v.GetOrderQty()
+			orderQty += int64(v.GetOrderQty())
 			orderMap[v.GetId()] = struct{}{}
 		}
 		if v.GetChildOrdStatus() == 8 {
-			cancelQty += v.GetOrderQty() - v.GetCumQty()
+			cancelQty += int64(v.GetOrderQty() - v.GetCumQty())
 		}
 		if v.GetChildOrdStatus() == 1 || v.GetChildOrdStatus() == 3 || v.GetChildOrdStatus() == 5 {
-			rejectQty += v.GetOrderQty()
+			rejectQty += int64(v.GetOrderQty())
 		}
 	}
 	// check
@@ -219,7 +218,7 @@ func (o *AssessJob) CalculateAssess(transactAt int64, assess []*pb.ChildOrderPer
 		UsecurityId:           uint(usecurityId),
 		SecurityId:            securityId,
 		TimeDimension:         2,
-		TransactTime:          transactAt,
+		TransactAt:            transactAt,
 		ArrivedPrice:          0,
 		Vwap:                  vWap,
 		DealRate:              dealRate,

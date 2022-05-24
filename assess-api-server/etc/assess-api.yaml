@@ -1,12 +1,24 @@
 Name: assess-api
 Host: 0.0.0.0
-Port: 8088
+Port: 20080
 MetricsUrl:
+
+#Etcd:
+#  Hosts:
+#  - 127.0.0.1:2379
+#  Key: assess.api
 
 Prometheus:
   Host: 192.168.1.82
   Port: 8089
   Path: /metrics
+
+#rpc etcd conf
+#AssessRPC:
+#  Etcd:
+#    Hosts:
+#    - 127.0.0.1:2379
+#    Key: assess.rpc
 
 #rpc
 AssessRPC:
@@ -16,14 +28,35 @@ AssessRPC:
   Timeout: 1000
 
 #mq rpc
+#AssessMQRPC:
+#  Etcd:
+#    Hosts:
+#      - 127.0.0.1:2379
+#    Key: mqassess.rpc
+
 AssessMQRPC:
   Endpoints:
     - 127.0.0.1:5080
   NonBlock: true
-  Timeout: 1000  #调用超时时间
+  Timeout: 1000
+
+#market mq rpc
+#MarketMQRPC:
+#  Etcd:
+#    Hosts:
+#      - 127.0.0.1:2379
+#    Key: market.rpc
+MarketMQRPC:
+  Endpoints:
+    - 127.0.0.1:7080
+  NonBlock: true
+  Timeout: 1000
 #日志
 Log:
   ServiceName: assess-api
   Mode: console  # console 终端打印      file 落地日志文件
   Level: info
-  Encoding: plain   #options=[json,plain]
+  Encoding: json   #options=[json,plain]
+
+WebSocket:
+  DurationTime: 3     #websocket 间隔发送时间

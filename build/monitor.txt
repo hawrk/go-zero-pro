@@ -26,3 +26,78 @@
    下载完成后，解压， 得到grafana文件， 其中配置文件在/conf/default.ini里
    直接执行/bin/grafana-server, 默认端口3000
    用浏览器打开 localhost:3000, 默认用户名和密码 admin/admin
+
+3.prometheus服务配置：
+ 在prometheus目录配置文件prometheus.yml 增加以下节点项
+    - job_name: "assess-api-server"
+      static_configs:
+        - targets: ["192.168.1.82:8089"]
+          labels:
+             job: assess-api-server
+             env: test
+
+    - job_name: "assess-rpc-server"
+      static_configs:
+        - targets: ["192.168.1.82:6081"]
+          labels:
+             job: assess-rpc-server
+             env: test
+
+    - job_name: "assess-mq-server"
+      static_configs:
+        - targets: ["192.168.1.82:5081"]
+          labels:
+             job: assess-mq-server
+             env: test
+
+    - job_name: "market-mq-server"
+      static_configs:
+        - targets: ["192.168.1.82:7081"]
+          labels:
+             job: market-mq-server
+             env: test
+  然后重启prometheus  :./prometheus --config.file=prometheus.yml
+  浏览器打开: http://192.168.1.82:9090/targets
+  【注意】： prometheus 监听端口避免使用9xxx的端口， 这些端口大多已被第三方开源库使用，
+  详见：https://github.com/prometheus/prometheus/wiki/Default-port-allocations
+
+  参考文档 ：
+  https://www.toutiao.com/article/7094143196430680580/?app=news_article&timestamp=1651799066&use_new_style=1&req_id=2022050609042501013110703620342051&group_id=7094143196430680580&share_token=52751C48-55EC-4456-8129-40A076784F4E&tt_from=weixin&utm_source=weixin&utm_medium=toutiao_ios&utm_campaign=client_share&wxshare_count=1
+
+4. grafana 集成 prometheus
+   1）登陆grafana后， 在Configuration-> Data source-> add Data source 添加prometheus, 填上访问地址，保存退出
+   2）Create -> Add a new panel->  Data source 源选择prometheus，然后在metrics browser 添加需要显示的指标
+
+5. redis 监控
+  1）下载redis-exporter : https://github.com/oliver006/redis_exporter/releases 选择对应版本
+  2）下载完成后, 启动redis-exporter, ./redis_exporter --redis.addr=192.168.1.84:6379
+     如果要监控多个redis，则后面用逗号分隔， 启动后默认端口号 9121
+  3）修改prometheus 配置文件，加入以下配置：
+      - job_name: "redis-exporter"
+        static_configs:
+          - targets: ["192.168.1.82:9121"]
+            labels:
+               job: redis-exporter
+               env: test
+    其中 targets 为redis-exporter启动IP和端口号
+  4）重启prometheus, 浏览器打开： http://192.168.1.82:9090/targets ,找到 redis-exporter 的metrics,如果有数据内容，则表示抓取成功
+  5） grafana 内 ， Create-> import 导入Json模板文件， 模板文件可以在 https://github.com/oliver006/redis_exporter/contrib下找到
+      grafana_prometheus_redis_dashboard.json, 点击保存，就可以看到监控指标了
+
+mysql 监控：
+  1)下载  mysql_exporter
+  2) 启动 mysql_exporter 要先设置环境变量 export DATA_SOURCE_NAME='root:Root_123@(192.168.1.84:3306)/'
+      然后启动   ./mysql_exporter
+  3) 配置 prometheus 配置文件
+      - job_name: "mysqld-exporter"
+        static_configs:
+          - targets: ["192.168.1.84:9104"]
+            labels:
+               job: mysqld-exporter
+               env: test
+  4) 重启prometheus
+  5) grafana, 直接导入模板文件即可
+exporter 大全：
+https://prometheus.io/docs/instrumenting/exporters/
+dashbord 大全：
+https://grafana.com/grafana/dashboards/

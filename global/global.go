@@ -13,6 +13,9 @@ const (
 	TimeFormatMinInt = "200601021504"
 	TimeFormatDay    = "20060102"
 	AssessTimeSetKey = "assess-calculate"
+
+	MaxAssessTimeLen = 241       // 单日绩效汇总最大条数
+	Level2RedisPrx   = "level2:" // 行情十档数据Redis前缀
 )
 
 const (
@@ -25,4 +28,18 @@ const (
 	OrderStatusPatiDeal  = 6 // 部分成交
 	OrderStatusTotalDeal = 7 // 完全成交
 	OrderStatusCancel    = 8 // 撤单
+)
+
+const (
+	DivMillion     = 1000000
+	DivTenThousand = 10000
+	DivHundred     = 100
+)
+
+// 部署环境
+const (
+	EnvPro  = "pro"  // 生产环境
+	EnvGray = "gray" // 灰度环境
+	EnvTest = "test" // 测试环境
+	EvnDev  = "dev"  // 开发环境
 )

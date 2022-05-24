@@ -10,26 +10,35 @@ info (
 // 绩效汇总
 type (
 	GeneralData {
-		TransactTime          int64   `json:"transact_time"`
-		OrderQty              int64   `json:"order_qty"`
-		LastQty               int64   `json:"last_qty"`
-		CancelledQty          int64   `json:"cancelled_qty"`
-		RejectedQty           int64   `json:"rejected_qty"`
-		Vwap                  float64 `json:"vwap"`
-		VwapDeviation         float64 `json:"vwap_deviation"`
-		LastPrice             int64   `json:"last_price"`
-		ArrivedPrice          int64   `json:"arrived_price"`
-		ArrivedPriceDeviation float64 `json:"arrived_price_deviation"`
-		MarketRate            float64 `json:"market_rate"`
-		DealRate              float64 `json:"deal_rate"`
+		TransTime    string  `json:"trans_time"`
+		OrderQty     int64   `json:"order_qty"`
+		LastQty      int64   `json:"last_qty"`
+		CancelQty    int64   `json:"cancel_qty"`
+		RejectQty    int64   `json:"reject_qty"`
+		Vwap         float64 `json:"vwap"`
+		VwapDev      float64 `json:"vwap_dev"`
+		LastPrice    float64 `json:"last_price"`
+		ArriPrice    float64 `json:"arri_price"`
+		ArriPriceDev float64 `json:"arri_price_dev"`
+		MarketRate   float64 `json:"market_rate"`
+		DealRate     float64 `json:"deal_rate"`
+		DealProgress float64 `json:"deal_progress"`
+		MkLastPrice  float64 `json:"mk_last_price"`
+		MkTradeVol   int64   `json:"mk_trade_vol"`
+		AskPrice     string  `json:"ask_price"`
+		AskVol       string  `json:"ask_vol"`
+		BidPrice     string  `json:"bid_price"`
+		BidVol       string  `json:"bid_vol"`
 	}
 	GeneralReq {
-		AlgoId          int32 `json:"algo_id"`
-		UseculityId     int32 `json:"useculity_id"`
-		TimeDemension   int32 `json:"time_demension,range=[1:6]"`
-		OrderStatusType int32 `json:"order_status_type,optional"`
-		StartTime       int64 `json:"start_time"`
-		EndTime         int64 `json:"end_time"`
+		AlgoId          int32  `json:"algo_id"`
+		SecId           string `json:"sec_id"`
+		SecSource       int32  `json:"sec_source,optional"`
+		TimeDemension   int32  `json:"time_demension,range=[1:6]"`
+		OrderStatusType int32  `json:"order_status_type,optional"`
+		StartTime       int64  `json:"start_time"`
+		EndTime         int64  `json:"end_time"`
+		WebSocket       int32  `json:"web_socket,optional"`
 	}
 	GeneralRsp {
 		Code int           `json:"code"`
@@ -40,6 +49,7 @@ type (
 
 @server(
 	prefix: algo-assess/v1
+	middleware: Interceptor
 )
 service assess-api {
 	@doc "算法绩效汇总"

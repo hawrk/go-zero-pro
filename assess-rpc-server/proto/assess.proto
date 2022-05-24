@@ -21,7 +21,7 @@ message AssessInfo {
 
 message GeneralReq {
   int32 algo_id = 1;                        // 算法ID
-  int32 useculity_id = 2;                   // 证券ID
+  string sec_id = 2;                       // 证券ID
   int32 time_demension = 3;                 // 时间维度
   int32 order_status_type = 4;              // 订单状态
   int64 start_time = 5;                     // 开始时间

@@ -1,0 +1,40 @@
+1. ubuntu clickhous 安装
+sudo apt-get install apt-transport-https ca-certificates dirmngr
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754
+
+echo "deb https://packages.clickhouse.com/deb stable main" | sudo tee \
+    /etc/apt/sources.list.d/clickhouse.list
+sudo apt-get update
+
+sudo apt-get install -y clickhouse-server clickhouse-client
+
+sudo service clickhouse-server start
+clickhouse-client # or "clickhouse-client --password" if you set up a password.
+2. 启动
+服务器启动： sudo clickhouse start
+验证启动成功：
+hawrk@ubuntu:~$ ps -ef|grep "clickhouse"
+clickho+    4303    1817  0 11:23 ?        00:00:00 clickhouse-watchdog        --config-file /etc/clickhouse-server/config.xml --pid-file /var/run/clickhouse-server/clickhouse-server.pid --daemon
+clickho+    4304    4303  5 11:23 ?        00:00:00 /usr/bin/clickhouse-server --config-file /etc/clickhouse-server/config.xml --pid-file /var/run/clickhouse-server/clickhouse-server.pid --daemon
+hawrk       4529    4289  0 11:23 pts/1    00:00:00 grep --color=auto clickhouse
+
+默认端口号是 tcp:9000  http:8123
+
+客户端连接： clickhouse-client --password pass.1234
+进入客户端操作， 其操作跟Mysql 差不多了
+
+3. 性能测试对比： go test -bench="." -benchtime=60s -benchmem
+
+goos: windows
+goarch: amd64
+pkg: clickhouse/bench
+cpu: 11th Gen Intel(R) Core(TM) i7-11700 @ 2.50GHz
+BenchmarkMysqlInsert-16
+   24409           2997477 ns/op            6385 B/op         75 allocs/op
+BenchmarkClickHouseInsert-16
+   16152          16601072 ns/op           13091 B/op        195 allocs/op
+PASS
+ok      clickhouse/bench        416.927s
+
+ 结论：根据随机生成一个字符串ID作为key,单笔写入，clickhouse写入速度明显比mysql慢，并且出现了大量慢Sql语句，
+ clickhouse可以把单笔插入改成批量插入 （有空再搞搞）

@@ -11,13 +11,16 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/assess/general",
-				Handler: GeneralHandler(serverCtx),
-			},
-		},
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Interceptor},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/general",
+					Handler: GeneralHandler(serverCtx),
+				},
+			}...,
+		),
 		rest.WithPrefix("/algo-assess/v1"),
 	)
 }

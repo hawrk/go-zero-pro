@@ -1,0 +1,132 @@
+{"@timestamp":"2022-05-18T16:56:24.144+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.9Mi, TotalAlloc=16.9Mi, Sys=17.5Mi, NumGC=6"}
+{"@timestamp":"2022-05-18T16:56:24.161+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T16:56:24.912+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.2/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T16:57:24.139+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=3.7Mi, TotalAlloc=31.1Mi, Sys=22.2Mi, NumGC=12"}
+{"@timestamp":"2022-05-18T16:57:24.155+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T16:57:24.911+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T16:58:24.146+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=3.5Mi, TotalAlloc=44.1Mi, Sys=22.2Mi, NumGC=17"}
+{"@timestamp":"2022-05-18T16:58:24.161+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T16:58:24.915+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T16:59:24.138+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=3.7Mi, TotalAlloc=55.3Mi, Sys=22.4Mi, NumGC=21"}
+{"@timestamp":"2022-05-18T16:59:24.153+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T16:59:24.924+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:00:24.138+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.9Mi, TotalAlloc=63.0Mi, Sys=22.4Mi, NumGC=23"}
+{"@timestamp":"2022-05-18T17:00:24.153+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:00:24.911+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:01:24.143+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.6Mi, TotalAlloc=73.8Mi, Sys=22.4Mi, NumGC=27"}
+{"@timestamp":"2022-05-18T17:01:24.158+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:01:24.910+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:02:24.135+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.6Mi, TotalAlloc=87.5Mi, Sys=22.4Mi, NumGC=32"}
+{"@timestamp":"2022-05-18T17:02:24.162+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:02:24.911+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:03:24.140+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.9Mi, TotalAlloc=96.3Mi, Sys=22.4Mi, NumGC=35"}
+{"@timestamp":"2022-05-18T17:03:24.156+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:03:24.924+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:04:24.137+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.7Mi, TotalAlloc=104.3Mi, Sys=22.4Mi, NumGC=38"}
+{"@timestamp":"2022-05-18T17:04:24.153+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:04:24.914+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:05:24.141+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.9Mi, TotalAlloc=111.9Mi, Sys=22.4Mi, NumGC=41"}
+{"@timestamp":"2022-05-18T17:05:24.156+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:05:24.911+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:06:24.142+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.8Mi, TotalAlloc=120.9Mi, Sys=22.4Mi, NumGC=44"}
+{"@timestamp":"2022-05-18T17:06:24.158+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:06:24.924+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:07:24.135+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.2Mi, TotalAlloc=128.7Mi, Sys=22.4Mi, NumGC=47"}
+{"@timestamp":"2022-05-18T17:07:24.151+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:07:24.920+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:08:24.137+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.5Mi, TotalAlloc=136.5Mi, Sys=22.4Mi, NumGC=50"}
+{"@timestamp":"2022-05-18T17:08:24.153+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:08:24.925+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:09:24.139+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.0Mi, TotalAlloc=144.4Mi, Sys=22.4Mi, NumGC=53"}
+{"@timestamp":"2022-05-18T17:09:24.155+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:09:24.911+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:10:24.141+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.1Mi, TotalAlloc=154.1Mi, Sys=22.4Mi, NumGC=56"}
+{"@timestamp":"2022-05-18T17:10:24.156+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:10:24.910+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:11:24.137+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.2Mi, TotalAlloc=166.9Mi, Sys=22.4Mi, NumGC=61"}
+{"@timestamp":"2022-05-18T17:11:24.153+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:11:24.918+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:12:24.140+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=6.2Mi, TotalAlloc=179.8Mi, Sys=22.4Mi, NumGC=65"}
+{"@timestamp":"2022-05-18T17:12:24.155+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:12:24.920+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:13:24.146+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.0Mi, TotalAlloc=193.0Mi, Sys=22.4Mi, NumGC=70"}
+{"@timestamp":"2022-05-18T17:13:24.148+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:13:24.914+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:14:24.136+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.7Mi, TotalAlloc=206.6Mi, Sys=22.4Mi, NumGC=75"}
+{"@timestamp":"2022-05-18T17:14:24.151+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:14:24.918+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:15:24.145+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.2Mi, TotalAlloc=220.2Mi, Sys=22.4Mi, NumGC=80"}
+{"@timestamp":"2022-05-18T17:15:24.161+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:15:24.912+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:16:24.146+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.7Mi, TotalAlloc=233.1Mi, Sys=22.4Mi, NumGC=84"}
+{"@timestamp":"2022-05-18T17:16:24.162+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:16:24.915+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:17:24.141+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.5Mi, TotalAlloc=246.5Mi, Sys=22.4Mi, NumGC=89"}
+{"@timestamp":"2022-05-18T17:17:24.157+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:17:24.910+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:18:24.137+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=6.3Mi, TotalAlloc=259.3Mi, Sys=22.4Mi, NumGC=93"}
+{"@timestamp":"2022-05-18T17:18:24.153+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:18:24.916+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:19:24.148+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.8Mi, TotalAlloc=271.9Mi, Sys=22.4Mi, NumGC=98"}
+{"@timestamp":"2022-05-18T17:19:24.148+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:19:24.918+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:20:24.141+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=6.3Mi, TotalAlloc=284.5Mi, Sys=22.4Mi, NumGC=102"}
+{"@timestamp":"2022-05-18T17:20:24.157+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:20:24.915+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:21:24.145+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.1Mi, TotalAlloc=296.7Mi, Sys=22.4Mi, NumGC=107"}
+{"@timestamp":"2022-05-18T17:21:24.161+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:21:24.914+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:22:24.143+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.7Mi, TotalAlloc=309.7Mi, Sys=22.4Mi, NumGC=111"}
+{"@timestamp":"2022-05-18T17:22:24.159+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:22:24.912+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:23:24.149+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=6.1Mi, TotalAlloc=324.4Mi, Sys=22.4Mi, NumGC=116"}
+{"@timestamp":"2022-05-18T17:23:24.149+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:23:24.919+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:24:24.147+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:24:24.147+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.1Mi, TotalAlloc=337.7Mi, Sys=22.4Mi, NumGC=121"}
+{"@timestamp":"2022-05-18T17:24:24.916+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:25:24.143+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.8Mi, TotalAlloc=348.6Mi, Sys=22.4Mi, NumGC=125"}
+{"@timestamp":"2022-05-18T17:25:24.159+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:25:24.915+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:26:24.140+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.3Mi, TotalAlloc=357.3Mi, Sys=22.4Mi, NumGC=128"}
+{"@timestamp":"2022-05-18T17:26:24.156+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:26:24.913+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:27:24.144+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=3.5Mi, TotalAlloc=364.4Mi, Sys=22.4Mi, NumGC=131"}
+{"@timestamp":"2022-05-18T17:27:24.160+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:27:24.912+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:28:24.146+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.1Mi, TotalAlloc=370.3Mi, Sys=22.4Mi, NumGC=133"}
+{"@timestamp":"2022-05-18T17:28:24.161+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:28:24.918+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:29:24.138+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.5Mi, TotalAlloc=376.3Mi, Sys=22.4Mi, NumGC=135"}
+{"@timestamp":"2022-05-18T17:29:24.153+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:29:24.918+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:30:24.143+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.2Mi, TotalAlloc=382.3Mi, Sys=22.4Mi, NumGC=137"}
+{"@timestamp":"2022-05-18T17:30:24.158+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:30:24.916+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:31:24.144+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.4Mi, TotalAlloc=388.2Mi, Sys=22.4Mi, NumGC=139"}
+{"@timestamp":"2022-05-18T17:31:24.159+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:31:24.911+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:32:24.147+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=6.0Mi, TotalAlloc=394.2Mi, Sys=22.4Mi, NumGC=141"}
+{"@timestamp":"2022-05-18T17:32:24.163+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:32:24.922+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:33:24.148+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=3.6Mi, TotalAlloc=400.2Mi, Sys=22.4Mi, NumGC=144"}
+{"@timestamp":"2022-05-18T17:33:24.148+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:33:24.913+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:34:24.149+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:34:24.149+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=3.9Mi, TotalAlloc=406.0Mi, Sys=22.4Mi, NumGC=146"}
+{"@timestamp":"2022-05-18T17:34:24.922+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:35:24.149+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:35:24.149+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.3Mi, TotalAlloc=412.1Mi, Sys=22.4Mi, NumGC=148"}
+{"@timestamp":"2022-05-18T17:35:24.917+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:36:24.135+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=4.8Mi, TotalAlloc=417.9Mi, Sys=22.4Mi, NumGC=150"}
+{"@timestamp":"2022-05-18T17:36:24.150+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:36:24.917+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:37:24.150+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.3Mi, TotalAlloc=423.9Mi, Sys=22.4Mi, NumGC=152"}
+{"@timestamp":"2022-05-18T17:37:24.150+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:37:24.924+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:38:24.134+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=5.8Mi, TotalAlloc=429.8Mi, Sys=22.4Mi, NumGC=154"}
+{"@timestamp":"2022-05-18T17:38:24.150+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:38:24.920+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}
+{"@timestamp":"2022-05-18T17:39:24.137+08:00","level":"stat","content":"CPU: 0m, MEMORY: Alloc=3.5Mi, TotalAlloc=435.7Mi, Sys=22.4Mi, NumGC=157"}
+{"@timestamp":"2022-05-18T17:39:24.152+08:00","level":"stat","content":"(rpc) shedding_stat [1m], cpu: 0, total: 0, pass: 0, drop: 0"}
+{"@timestamp":"2022-05-18T17:39:24.921+08:00","level":"stat","content":"(AlgoPlatFormSHMarketConf) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms"}

@@ -33,6 +33,7 @@ func (l *GetMqGeneralLogic) GetMqGeneral(in *proto.GeneralReq) (*proto.GeneralRs
 	infos := make([]*proto.AssessInfo, 0, len(global.GlobalAssess.CalAlgo))
 	for _, val := range global.GlobalAssess.CalAlgo {
 		var info proto.AssessInfo
+		//TODO: 优化掉
 		copier.Copy(&info, val)
 		infos = append(infos, &info)
 	}

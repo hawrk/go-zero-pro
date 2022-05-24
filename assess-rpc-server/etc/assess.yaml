@@ -1,11 +1,13 @@
 Name: assess.rpc
 ListenOn: 127.0.0.1:6080
-#Etcd:
-#  Hosts:
-#  - 127.0.0.1:2379
-#  Key: assess.rpc
+
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: assess.rpc
+
 Prometheus:
-  Host: 127.0.0.1
+  Host: 192.168.1.82
   Port: 6081
   Path: /metrics
 

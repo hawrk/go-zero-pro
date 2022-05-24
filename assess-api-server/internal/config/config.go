@@ -7,6 +7,12 @@ import (
 
 type Config struct {
 	rest.RestConf
+
 	AssessRPC   zrpc.RpcClientConf
 	AssessMQRPC zrpc.RpcClientConf
+	MarketMQRPC zrpc.RpcClientConf
+
+	WebSocket struct {
+		DurationTime int
+	}
 }

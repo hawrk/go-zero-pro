@@ -19,8 +19,11 @@ import (
 func KafkaQueues(ctx context.Context, c config.Config, svcContext *svc.ServiceContext) []service.Service {
 	l := logx.WithContext(ctx)
 	l.Infof("market info %+v", c.AlgoPlatformMarketConf)
+	l.Infof("market sh info %+v", c.AlgoPlatFormSHMarketConf)
 	return []service.Service{
-		// 行情信息接收
+		// 行情信息接收---深圳
 		kq.MustNewQueue(c.AlgoPlatformMarketConf, consumer.NewAlgoPlatformMarketInfo(ctx, svcContext)),
+		// 行情信息接收---上海
+		kq.MustNewQueue(c.AlgoPlatFormSHMarketConf, consumer.NewAlgoPlatformSHMarketInfo(ctx, svcContext)),
 	}
 }

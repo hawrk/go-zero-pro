@@ -14,7 +14,6 @@ import (
 	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"
 	"google.golang.org/protobuf/proto"
-	"time"
 )
 
 type AlgoOrderTrade struct {
@@ -31,22 +30,30 @@ func NewAlgoOrderTrade(ctx context.Context, svcCtx *svc.ServiceContext) *AlgoOrd
 	}
 }
 
-func (s *AlgoOrderTrade) Consume(_ string, val string) error {
-	// s.Logger.Info("get algo order trade consume:key :", key, ", val:", val)
+func (s *AlgoOrderTrade) Consume(key string, val string) error {
+	//time.Sleep(time.Second* 100)
+	s.Logger.Info("-----------------algo order start------------------")
 	data := pb.AlgoOrderPerf{}
 	if err := proto.Unmarshal([]byte(val), &data); err != nil {
 		s.Logger.Error("Unmarshal data fail:", err)
 		return err
 	}
-	s.Logger.Info("get data:", data)
-	transactAt := time.UnixMicro(int64(data.GetTransactTime())).Format(global.TimeFormatMinInt)
-	key := fmt.Sprintf("%s:%d:%d", transactAt, data.AlgorithmId, data.USecurityId)
+	//s.Logger.Infof("get data:%+v", data)
+	assessAlgoOrder := TransAlgoOrderData(&data)
 
+	if err := s.svcCtx.AlgoOrderRepo.CreateAlgoOrder(s.ctx, &assessAlgoOrder); err != nil {
+		s.Logger.Error("insert table fail:", err)
+		return nil
+	}
+	algoOrderKey := fmt.Sprintf("%d:%s", data.AlgorithmId, assessAlgoOrder.SecId)
+	s.Logger.Info("get algoOrderKey:", algoOrderKey)
 	global.GlobalAlgoOrder.RWMutex.Lock()
-	global.GlobalAlgoOrder.AlgoOrder[key] += data.AlgoOrderQty
+	global.GlobalAlgoOrder.AlgoOrder[algoOrderKey] += assessAlgoOrder.AlgoOrderQty
+	s.Logger.Infof("get map:%v", global.GlobalAlgoOrder.AlgoOrder)
+	//s.Logger.Info("get map len:", len(global.GlobalAlgoOrder.AlgoOrder))
 	global.GlobalAlgoOrder.RWMutex.Unlock()
 
+	//time.Sleep(time.Second * 10)
 	//s.svcCtx.BigCache.Set(cast.ToString(data.Id), tools.IntToBytes(data.AlgoOrderQty))
-
 	return nil
 }

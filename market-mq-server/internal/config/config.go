@@ -7,8 +7,19 @@ import (
 
 type Config struct {
 	zrpc.RpcServerConf
+	Mysql struct {
+		DataSource     string
+		IdleConn       int
+		MaxOpenConn    int
+		EnablePrintSQL int
+	}
+	Deployment struct {
+		Env string
+	}
 	// mq rpc
 	AssessMQRPC zrpc.RpcClientConf
-	//kq
+	//kq-sz
 	AlgoPlatformMarketConf kq.KqConf
+	//kq-sh
+	AlgoPlatFormSHMarketConf kq.KqConf
 }

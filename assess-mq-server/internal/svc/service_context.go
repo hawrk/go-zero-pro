@@ -18,6 +18,7 @@ type ServiceContext struct {
 	RedisClient     *redis.Redis
 	OrderAssessRepo repo.OrderAssessRepo
 	OrderDetailRepo repo.OrderDetailRepo
+	AlgoOrderRepo   repo.AlgoOrderRepo
 	BigCache        *bigcache.BigCache
 }
 
@@ -56,6 +57,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		RedisClient:     redis.New(c.Redis.Host),
 		OrderAssessRepo: repo.NewAlgoAssessRepo(db),
 		OrderDetailRepo: repo.NewOrderDetailRepo(db),
+		AlgoOrderRepo:   repo.NewDefaultAlgoOrder(db),
 		BigCache:        cache,
 	}
 }

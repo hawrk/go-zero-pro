@@ -12,11 +12,10 @@ import (
 	pb "algo_assess/assess-mq-server/proto/order"
 	"algo_assess/global"
 	"context"
+	"errors"
 	"fmt"
-	"github.com/spf13/cast"
 	"github.com/zeromicro/go-zero/core/logx"
 	"google.golang.org/protobuf/proto"
-	"time"
 )
 
 type AlgoPlatformOrderTrade struct {
@@ -39,72 +38,71 @@ func (s *AlgoPlatformOrderTrade) Consume(_ string, val string) error {
 	//		fmt.Println("recover:", err)
 	//	}
 	//}()
+
 	// 消费
-	time.Sleep(time.Second * 100)
-	s.Logger.Info("-----------------start------------------")
+	//time.Sleep(time.Second * 1)
+	s.Logger.Info("-----------------child order start------------------")
 	data := pb.ChildOrderPerf{}
 	if err := proto.Unmarshal([]byte(val), &data); err != nil {
 		s.Logger.Error("Unmarshal data fail:", err)
 		return err
 	}
-
-	s.Logger.Infof("get data:%+v", data)
-	data.Id = 130
-	data.AlgorithmId = 2560
-	data.USecurityId = 79
-	//TODO:
-	//if data.GetAlgoOrderId() == 0 || data.AlgorithmId == 0 {  // 过滤普通单，没有绑定算法的不参与计算
-	//	s.Logger.Info("normal order:", data.GetId())
-	//	return nil
-	//}
-	if data.GetTransactTime() <= 0 {
-		s.Logger.Info("TransactTime empty", data.GetId())
-		return nil
-	}
-	if data.GetOrderQty() <= 0 {
-		s.Logger.Error(" order qty invalid:", data.GetId())
-		return nil
-	}
-	if data.GetChildOrdStatus() == global.OrderStatusApAccept || data.GetChildOrdStatus() == global.OrderStatusCtAccept {
-		s.Logger.Info("state access, continue")
+	//s.Logger.Infof("get data:%+v", data)
+	if err := checkOrderParam(&data); err != nil {
+		s.Logger.Error("skipping process, err:", err)
 		return nil
 	}
 
-	// 交易时间计算到分钟
-	transactAt := time.UnixMicro(int64(data.GetTransactTime())).Format(global.TimeFormatMinInt)
-	s.Logger.Info("get transactAt:", transactAt)
-	transact := cast.ToInt64(transactAt)
+	// 结构体转换
+	orderData := TransChildOrderData(&data)
+	s.Logger.Infof("get orderData:%+v", orderData)
+
 	// 时间戳落Redis
-	s.svcCtx.RedisClient.Sadd(global.AssessTimeSetKey, transact)
+	s.svcCtx.RedisClient.Sadd(global.AssessTimeSetKey, orderData.TransTime)
 	// 落地DB
-	if err := s.svcCtx.OrderDetailRepo.CreateOrderDetail(s.ctx, transact, &data); err != nil {
+	if err := s.svcCtx.OrderDetailRepo.CreateOrderDetail(s.ctx, &orderData); err != nil {
 		s.Logger.Error("insert into order detail fail:", err)
 		//return err
 	}
+	algoKey := fmt.Sprintf("%d:%d:%s", orderData.TransTime, orderData.AlgoId, orderData.SecId)
+	s.Logger.Info("get algoKey:", algoKey)
 
-	algoId := fmt.Sprintf("%s:%d:%d", transactAt, data.AlgorithmId, data.USecurityId)
 	// 定时计算时，直接落缓存落表
 	//global.GlobalOrders.RWMutex.Lock()
 	//global.GlobalOrders.CalOrders[transact] = append(global.GlobalOrders.CalOrders[transact], &data)
 	//global.GlobalOrders.RWMutex.Unlock()
 	//s.Logger.Info("get map len:", len(global.GlobalOrders.CalOrders), ",slice: ", transactAt, ",len:", len(global.GlobalOrders.CalOrders[transact]))
-
 	// 实时计算
 	global.GlobalAssess.RWMutex.Lock()
-	v := global.GlobalAssess.CalAlgo[algoId] // 取旧的算法数据，如有则全取，如无则默认都是0
-	out, err := logic.RealTimeCal(transactAt, v, &data)
+	v := global.GlobalAssess.CalAlgo[algoKey] // 取旧的算法数据，如有则全取，如无则默认都是0
+	out, err := logic.RealTimeCal(s.svcCtx, v, &orderData)
 	if err != nil {
-		s.Logger.Error("divisor zero, invalid order,get key:", algoId)
+		s.Logger.Error("real time cal error:", err)
 		return nil
 	}
-	global.GlobalAssess.CalAlgo[algoId] = out
-	s.Logger.Info("get map key:", algoId)
-	s.Logger.Infof("get map value:%+v", *global.GlobalAssess.CalAlgo[algoId])
-	global.GlobalAssess.RWMutex.Unlock()
-
+	global.GlobalAssess.CalAlgo[algoKey] = out
+	//s.Logger.Info("get map key:", orderKey)
+	//s.Logger.Infof("get map value:%+v", *global.GlobalAssess.CalAlgo[orderKey])
 	s.Logger.Info("get algo map len:", len(global.GlobalAssess.CalAlgo))
+	global.GlobalAssess.RWMutex.Unlock()
 	// 实时计算end
 
-	time.Sleep(time.Second * 10)
+	//time.Sleep(time.Second * 10)
+	return nil
+}
+
+func checkOrderParam(v *pb.ChildOrderPerf) error {
+	if v.GetAlgoOrderId() == 0 || v.AlgorithmId == 0 { // 过滤普通单，没有绑定算法的不参与计算
+		return errors.New("normal order, continue")
+	}
+	if v.GetTransactTime() <= 0 {
+		return errors.New("error field transTime")
+	}
+	if v.GetOrderQty() <= 0 {
+		return errors.New("error field orderQty")
+	}
+	if v.GetChildOrdStatus() == global.OrderStatusApAccept || v.GetChildOrdStatus() == global.OrderStatusCtAccept {
+		return errors.New("accept status, continue")
+	}
 	return nil
 }

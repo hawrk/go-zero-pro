@@ -14,13 +14,14 @@ message AssessInfo {
   int64 last_price = 8;
   int64 arrived_price = 9;
   double arrived_price_deviation = 10;
-  double market_rate = 11;
-  double deal_rate = 12;
+  double market_rate = 11;               // 市场参与率
+  double deal_rate = 12;                // 成交量比重
+  double deal_progress = 13;            // 成交进度
 }
 
 message GeneralReq {
   int32 algo_id = 1;
-  int32 useculity_id = 2;
+  string sec_id = 2;
   int32 time_demension = 3;
   int32 order_status_type = 4;
   int64 start_time = 5;
@@ -36,20 +37,35 @@ message GeneralRsp {
 message MarketDataReq {
   int32 useculity_id = 1;  // 证券ID
   string sec_id = 2;      // 证券代码
-  uint64 entrust_bid_vol = 3;   // 委托买入数量
-  uint64 entrust_ask_vol = 4;   // 委托买出数量
-  uint64 orgi_time = 5;   // 数据生成时间
-  uint64 total_trade_vol = 6;   // 成交总量
-  uint64 last_price = 7;       // 最新价格
+  int64 entrust_bid_vol = 3;   // 委托买入数量
+  int64 entrust_ask_vol = 4;   // 委托买出数量
+  int64 orgi_time = 5;   // 数据生成时间
+  int64 total_trade_vol = 6;   // 成交总量
+  int64 last_price = 7;       // 最新价格
+  int64 net_total_trade_vol = 8;    // 成交增量
 }
 
 message MarketDataRsp {
   int32 code = 1;       // 返回码
 }
 
+// ----------------内部调试用-----------------
+message AlgoOrderReq {
+  int32 AlgoOrderId = 1;     // 母单号
+}
+message AlgoOrderRsp {
+  int64 Qty = 1;        // 委托数量
+}
+
 service AssessMqService {
    // 获取绩效概况
   rpc GetMqGeneral(GeneralReq) returns (GeneralRsp);
-  // 推送行情数据
+  // 推送行情数据--深交所
   rpc PullMarketData(MarketDataReq) returns (MarketDataRsp);
+  // 推送上交所行情数据
+  rpc PullShMarketData(MarketDataReq) returns (MarketDataReq);
+
+  // -----------下面的接口为调试功能，不对外开放
+  // 查询本地缓存母单信息
+  rpc GetAlgoOrder(AlgoOrderReq) returns (AlgoOrderRsp);
 }

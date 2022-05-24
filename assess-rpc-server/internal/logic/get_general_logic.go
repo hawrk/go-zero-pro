@@ -27,7 +27,7 @@ func NewGetGeneralLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetGen
 func (l *GetGeneralLogic) GetGeneral(in *proto.GeneralReq) (*proto.GeneralRsp, error) {
 	// todo: add your logic here and delete this line
 	l.Logger.Infof("in GetGeneral, get Req:%+v", in)
-	data, result := l.svcCtx.OrderAssessRepo.GetAlgoAssess(l.ctx, in.GetAlgoId(), in.GetUseculityId(), in.GetTimeDemension(),
+	data, result := l.svcCtx.OrderAssessRepo.GetAlgoAssess(l.ctx, in.GetAlgoId(), in.GetSecId(), in.GetTimeDemension(),
 		in.GetOrderStatusType(), in.GetStartTime(), in.GetEndTime())
 	if result.Error != nil {
 		l.Logger.Error("get assess error :", result.Error)

@@ -28,8 +28,20 @@ func (s *AssessMqServiceServer) GetMqGeneral(ctx context.Context, in *proto.Gene
 	return l.GetMqGeneral(in)
 }
 
-//  推送行情数据
+//  推送行情数据--深交所
 func (s *AssessMqServiceServer) PullMarketData(ctx context.Context, in *proto.MarketDataReq) (*proto.MarketDataRsp, error) {
 	l := logic.NewPullMarketDataLogic(ctx, s.svcCtx)
 	return l.PullMarketData(in)
+}
+
+//  推送上交所行情数据
+func (s *AssessMqServiceServer) PullShMarketData(ctx context.Context, in *proto.MarketDataReq) (*proto.MarketDataReq, error) {
+	l := logic.NewPullShMarketDataLogic(ctx, s.svcCtx)
+	return l.PullShMarketData(in)
+}
+
+//  -----------下面的接口为调试功能，不对外开放
+func (s *AssessMqServiceServer) GetAlgoOrder(ctx context.Context, in *proto.AlgoOrderReq) (*proto.AlgoOrderRsp, error) {
+	l := logic.NewGetAlgoOrderLogic(ctx, s.svcCtx)
+	return l.GetAlgoOrder(in)
 }

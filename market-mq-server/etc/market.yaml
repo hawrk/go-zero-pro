@@ -1,22 +1,40 @@
 Name: mqmarket.rpc
 ListenOn: 127.0.0.1:7080
+
 #Etcd:
 #  Hosts:
 #  - 127.0.0.1:2379
 #  Key: market.rpc
+
 Prometheus:
-  Host: 127.0.0.1
+  Host: 192.168.1.82
   Port: 7081
   Path: /metrics
 
+#部署环境
+Deployment:
+  Env: test
 #日志
 Log:
   ServiceName: mqmarket.rpc
   Mode: console
   Level: info
 
+Mysql:
+  DataSource: root:Root_123@tcp(192.168.1.81:3306)/assess?charset=utf8mb4&parseTime=true&loc=Local
+  IdleConn : 10
+  MaxOpenConn : 100
+  EnablePrintSQL : 1       #是否允许打印Sql语句，1打印， 0 不打印
+
 Redis:
   Host: 192.168.1.84:6379
+
+#mq rpc  etcd
+#AssessMQRPC:
+#  Etcd:
+#    Hosts:
+#      - 127.0.0.1:2379
+#    Key: mqassess.rpc
 
 #mq rpc
 AssessMQRPC:
@@ -25,13 +43,24 @@ AssessMQRPC:
   NonBlock: true
   Timeout: 1000  #调用超时时间
 
-#行情信息推送
+#行情信息推送  --sz
 AlgoPlatformMarketConf:
   Name: AlgoPlatformMarket
   Brokers:
     - 192.168.1.85:9092
   Group:
   Topic: sz_quote
+  Offset: first
+  Consumers: 1
+  Processors: 1
+
+#行情信息推送  --sh
+AlgoPlatFormSHMarketConf:
+  Name: AlgoPlatFormSHMarketConf
+  Brokers:
+    - 192.168.1.85:9092
+  Group:
+  Topic: kkkk
   Offset: first
   Consumers: 1
   Processors: 1

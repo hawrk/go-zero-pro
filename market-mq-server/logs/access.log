@@ -1,0 +1,96 @@
+{"@timestamp":"2022-05-18T16:55:24.149+08:00","level":"info","content":"market info {ServiceConf:{Name:AlgoPlatformMarket Log:{ServiceName: Mode:console Encoding:json TimeFormat: Path:logs Level:info Compress:false KeepDays:0 StackCooldownMillis:100} Mode:pro MetricsUrl: Prometheus:{Host: Port:0 Path:} Telemetry:{Name: Endpoint: Sampler:0 Batcher:}} Brokers:[192.168.1.85:9092] Group: Topic:sz_quote1 Offset:first Conns:1 Consumers:1 Processors:1 MinBytes:10240 MaxBytes:10485760}"}
+{"@timestamp":"2022-05-18T16:55:24.149+08:00","level":"info","content":"Starting prometheus agent at 192.168.1.82:7081"}
+{"@timestamp":"2022-05-18T16:55:24.149+08:00","level":"info","content":"market sh info {ServiceConf:{Name:AlgoPlatFormSHMarketConf Log:{ServiceName: Mode:console Encoding:json TimeFormat: Path:logs Level:info Compress:false KeepDays:0 StackCooldownMillis:100} Mode:pro MetricsUrl: Prometheus:{Host: Port:0 Path:} Telemetry:{Name: Endpoint: Sampler:0 Batcher:}} Brokers:[192.168.1.85:9092] Group:sh_quote Topic:sh_quote Offset:first Conns:1 Consumers:1 Processors:1 MinBytes:10240 MaxBytes:10485760}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:93749 SecBitType:2 QuoteType:4} MsgID:2242 SecID:[54 48 48 55 52 52 32 32] Market:1 OrigTime:120953 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:3270 AskPrice:[3270 3280 3290 3300 3310 3320 0 0 0 0] AskVol:[1200000 200000 400000 600000 1600000 600000 0 0 0 0] BidPrice:[0 0 0 0 0 0 0 0 0 0] BidVol:[0 0 0 0 0 0 0 0 0 0] TotalTradeNum:67 TotalTradeVol:13400000 TotalTradeValue:4435800000 TotalBidVol:0 TotalAskVol:4600000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh600744:202205181209"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh600744:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:13400"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:13400"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:95418 SecBitType:2 QuoteType:4} MsgID:3911 SecID:[54 48 48 55 49 56 32 32] Market:1 OrigTime:120957 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:14810 AskPrice:[14810 14820 14830 14840 14850 14860 14870 0 0 0] AskVol:[1200000 1000000 2300000 1200000 800000 1200000 800000 0 0 0] BidPrice:[0 0 0 0 0 0 0 0 0 0] BidVol:[0 0 0 0 0 0 0 0 0 0] TotalTradeNum:124 TotalTradeVol:15100000 TotalTradeValue:24409000000 TotalBidVol:0 TotalAskVol:8500000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh600718:202205181209"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh600718:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:15100"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:15100"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:97731 SecBitType:2 QuoteType:4} MsgID:6224 SecID:[54 56 56 48 50 48 32 32] Market:1 OrigTime:121005 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:219000 AskPrice:[220870 0 0 0 0 0 0 0 0 0] AskVol:[10111000 0 0 0 0 0 0 0 0 0] BidPrice:[219070 219000 0 0 0 0 0 0 0 0] BidVol:[201000 76586000 0 0 0 0 0 0 0 0] TotalTradeNum:179 TotalTradeVol:46114000 TotalTradeValue:1010040200000 TotalBidVol:76787000 TotalAskVol:10111000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh688020:202205181210"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh688020:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:46114"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:46114"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:98712 SecBitType:2 QuoteType:4} MsgID:7205 SecID:[54 48 48 55 49 56 32 32] Market:1 OrigTime:121008 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:14810 AskPrice:[14810 14820 14830 14840 14850 14860 14870 0 0 0] AskVol:[1000000 1000000 2300000 1200000 800000 1200000 800000 0 0 0] BidPrice:[0 0 0 0 0 0 0 0 0 0] BidVol:[0 0 0 0 0 0 0 0 0 0] TotalTradeNum:125 TotalTradeVol:15300000 TotalTradeValue:24705200000 TotalBidVol:0 TotalAskVol:8300000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh600718:202205181210"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh600718:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:15100"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:200"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:200"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:92442 SecBitType:2 QuoteType:4} MsgID:935 SecID:[54 48 51 48 55 57 32 32] Market:1 OrigTime:120949 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:42460 AskPrice:[42370 0 0 0 0 0 0 0 0 0] AskVol:[100000 0 0 0 0 0 0 0 0 0] BidPrice:[42000 0 0 0 0 0 0 0 0 0] BidVol:[100000 0 0 0 0 0 0 0 0 0] TotalTradeNum:21 TotalTradeVol:2100000 TotalTradeValue:8968200000 TotalBidVol:100000 TotalAskVol:100000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh603079:202205181209"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh603079:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:2100"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:2100"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:92443 SecBitType:2 QuoteType:4} MsgID:936 SecID:[54 48 48 54 50 48 32 32] Market:1 OrigTime:120949 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:7900 AskPrice:[7980 8000 8300 8320 0 0 0 0 0 0] AskVol:[3700000 10200000 301000 100000 0 0 0 0 0 0] BidPrice:[7900 0 0 0 0 0 0 0 0 0] BidVol:[100000 0 0 0 0 0 0 0 0 0] TotalTradeNum:103 TotalTradeVol:26709000 TotalTradeValue:21724504000 TotalBidVol:100000 TotalAskVol:14301000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh600620:202205181209"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh600620:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:26709"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:26709"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:94768 SecBitType:2 QuoteType:4} MsgID:3261 SecID:[54 48 48 50 55 54 32 32] Market:1 OrigTime:120955 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:248190 AskPrice:[248200 248210 248220 248230 248240 248250 0 0 0 0] AskVol:[1000000 1000000 1200000 600000 600000 800000 0 0 0 0] BidPrice:[248190 0 0 0 0 0 0 0 0 0] BidVol:[100000 0 0 0 0 0 0 0 0 0] TotalTradeNum:109 TotalTradeVol:15300000 TotalTradeValue:380712900000 TotalBidVol:100000 TotalAskVol:5200000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh600276:202205181209"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh600276:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:15300"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:15300"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:95122 SecBitType:2 QuoteType:4} MsgID:3615 SecID:[54 56 56 48 48 54 32 32] Market:1 OrigTime:120956 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:398340 AskPrice:[398340 398350 398360 398370 398380 398390 398400 398410 0 0] AskVol:[500000 1000000 1000000 1200000 800000 400000 1600000 1800000 0 0] BidPrice:[0 0 0 0 0 0 0 0 0 0] BidVol:[0 0 0 0 0 0 0 0 0 0] TotalTradeNum:140 TotalTradeVol:25100000 TotalTradeValue:1002860700000 TotalBidVol:0 TotalAskVol:8300000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh688006:202205181209"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh688006:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:25100"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:25100"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:98074 SecBitType:2 QuoteType:4} MsgID:6567 SecID:[54 48 48 50 55 56 32 32] Market:1 OrigTime:121005 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:17950 AskPrice:[17950 17960 17970 17980 17990 0 0 0 0 0] AskVol:[200000 1000000 1200000 1200000 600000 0 0 0 0 0] BidPrice:[0 0 0 0 0 0 0 0 0 0] BidVol:[0 0 0 0 0 0 0 0 0 0] TotalTradeNum:72 TotalTradeVol:14400000 TotalTradeValue:25893000000 TotalBidVol:0 TotalAskVol:4200000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh600278:202205181210"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh600278:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:14400"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:14400"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:98075 SecBitType:2 QuoteType:4} MsgID:6568 SecID:[54 48 48 49 51 51 32 32] Market:1 OrigTime:121005 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:5750 AskPrice:[5750 0 0 0 0 0 0 0 0 0] AskVol:[200000 0 0 0 0 0 0 0 0 0] BidPrice:[5720 0 0 0 0 0 0 0 0 0] BidVol:[100000 0 0 0 0 0 0 0 0 0] TotalTradeNum:9 TotalTradeVol:1400000 TotalTradeValue:799400000 TotalBidVol:100000 TotalAskVol:200000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh600133:202205181210"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh600133:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:1400"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:1400"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:99047 SecBitType:2 QuoteType:4} MsgID:7540 SecID:[54 48 51 56 54 55 32 32] Market:1 OrigTime:121008 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:23960 AskPrice:[23970 23980 23990 24000 24010 24020 24030 24040 24050 0] AskVol:[1400000 600000 1400000 1200000 1200000 1400000 1600000 400000 800000 0] BidPrice:[23960 0 0 0 0 0 0 0 0 0] BidVol:[100000 0 0 0 0 0 0 0 0 0] TotalTradeNum:100 TotalTradeVol:10200000 TotalTradeValue:25524200000 TotalBidVol:100000 TotalAskVol:10000000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh603867:202205181210"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh603867:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:10200"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:10200"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:99344 SecBitType:2 QuoteType:4} MsgID:7837 SecID:[54 48 48 52 52 56 32 32] Market:1 OrigTime:121010 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:5980 AskPrice:[5980 5990 6000 6010 6020 6030 6040 0 0 0] AskVol:[600000 1800000 1000000 1000000 1100000 1800000 800000 0 0 0] BidPrice:[0 0 0 0 0 0 0 0 0 0] BidVol:[0 0 0 0 0 0 0 0 0 0] TotalTradeNum:51 TotalTradeVol:7700000 TotalTradeValue:4742000000 TotalBidVol:0 TotalAskVol:8100000 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get quoteKey:sh600448:202205181210"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get dayKey:sh600448:20220518"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"curVol:7700"}
+{"@timestamp":"2022-05-18T16:55:24.909+08:00","level":"info","content":"get netTotalVol:7700"}
+{"@timestamp":"2022-05-18T17:43:39.624+08:00","level":"info","content":"Starting prometheus agent at 192.168.1.82:7081"}
+{"@timestamp":"2022-05-18T17:43:39.624+08:00","level":"info","content":"market info {ServiceConf:{Name:AlgoPlatformMarket Log:{ServiceName: Mode:console Encoding:json TimeFormat: Path:logs Level:info Compress:false KeepDays:0 StackCooldownMillis:100} Mode:pro MetricsUrl: Prometheus:{Host: Port:0 Path:} Telemetry:{Name: Endpoint: Sampler:0 Batcher:}} Brokers:[192.168.1.85:9092] Group: Topic:sz_quote1 Offset:first Conns:1 Consumers:1 Processors:1 MinBytes:10240 MaxBytes:10485760}"}
+{"@timestamp":"2022-05-18T17:43:39.624+08:00","level":"info","content":"market sh info {ServiceConf:{Name:AlgoPlatFormSHMarketConf Log:{ServiceName: Mode:console Encoding:json TimeFormat: Path:logs Level:info Compress:false KeepDays:0 StackCooldownMillis:100} Mode:pro MetricsUrl: Prometheus:{Host: Port:0 Path:} Telemetry:{Name: Endpoint: Sampler:0 Batcher:}} Brokers:[192.168.1.85:9092] Group:sh_quote Topic:sh_quote Offset:first Conns:1 Consumers:1 Processors:1 MinBytes:10240 MaxBytes:10485760}"}
+{"@timestamp":"2022-05-18T17:43:39.635+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:292810 SecBitType:2 QuoteType:4} MsgID:292810 SecID:[54 56 56 57 56 54 32 32] Market:1 OrigTime:73722 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:0 AskPrice:[0 0 0 0 0 0 0 0 0 0] AskVol:[0 0 0 0 0 0 0 0 0 0] BidPrice:[0 0 0 0 0 0 0 0 0 0] BidVol:[0 0 0 0 0 0 0 0 0 0] TotalTradeNum:0 TotalTradeVol:0 TotalTradeValue:0 TotalBidVol:0 TotalAskVol:0 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T17:43:39.635+08:00","level":"info","content":"get quoteKey:sh688986:202205180737"}
+{"@timestamp":"2022-05-18T17:43:39.635+08:00","level":"info","content":"get dayKey:sh688986:20220518"}
+{"@timestamp":"2022-05-18T17:43:39.635+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T17:43:39.635+08:00","level":"info","content":"curVol:0"}
+{"@timestamp":"2022-05-18T17:43:39.635+08:00","level":"info","content":"get netTotalVol:0"}
+{"@timestamp":"2022-05-18T17:43:40.641+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:292819 SecBitType:2 QuoteType:4} MsgID:292819 SecID:[54 48 48 51 49 57 32 32] Market:1 OrigTime:73722 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:0 AskPrice:[0 0 0 0 0 0 0 0 0 0] AskVol:[0 0 0 0 0 0 0 0 0 0] BidPrice:[0 0 0 0 0 0 0 0 0 0] BidVol:[0 0 0 0 0 0 0 0 0 0] TotalTradeNum:0 TotalTradeVol:0 TotalTradeValue:0 TotalBidVol:0 TotalAskVol:0 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T17:43:40.641+08:00","level":"info","content":"get quoteKey:sh600319:202205180737"}
+{"@timestamp":"2022-05-18T17:43:40.641+08:00","level":"info","content":"get dayKey:sh600319:20220518"}
+{"@timestamp":"2022-05-18T17:43:40.641+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T17:43:40.641+08:00","level":"info","content":"curVol:0"}
+{"@timestamp":"2022-05-18T17:43:40.641+08:00","level":"info","content":"get netTotalVol:0"}
+{"@timestamp":"2022-05-18T17:43:41.655+08:00","level":"info","content":"get level2:{QuoteHead:{QuoteID:292821 SecBitType:2 QuoteType:4} MsgID:292821 SecID:[54 56 56 48 48 50 32 32] Market:1 OrigTime:73722 TradeStatus:0 PreClosePrice:0 OpenPrice:0 HighPrice:0 LowPrice:0 LastPrice:0 AskPrice:[0 0 0 0 0 0 0 0 0 0] AskVol:[0 0 0 0 0 0 0 0 0 0] BidPrice:[0 0 0 0 0 0 0 0 0 0] BidVol:[0 0 0 0 0 0 0 0 0 0] TotalTradeNum:0 TotalTradeVol:0 TotalTradeValue:0 TotalBidVol:0 TotalAskVol:0 WeightAvgBidPrice:0 WeightAvgAskPrice:0 IOPV:0 YieldToMaturity:0 HighLimited:0 LowLimited:0}"}
+{"@timestamp":"2022-05-18T17:43:41.655+08:00","level":"info","content":"get quoteKey:sh688002:202205180737"}
+{"@timestamp":"2022-05-18T17:43:41.655+08:00","level":"info","content":"get dayKey:sh688002:20220518"}
+{"@timestamp":"2022-05-18T17:43:41.655+08:00","level":"info","content":"debug core dump: lastVol:0"}
+{"@timestamp":"2022-05-18T17:43:41.655+08:00","level":"info","content":"curVol:0"}
+{"@timestamp":"2022-05-18T17:43:41.655+08:00","level":"info","content":"get netTotalVol:0"}

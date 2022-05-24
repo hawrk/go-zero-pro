@@ -1,9 +1,15 @@
 Name: mqassess-rpc
 ListenOn: 127.0.0.1:5080
+
 #Etcd:
 #  Hosts:
 #  - 127.0.0.1:2379
 #  Key: mqassess.rpc
+
+Prometheus:
+  Host: 192.168.1.82
+  Port: 5081
+  Path: /metrics
 
 Log:
   ServiceName: mqassess-rpc
@@ -22,14 +28,14 @@ Redis:
 
 WorkProcesser:
   GorontineNum: 5   #并发协程数
-  ElapseMin: 1    # 间隔处理时间
+  ElapseMin: 3    # 间隔处理时间
 #订单详情推送
 AlgoPlatformOrderTradeConf:
   Name: AlgoPlatformOrderTrade
   Brokers:
     - 192.168.1.85:9092
   Group:
-  Topic: child_order
+  Topic: hawrk_demo
   Offset: first
   Consumers: 1
   Processors: 1
@@ -40,7 +46,7 @@ AlgoOrderTradeConf:
   Brokers:
     - 192.168.1.85:9092
   Group:
-  Topic: hawrk_demo
+  Topic: algo_order
   Offset: first
   Consumers: 1
   Processors: 1

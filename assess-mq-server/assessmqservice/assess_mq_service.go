@@ -13,6 +13,8 @@ import (
 )
 
 type (
+	AlgoOrderReq  = proto.AlgoOrderReq
+	AlgoOrderRsp  = proto.AlgoOrderRsp
 	AssessInfo    = proto.AssessInfo
 	GeneralReq    = proto.GeneralReq
 	GeneralRsp    = proto.GeneralRsp
@@ -22,8 +24,12 @@ type (
 	AssessMqService interface {
 		//  获取绩效概况
 		GetMqGeneral(ctx context.Context, in *GeneralReq, opts ...grpc.CallOption) (*GeneralRsp, error)
-		//  推送行情数据
+		//  推送行情数据--深交所
 		PullMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataRsp, error)
+		//  推送上交所行情数据
+		PullShMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataReq, error)
+		//  -----------下面的接口为调试功能，不对外开放
+		GetAlgoOrder(ctx context.Context, in *AlgoOrderReq, opts ...grpc.CallOption) (*AlgoOrderRsp, error)
 	}
 
 	defaultAssessMqService struct {
@@ -43,8 +49,20 @@ func (m *defaultAssessMqService) GetMqGeneral(ctx context.Context, in *GeneralRe
 	return client.GetMqGeneral(ctx, in, opts...)
 }
 
-//  推送行情数据
+//  推送行情数据--深交所
 func (m *defaultAssessMqService) PullMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataRsp, error) {
 	client := proto.NewAssessMqServiceClient(m.cli.Conn())
 	return client.PullMarketData(ctx, in, opts...)
+}
+
+//  推送上交所行情数据
+func (m *defaultAssessMqService) PullShMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataReq, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.PullShMarketData(ctx, in, opts...)
+}
+
+//  -----------下面的接口为调试功能，不对外开放
+func (m *defaultAssessMqService) GetAlgoOrder(ctx context.Context, in *AlgoOrderReq, opts ...grpc.CallOption) (*AlgoOrderRsp, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.GetAlgoOrder(ctx, in, opts...)
 }

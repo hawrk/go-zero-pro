@@ -8,11 +8,9 @@ package job
 
 import (
 	"algo_assess/assess-mq-server/internal/logic"
-	pb "algo_assess/assess-mq-server/proto/order"
 	"algo_assess/global"
 	"fmt"
 	"github.com/spf13/cast"
-	"time"
 )
 
 func (o *AssessJob) DealDBAssess() {
@@ -32,7 +30,7 @@ func (o *AssessJob) DealDBAssess() {
 		o.Logger.Info(" no task to do, finish...")
 		return
 	}
-	var datas []pb.ChildOrderPerf
+	var datas []global.ChildOrderData
 	for _, v := range arr {
 		transactAt := cast.ToInt64(v)
 		result, err := o.s.OrderDetailRepo.QueryOrderDetail(transactAt)
@@ -44,22 +42,22 @@ func (o *AssessJob) DealDBAssess() {
 			if detail.ProcStatus == 1 { // 已处理的不再处理
 				continue
 			}
-			data := pb.ChildOrderPerf{
-				Id:             uint32(detail.ChildOrderId),
-				AlgoOrderId:    uint32(detail.AlgoOrderId),
-				AlgorithmType:  uint32(detail.AlgorithmType),
-				AlgorithmId:    uint32(detail.AlgorithmId),
-				USecurityId:    uint32(detail.UsecurityId),
-				SecurityId:     detail.SecurityId,
-				OrderQty:       uint64(detail.OrderQty),
-				Price:          uint64(detail.Price),
-				OrderType:      uint32(detail.OrderType),
-				CumQty:         uint64(detail.ComQty),
-				LastPx:         uint64(detail.LastPx),
-				LastQty:        uint64(detail.LastQty),
-				ArrivedPrice:   uint64(detail.ArrivedPrice),
-				ChildOrdStatus: uint32(detail.OrdStatus),
-				TransactTime:   uint64(detail.TransactTime),
+			data := global.ChildOrderData{
+				OrderId:          detail.ChildOrderId,
+				AlgoOrderId:      int64(detail.AlgoOrderId),
+				AlgorithmType:    detail.AlgorithmType,
+				AlgoId:           detail.AlgorithmId,
+				UsecId:           detail.UsecurityId,
+				SecId:            detail.SecurityId,
+				OrderQty:         detail.OrderQty,
+				Price:            detail.Price,
+				OrderType:        detail.OrderType,
+				LastPx:           detail.LastPx,
+				LastQty:          detail.LastQty,
+				ComQty:           detail.ComQty,
+				ArrivePrice:      detail.ArrivedPrice,
+				ChildOrderStatus: detail.OrdStatus,
+				TransTime:        detail.TransactTime,
 			}
 			datas = append(datas, data)
 		}
@@ -71,16 +69,14 @@ func (o *AssessJob) DealDBAssess() {
 	// 合并到本地缓存中
 	global.GlobalAssess.RWMutex.Lock()
 	for _, data := range datas {
-		transactAt := time.UnixMicro(int64(data.GetTransactTime())).Format(global.TimeFormatMinInt)
-		//transact := cast.ToInt64(transactAt)
-		algoId := fmt.Sprintf("%s:%d:%d", transactAt, data.AlgorithmId, data.USecurityId)
-		v := global.GlobalAssess.CalAlgo[algoId]
-		out, err := logic.RealTimeCal(transactAt, v, &data)
+		algoKey := fmt.Sprintf("%d:%d:%s", data.TransTime, data.AlgoId, data.SecId)
+		v := global.GlobalAssess.CalAlgo[algoKey]
+		out, err := logic.RealTimeCal(o.s, v, &data)
 		if err != nil {
 			o.Logger.Error("error cal assess:", err)
 			continue
 		}
-		global.GlobalAssess.CalAlgo[algoId] = out
+		global.GlobalAssess.CalAlgo[algoKey] = out
 	}
 	global.GlobalAssess.RWMutex.Unlock()
 

@@ -7,7 +7,7 @@
 package repo
 
 import (
-	"algo_assess/assess-mq-server/proto/order"
+	"algo_assess/global"
 	"algo_assess/models"
 	"context"
 	"gorm.io/gorm"
@@ -15,7 +15,7 @@ import (
 )
 
 type OrderDetailRepo interface {
-	CreateOrderDetail(ctx context.Context, t int64, data *order.ChildOrderPerf) error
+	CreateOrderDetail(ctx context.Context, data *global.ChildOrderData) error
 	UpdateOrderDetail(transactAt int64) error
 	QueryOrderDetail(t int64) (orders []*models.TbAlgoOrderDetail, err error)
 }
@@ -30,26 +30,26 @@ func NewOrderDetailRepo(conn *gorm.DB) OrderDetailRepo {
 	}
 }
 
-func (d *DefaultOrderDetail) CreateOrderDetail(ctx context.Context, t int64, data *order.ChildOrderPerf) error {
+func (d *DefaultOrderDetail) CreateOrderDetail(ctx context.Context, data *global.ChildOrderData) error {
 	detail := &models.TbAlgoOrderDetail{
-		ChildOrderId:  int64(data.GetId()),
-		AlgoOrderId:   uint(data.GetAlgoOrderId()),
-		AlgorithmType: uint(data.GetAlgorithmType()),
-		AlgorithmId:   uint(data.GetAlgorithmId()),
-		UsecurityId:   uint(data.GetUSecurityId()),
-		SecurityId:    data.GetSecurityId(),
-		OrderQty:      int64(data.GetOrderQty()),
-		Price:         int64(data.GetPrice()),
-		OrderType:     uint(data.GetOrderType()),
-		LastPx:        int64(data.GetLastPx()),
-		LastQty:       int64(data.GetLastQty()),
-		ComQty:        int64(data.GetCumQty()),
-		ArrivedPrice:  int64(data.GetArrivedPrice()),
-		OrdStatus:     uint(data.GetChildOrdStatus()),
-		TransactTime:  int64(data.GetTransactTime()),
-		TransactAt:    t,
-		ProcStatus:    0,
-		CreateTime:    time.Now(),
+		ChildOrderId:  data.OrderId,
+		AlgoOrderId:   uint(data.AlgoOrderId),
+		AlgorithmType: data.AlgorithmType,
+		AlgorithmId:   data.AlgoId,
+		UsecurityId:   data.UsecId,
+		SecurityId:    data.SecId,
+		OrderQty:      data.OrderQty,
+		Price:         data.Price,
+		OrderType:     data.OrderType,
+		LastPx:        data.LastPx,
+		LastQty:       data.LastQty,
+		ComQty:        data.ComQty,
+		ArrivedPrice:  data.ArrivePrice,
+		OrdStatus:     data.ChildOrderStatus,
+		//TransactTime:  data.TransTime,
+		TransactAt: data.TransTime,
+		ProcStatus: 0,
+		CreateTime: time.Now(),
 	}
 	result := d.DB.Create(detail)
 	if result.Error != nil || result.RowsAffected != 1 {

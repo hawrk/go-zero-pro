@@ -25,7 +25,7 @@ const (
 )
 
 type QuoteHead struct {
-	QuoteID    uint64 // 行情ID 不同消息类型从0开始递增
+	QuoteID    uint32 // 行情ID 不同消息类型从0开始递增
 	SecBitType uint16 // 业务类型 参考SecBitTypeInfo
 	QuoteType  uint16 // 行情数据类型
 }
@@ -81,9 +81,9 @@ type TagQuoteClientLevel1Data struct {
 //  TagQuoteClientLevel2Data 十档行情数据结构
 type TagQuoteClientLevel2Data struct {
 	QuoteHead                    //  行情头部消息
-	MsgID         uint64         // 消息ID 不同消息类型从0开始递增
+	MsgID         uint32         // 消息ID 不同消息类型从0开始递增
 	SecID         [SecIdLen]byte // 交易所证券代码（六位十六进制表示）
-	Market        uint16         // 市场
+	Market        uint8          // 市场
 	OrigTime      uint64         // 数据生成时间
 	TradeStatus   uint8          // 交易状态 见字典
 	PreClosePrice uint32         // 昨收盘价

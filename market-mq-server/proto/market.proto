@@ -4,11 +4,25 @@ option go_package = "proto";
 package market;
 
 message MarkReq {
-  int32 usecurity_id = 1;   // 证券ID
+  string sec_id = 1;       // 证券ID
+  int64  start_time = 2;   // 开始时间
+  int64  end_time = 3;     // 结束时间
+  int32 sec_source = 4;    // 证券类型： 深市 沪市
 }
 
+message LevelInfo {
+  int64 last_price = 1;    // 市场价格
+  int64 trade_vol = 2;     // 总成交量最新价格
+  string ask_price = 3;    // 申卖价
+  string ask_vol = 4;      // 申卖量
+  string bid_price = 5;    // 申买价
+  string bid_vol = 6;      // 申买量
+  double market_vwap = 7;   // 市场vwap
+}
 message MarkRsp {
-  int64 trade_qty = 1;     // 市场数量
+  int32 code = 1;      // 返回码
+  string msg = 2;     // 返回消息
+  map<int64, LevelInfo> attrs = 3;
 }
 
 service MarketService {

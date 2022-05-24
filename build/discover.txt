@@ -1,0 +1,67 @@
+服务注册与发现etcd
+ 1. 下载 etcd 最新二进制包 https://github.com/etcd-io/etcd/releases/ 下载对应的平台包
+ 2. 解压后， 直接运行， 默认端口号 2379
+ 3. go-zero微服务框架已默认支持Etcd，只需要在配置文件里把Etcd的配置加上即可
+     3.1) assess-api-server 注册自身Key
+       Etcd:
+         Hosts:
+         - 127.0.0.1:2379
+         Key: assess.api
+         api要调用rpc时，可以直接指定RPC IP端口，也可以用Etcd
+         直接指定RPC IP端口：
+         AssessRPC:
+           Endpoints:
+             - 127.0.0.1:6080
+           NonBlock: true
+           Timeout: 1000
+         用Etcd时：
+         AssessRPC:
+           Etcd:
+             Hosts:
+             - 127.0.0.1:2379
+             Key: assess.rpc
+         其中的 assess.rpc 就是 assess-rpc-server 注册的key
+
+         3.2) assess-rpc-server 注册key
+         Etcd:
+           Hosts:
+           - 127.0.0.1:2379
+           Key: assess.rpc
+
+         3.3) assess-mq-server 注册key
+         Etcd:
+           Hosts:
+           - 127.0.0.1:2379
+           Key: mqassess.rpc
+         3.4) market-mq-server 注册key
+         Etcd:
+           Hosts:
+           - 127.0.0.1:2379
+           Key: market.rpc
+     rpc 之间相互调用时，加上etcd 的key即可
+
+ 4. 所有服务加上Etcd 之后都要重启，重启后 在etcd的安装目录下用 ./etcdctl get --prefix [key] 查看key是否存在
+    有些key可能没显示， 可以直接查2379的监听端口号
+    [chhw@localhost etcd-v3.5.4-linux-amd64]$ lsof -i:2379
+    COMMAND    PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+    etcd      6050 chhw    8u  IPv4 9144424      0t0  TCP localhost:2379 (LISTEN)
+    etcd      6050 chhw   12u  IPv4 9135666      0t0  TCP localhost:55158->localhost:2379 (ESTABLISHED)
+    etcd      6050 chhw   14u  IPv4 9127636      0t0  TCP localhost:2379->localhost:55158 (ESTABLISHED)
+    etcd      6050 chhw   15u  IPv4 9144839      0t0  TCP localhost:2379->localhost:45446 (ESTABLISHED)
+    etcd      6050 chhw   16u  IPv4 8885834      0t0  TCP localhost:2379->localhost:36274 (ESTABLISHED)
+    etcd      6050 chhw   17u  IPv4 8804165      0t0  TCP localhost:2379->localhost:46506 (ESTABLISHED)
+    etcd      6050 chhw   18u  IPv4 9038173      0t0  TCP localhost:2379->localhost:36330 (ESTABLISHED)
+    etcd      6050 chhw   19u  IPv4 9145782      0t0  TCP localhost:2379->localhost:57660 (ESTABLISHED)
+    etcd      6050 chhw   20u  IPv4 8887070      0t0  TCP localhost:2379->localhost:37296 (ESTABLISHED)
+    etcd      6050 chhw   21u  IPv4 9147065      0t0  TCP localhost:2379->localhost:58666 (ESTABLISHED)
+    etcd      6050 chhw   22u  IPv4 9163853      0t0  TCP localhost:2379->localhost:37372 (ESTABLISHED)
+    assess-rp 7550 chhw    9u  IPv4 8945295      0t0  TCP localhost:45446->localhost:2379 (ESTABLISHED)
+    assess-rp 7550 chhw   13u  IPv4 9037034      0t0  TCP localhost:46506->localhost:2379 (ESTABLISHED)
+    assess-mq 9065 chhw    8u  IPv4 9160650      0t0  TCP localhost:57660->localhost:2379 (ESTABLISHED)
+    assess-mq 9065 chhw   26u  IPv4 9143975      0t0  TCP localhost:58666->localhost:2379 (ESTABLISHED)
+    assess-ap 9884 chhw    7u  IPv4 9170000      0t0  TCP localhost:36274->localhost:2379 (ESTABLISHED)
+    assess-ap 9884 chhw   14u  IPv4 9144146      0t0  TCP localhost:37296->localhost:2379 (ESTABLISHED)
+    market-mq 9911 chhw   10u  IPv4 9169021      0t0  TCP localhost:36330->localhost:2379 (ESTABLISHED)
+    market-mq 9911 chhw   12u  IPv4 9161034      0t0  TCP localhost:37372->localhost:2379 (ESTABLISHED)
+
+    发现四个服务都已经监听了

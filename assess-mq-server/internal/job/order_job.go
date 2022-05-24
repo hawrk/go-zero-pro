@@ -18,9 +18,6 @@ func newCronCnf() *cron.Cron {
 }
 
 func StartOrderJob(c config.Config, d chan struct{}) {
-	// TODO:
-	return
-
 	defer func() {
 		if err := recover(); err != nil {
 			fmt.Println("in StartOrderJob recover :", err)
@@ -28,9 +25,9 @@ func StartOrderJob(c config.Config, d chan struct{}) {
 	}()
 	order := NewOrderJob(c)
 
-	go func() {
-		order.DealDBAssess()
-	}()
+	//go func() {
+	//	order.DealDBAssess()
+	//}()
 
 	job := newCronCnf()
 	spec := "0 */1 * * * ?"
