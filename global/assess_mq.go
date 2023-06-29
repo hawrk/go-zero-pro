@@ -28,11 +28,11 @@ var (
 		CalAlgo:  make(map[string]*OrderAssess),
 		OrderMap: make(map[string]struct{}),
 	}
-
-	GlobalAlgoOrder = AlgoOrderMap{
-		AlgoOrder:     make(map[string]int64),
-		DealAlgoOrder: make(map[string]int64),
-	}
+	//
+	//GlobalAlgoOrder = AlgoOrderMap{
+	//	AlgoOrder:     make(map[string]int64),
+	//	DealAlgoOrder: make(map[string]int64),
+	//}
 
 	GlobalMarketLevel2 = MarketLevel2Map{
 		EntrustVol: make(map[string]int64),
@@ -41,6 +41,21 @@ var (
 	}
 
 	GlobalMarketVwap = MarketVwap{
+		LastVol:     make(map[string]int64),
+		TotalPrxCal: make(map[string]int64),
+		TotalVol:    make(map[string]int64),
+		MVwap:       make(map[string]float64),
+	}
+)
+
+// -----fix market
+var (
+	FixGlobalMarketLevel2 = MarketLevel2Map{
+		EntrustVol: make(map[string]int64),
+		TradeVol:   make(map[string]int64),
+		LastPrice:  make(map[string]int64),
+	}
+	FixGlobalMarketVwap = MarketVwap{
 		LastVol:     make(map[string]int64),
 		TotalPrxCal: make(map[string]int64),
 		TotalVol:    make(map[string]int64),
@@ -58,11 +73,11 @@ type MCalAssess struct {
 }
 
 // 母单委托数量  数据源： 母单交易推送
-type AlgoOrderMap struct {
-	AlgoOrder     map[string]int64 // key-> 算法ID：证券ID  value -> 总委托数量
-	DealAlgoOrder map[string]int64 // key -> 算法ID：证券ID   value -> 已成交数量
-	sync.RWMutex
-}
+//type AlgoOrderMap struct {
+//	AlgoOrder     map[string]int64 // key-> 算法ID：证券ID  value -> 总委托数量
+//	DealAlgoOrder map[string]int64 // key -> 算法ID：证券ID   value -> 已成交数量
+//	sync.RWMutex
+//}
 
 // 市场委托数量  数据源：十档行情快照
 type MarketLevel2Map struct {
@@ -84,10 +99,12 @@ type MarketVwap struct {
 // -------------------计算结果输出----------------------
 // OrderAssess 绩效计算最终数据
 type OrderAssess struct {
-	AlgorithmType  uint
-	AlgorithmId    uint
+	BatchNo        int64 // 批次号
+	AlgorithmType  int
+	AlgorithmId    int
 	UsecurityId    uint
 	SecurityId     string
+	UserId         string // 交易账户ID
 	TimeDimension  int
 	TransactAt     int64   // 精确到分的时间 格式： 202204241532
 	ArrivedPrice   int64   // 到达价格
@@ -108,27 +125,43 @@ type OrderAssess struct {
 	VwapDeviation         float64 // vwap 滑点
 	ArrivedPriceDeviation float64 // 到达价滑点
 	CreateTime            time.Time
+	SourceFrom            int // 来源  1-总线   2-数据导入
 }
 
 // -------------------总线平台-> 绩效平台结构体转换--------
 //母单下发
 type MAlgoOrder struct {
-	AlgoId       int
-	AlgorithmId  int
-	UsecId       int
-	SecId        string
-	AlgoOrderQty int64
-	TransTime    int64
+	BatchNo         int64 // 总线来的批次号默认为1
+	BatchName       string
+	UserId          string //用户ID
+	BasketId        int    // 篮子ID
+	AlgoId          int    // 母单ID
+	AlgorithmId     int    // 算法ID
+	AlgorithmType   int    // 算法类型
+	UsecId          int
+	SecId           string
+	AlgoOrderQty    int64
+	TransTime       int64
+	StartTime       int64
+	EndTime         int64
+	UnixTime        string // 交易时间戳，精确到分钟
+	UnixTimeMillSec int64  // 原始订单交易时间戳
+	SourceFrom      int    // 数据来源 0-总线 1-数据修复 2-数据导入
+	SourcePrx       string // 数据源前缀，前缀值根据sourceFrom定
 }
 
 // 子单下发
 type ChildOrderData struct {
+	BatchNo          int64 // 总线来的批次号默认为1
+	BatchName        string
 	OrderId          int64  // 子单ID
 	AlgoOrderId      int64  // 母单ID
-	AlgorithmType    uint   // 算法类型
-	AlgoId           uint   // 算法ID
+	AlgorithmType    int    // 算法类型
+	AlgoId           int    // 算法ID
 	UsecId           uint   // 证券码
 	SecId            string // 证券ID
+	UserId           string // 账户ID
+	TradeSide        int    // 买卖方向    1-买   2 卖
 	OrderQty         int64  // 委托数量 （实际数量）
 	Price            int64  // 委托价格 （以分为单位）
 	OrderType        uint   // 订单类型
@@ -136,6 +169,13 @@ type ChildOrderData struct {
 	LastQty          int64  // 成交数量
 	ComQty           int64  // 总成交数量 （实际数量）
 	ArrivePrice      int64  // 到达价格
+	TotalFee         int64  // 手续费
 	ChildOrderStatus uint   // 订单交易状态
 	TransTime        int64  // 交易时间 格式：202205050930
+	CurDate          int64  // 当前日期 8位  格式:20220505
+	UnixTime         int64  // 交易时间戳，精确到分钟
+	UnixTimeMillSec  int64  // 原始订单交易时间戳
+	SourceFrom       int    // 数据来源 0-总线 1-数据修复 2-数据导入
+	MarketPrice      int64  // 市场行情价格
+	SourcePrx        string // 数据源前缀，前缀值根据sourceFrom定
 }

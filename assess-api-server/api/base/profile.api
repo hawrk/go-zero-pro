@@ -1,0 +1,120 @@
+syntax = "v1"
+
+info (
+    title: "算法画像基本结构体定义"
+    desc: "二期绩效结构体"
+    author: "hawrk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+    ProfileHead {
+        AccountId string    `json:"user_id"`         // 用户ID
+        AccountName string  `json:"user_name"`       // 用户名称
+        Provider      string    `json:"provider"`       // 算法厂商
+        AlgoId    int32      `json:"algo_id"`           // 算法ID
+        AlgoName string  `json:"algo_name"`             // 算法名称
+        CreateTime    string     `json:"create_time"`    // 创建时间
+        SecId       string      `json:"sec_id"`         // 证券代码
+        SecName     string      `json:"sec_name"`       // 证券名称
+        AlgoOrderId   int64     `json:"algo_order_id"`    // 母单ID
+        Industry    string    `json:"industry"`   // 行业
+        FundType     int32     `json:"fund_type"`   // 市值
+        Flowability  int32     `json:"flowability"`   // 流动性
+        BatchNo      int64      `json:"batch_no"`      // 批次号
+    }
+    // 经济性
+    EconomyStruct {
+        ProfileHead
+        TradeVol  float64  `json:"trade_vol"`    // 交易总量
+        Profit     float64 `json:"profit"`     // 盈亏金额
+        ProfitRate float64  `json:"profit_rate"`  // 收益率
+        TotalFee   float64  `json:"total_fee"`    // 总手续费
+        CrossFee   float64  `json:"cross_fee"`    // 流量费
+        CancelRate float64  `json:"cancel_rate"`  // 撤单率
+        MinSplitOrder  int32   `json:"min_split_order"`   // 最小拆单单位
+        DealEffi   float64    `json:"deal_eff"`     // 成交效率
+        AvgTradePrice float64    `json:"avg_trade_price"`   // 母单执行均价
+        AvgArrivePrice  float64    `json:"avg_arrive_price"`    // 母单达到均价
+        PWP   float64             `json:"pwp"`    // pwp价格
+        AlgoDuration    int64    `json:"algo_duration"`    // 母单有效时长
+        TWAP       float64     `json:"twap"`  // twap值
+        TWAPDev    float64     `json:"twap_dev"`   // twap滑点
+        VWAP       float64     `json:"vwap"`   // vwap值
+        VWAPDev    float64     `json:"vwap_dev"`   // vwap滑点
+    }
+    // 完成度
+    ProgressStruct {
+        ProfileHead
+        Progress  float64  `json:"progress"`     // 完成度
+        AlgoOrderFit   float64   `json:"algo_order_fit"`    // 母单贴合度
+        PriceFit       float64   `json:"price_fit"`     // 价格贴合度
+        TradeVolFit    float64    `json:"trade_vol_fit"`   // 成交量贴合度
+    }
+    // 风险度
+    RiskStruct {
+        ProfileHead
+        MinJointRate  float64  `json:"min_jonit_rate"`    // 最小贴合度
+        ProfitRate float64  `json:"profit_rate"`  // 收益率
+        WithdrawRate  float64   `json:"withdraw_rate"`    // 回撤比例
+    }
+    // 算法绩效
+    AssessStruct {
+        ProfileHead
+        VwapDev       float64   `json:"vwap_dev"`       // vwap 滑点值
+        ProfitRate  float64  `json:"profit_rate"`  // 收益率
+    }
+    // 稳定性
+    StabilityStruct {
+        ProfileHead
+        VwapStdDev    float64   `json:"vwap_std_dev"`   // vwap 滑点标准差
+        ProfitRateStd  float64   `json:"profit_rate_std"`   // 收益率标准差
+        JointRate      float64   `json:"joint_rate"`        // 贴合度
+        TradeVolFitStdDev   float64   `json:"trade_vol_fit_std_dev"`    // 成交量贴合度标准差
+        TimeFitStdDev    float64     `json:"time_fit_std_dev"`      // 时间贴合度校准差
+    }
+
+    ProfileReq {
+        ProfileType int32  `json:"profile_type,range=[1:5]"`         // 获取画像类型  1-经济性，2-完成度，3-风险度，4-算法绩效 5-稳定性
+        Provider  string `json:"provider,optional"`    // 厂商
+        AlgoTypeName  string    `json:"algo_type_name,optional"`    // 算法类型
+        AlgoName  string `json:"algo_name,optional"`    // 算法名称
+        UserId    string  `json:"user_id,optional"`      // 用户ID
+        UserType  int    `json:"user_type,optional"`     // 用户类型
+        StartTime int64   `json:"start_time"`            // 开始时间
+        EndTime   int64   `json:"end_time"`              // 结束时间
+        Page      int32   `json:"page"`                  // 当前页数
+        Limit     int32   `json:"limit"`                 // 每页数量
+        SourceFrom int32 `json:"source_from,default=1"` //数据来源，1:总线 ,2:订单导入
+        BatchNo   int64    `json:"batch_no,optional"`    // 批次号
+    }
+
+    ProfileRsp {
+        Code int                        `json:"code"`
+        Msg  string                     `json:"msg"`
+        Total int64                     `json:"total"`
+        Economy     []EconomyStruct     `json:"economy"`
+        Progress    []ProgressStruct    `json:"progress"`
+        Risk        []RiskStruct        `json:"risk"`
+        Assess      []AssessStruct      `json:"assess"`
+        Stability   []StabilityStruct   `json:"stability"`
+    }
+
+    // 用户画像数据导出
+    ProfileExportReq {
+        ProfileType  int32      `form:"profile_type"`            // 导出画像类型
+        UserId      string      `form:"user_id,optional"`
+        UserType    int         `form:"user_type,optional"`
+        Provider    string      `form:"provider,optional"`
+        AlgoTypeName string     `form:"algo_type_name,optional"`
+        AlgoName     string     `form:"algo_name,optional"`
+        StartTime    int64      `form:"start_time,optional"`
+        EndTime      int64      `form:"end_time,optional"`
+    }
+
+    ProfileExportRsp {
+        Code int                        `json:"code"`
+        Msg  string                     `json:"msg"`
+        FileName    string              `json:"file_name"`
+    }
+)

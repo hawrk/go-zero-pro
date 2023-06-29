@@ -1,11 +1,9 @@
 Name: mqassess-rpc
 ListenOn: 127.0.0.1:5080
-
 #Etcd:
 #  Hosts:
 #  - 127.0.0.1:2379
 #  Key: mqassess.rpc
-
 Prometheus:
   Host: 192.168.1.82
   Port: 5081
@@ -16,26 +14,40 @@ Log:
   Mode: console   #console file volume
   Level: info
   Encoding: json           #json , plain
+  KeepDays: 30
 
 Mysql:
-  DataSource: root:Root_123@tcp(192.168.1.84:3306)/assess?charset=utf8mb4&parseTime=true&loc=Local
-  IdleConn : 10
+  DataSource: root:Root_123@tcp(192.168.1.85:3306)/assess?charset=utf8mb4&parseTime=true&loc=Local
+  IdleConn : 101
   MaxOpenConn : 100
-  EnablePrintSQL : 0       #是否允许打印Sql语句，1打印， 0 不打印
+  EnablePrintSQL : 1       #是否允许打印Sql语句，1打印， 0 不打印
 
 Redis:
-  Host: 192.168.1.84:6379
+  Host: 192.168.1.85:6379
+
+#mornano rpc
+MornanoRPC:
+  Endpoints:
+    - 127.0.0.1:4080
+  NonBlock: true
+  Timeout: 30000
 
 WorkProcesser:
   GorontineNum: 5   #并发协程数
-  ElapseMin: 3    # 间隔处理时间
+  ElapseMin: 1    # 间隔处理时间
+  EnableFirstPhase: true     #一期绩效计算开关
+  EnableSecondPhase: true     #二期绩效计算开关
+  EnableReloadCache: false     #是否允许加载内存数据（重启时）
+  EnableCheckHeartBeat: false    #是否需要进行心跳检测， 用在集群或主备环境中
+  EnableConcurrency: false      #分类用户并发计算
+
 #订单详情推送
 AlgoPlatformOrderTradeConf:
   Name: AlgoPlatformOrderTrade
   Brokers:
     - 192.168.1.85:9092
   Group:
-  Topic: hawrk_demo
+  Topic: child_order_85
   Offset: first
   Consumers: 1
   Processors: 1
@@ -46,7 +58,19 @@ AlgoOrderTradeConf:
   Brokers:
     - 192.168.1.85:9092
   Group:
-  Topic: algo_order
+  Topic: algo_order_85
   Offset: first
   Consumers: 1
   Processors: 1
+
+#账户信息变更推送
+AlgoAccountInfoConf:
+  Name: AlgoAccountInfo
+  Brokers:
+    - 192.168.1.81:9092
+  Group: userinfo
+  Topic: datasync1
+  Offset: first
+  Consumers: 8
+  Processors: 8
+

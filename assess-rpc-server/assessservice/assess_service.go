@@ -13,13 +13,156 @@ import (
 )
 
 type (
-	AssessInfo = proto.AssessInfo
-	GeneralReq = proto.GeneralReq
-	GeneralRsp = proto.GeneralRsp
+	AddOptimizeBaseReq      = proto.AddOptimizeBaseReq
+	AddOptimizeBaseRsp      = proto.AddOptimizeBaseRsp
+	AlgoDimension           = proto.AlgoDimension
+	AlgoInfo                = proto.AlgoInfo
+	AlgoOrder               = proto.AlgoOrder
+	AlgoOrderPerf           = proto.AlgoOrderPerf
+	AlgoOrderPerfs          = proto.AlgoOrderPerfs
+	AlgoOrderReq            = proto.AlgoOrderReq
+	AlgoOrderRsp            = proto.AlgoOrderRsp
+	AlgoProfileReq          = proto.AlgoProfileReq
+	AlgoProfileRsp          = proto.AlgoProfileRsp
+	AlgoTradeInfo           = proto.AlgoTradeInfo
+	Analyse                 = proto.Analyse
+	AssessInfo              = proto.AssessInfo
+	AssessSummary           = proto.AssessSummary
+	ChildOrder              = proto.ChildOrder
+	ChildOrderPerf          = proto.ChildOrderPerf
+	ChildOrderPerfs         = proto.ChildOrderPerfs
+	ChooseAlgoReq           = proto.ChooseAlgoReq
+	ChooseAlgoRsp           = proto.ChooseAlgoRsp
+	CompareAlgoScore        = proto.CompareAlgoScore
+	CompareReq              = proto.CompareReq
+	CompareRsp              = proto.CompareRsp
+	DefaultReq              = proto.DefaultReq
+	DefaultRsp              = proto.DefaultRsp
+	DeleteOptimizeBaseReq   = proto.DeleteOptimizeBaseReq
+	DeleteOptimizeBaseRsp   = proto.DeleteOptimizeBaseRsp
+	DownloadOptimizeBaseReq = proto.DownloadOptimizeBaseReq
+	DownloadOptimizeBaseRsp = proto.DownloadOptimizeBaseRsp
+	DynamicReq              = proto.DynamicReq
+	DynamicRsp              = proto.DynamicRsp
+	FundRate                = proto.FundRate
+	GeneralReq              = proto.GeneralReq
+	GeneralRsp              = proto.GeneralRsp
+	LoginReq                = proto.LoginReq
+	LoginRsp                = proto.LoginRsp
+	MultiAlgoReq            = proto.MultiAlgoReq
+	MultiAlgoRsp            = proto.MultiAlgoRsp
+	MultiDayReq             = proto.MultiDayReq
+	MultiDayRsp             = proto.MultiDayRsp
+	Optimize                = proto.Optimize
+	OptimizeBase            = proto.OptimizeBase
+	OptimizeReq             = proto.OptimizeReq
+	OptimizeRsp             = proto.OptimizeRsp
+	OrderSummaryReq         = proto.OrderSummaryReq
+	OrderSummaryRsp         = proto.OrderSummaryRsp
+	OrigAlgo                = proto.OrigAlgo
+	OrigAnalyseReq          = proto.OrigAnalyseReq
+	OrigAnalyseResp         = proto.OrigAnalyseResp
+	OrigChild               = proto.OrigChild
+	ProfileInfo             = proto.ProfileInfo
+	PushDataRsp             = proto.PushDataRsp
+	QuoteLevel              = proto.QuoteLevel
+	ReqPushShLevel          = proto.ReqPushShLevel
+	ReqPushSzLevel          = proto.ReqPushSzLevel
+	ReqQueryAlgoOrder       = proto.ReqQueryAlgoOrder
+	ReqQueryChildOrder      = proto.ReqQueryChildOrder
+	ReqQueryQuoteLevel      = proto.ReqQueryQuoteLevel
+	RespQueryAlgoOrder      = proto.RespQueryAlgoOrder
+	RespQueryChildOrder     = proto.RespQueryChildOrder
+	RespQueryQuoteLevel     = proto.RespQueryQuoteLevel
+	ScoreRankInfo           = proto.ScoreRankInfo
+	ScoreRankReq            = proto.ScoreRankReq
+	ScoreRankRsp            = proto.ScoreRankRsp
+	SelectOptimizeBaseReq   = proto.SelectOptimizeBaseReq
+	SelectOptimizeBaseRsp   = proto.SelectOptimizeBaseRsp
+	SignalInfo              = proto.SignalInfo
+	SignalReq               = proto.SignalReq
+	SignalRsp               = proto.SignalRsp
+	TimeLine                = proto.TimeLine
+	TimeLineReq             = proto.TimeLineReq
+	TimeLineRsp             = proto.TimeLineRsp
+	UpdateOptimizeBaseReq   = proto.UpdateOptimizeBaseReq
+	UpdateOptimizeBaseRsp   = proto.UpdateOptimizeBaseRsp
+	UploadOptimizeBaseReq   = proto.UploadOptimizeBaseReq
+	UploadOptimizeBaseRsp   = proto.UploadOptimizeBaseRsp
+	UserProfileReq          = proto.UserProfileReq
+	UserProfileRsp          = proto.UserProfileRsp
+	WinRatioHead            = proto.WinRatioHead
+	WinRatioInfo            = proto.WinRatioInfo
+	WinRatioReq             = proto.WinRatioReq
+	WinRatioRsp             = proto.WinRatioRsp
 
 	AssessService interface {
 		//  获取绩效概况
 		GetGeneral(ctx context.Context, in *GeneralReq, opts ...grpc.CallOption) (*GeneralRsp, error)
+		//  获取算法画像信息
+		GetAlgoProfile(ctx context.Context, in *AlgoProfileReq, opts ...grpc.CallOption) (*AlgoProfileRsp, error)
+		//  一键优选
+		GetOptimize(ctx context.Context, in *OptimizeReq, opts ...grpc.CallOption) (*OptimizeRsp, error)
+		// 新增一键优选基础数据
+		AddOptimizeBase(ctx context.Context, in *AddOptimizeBaseReq, opts ...grpc.CallOption) (*AddOptimizeBaseRsp, error)
+		// 修改一键优选基础数据
+		UpdateOptimizeBase(ctx context.Context, in *UpdateOptimizeBaseReq, opts ...grpc.CallOption) (*UpdateOptimizeBaseRsp, error)
+		// 删除一键优选基础数据
+		DeleteOptimizeBase(ctx context.Context, in *DeleteOptimizeBaseReq, opts ...grpc.CallOption) (*DeleteOptimizeBaseRsp, error)
+		// 查询一键优选基础数据
+		SelectOptimizeBase(ctx context.Context, in *SelectOptimizeBaseReq, opts ...grpc.CallOption) (*SelectOptimizeBaseRsp, error)
+		// 下载一键优选基础数据
+		DownloadOptimizeBase(ctx context.Context, in *DownloadOptimizeBaseReq, opts ...grpc.CallOption) (*DownloadOptimizeBaseRsp, error)
+		// 导入一键优选基础数据
+		UploadOptimizeBase(ctx context.Context, in *UploadOptimizeBaseReq, opts ...grpc.CallOption) (*UploadOptimizeBaseRsp, error)
+		//  算法动态
+		GetAlgoDynamic(ctx context.Context, in *DynamicReq, opts ...grpc.CallOption) (*DynamicRsp, error)
+		//  时间线图
+		GetAlgoTimeLine(ctx context.Context, in *TimeLineReq, opts ...grpc.CallOption) (*TimeLineRsp, error)
+		//  取用户订单汇总信息(dashboard 用户数量， 交易量，买卖占比，厂商个数，资金占比,完成度--查汇总表）
+		GetUserOrderSummary(ctx context.Context, in *OrderSummaryReq, opts ...grpc.CallOption) (*OrderSummaryRsp, error)
+		//  根据算法类型取订单汇总信息 （dashboard 算法列表）
+		GetAlgoOrderSummary(ctx context.Context, in *AlgoOrderReq, opts ...grpc.CallOption) (*AlgoOrderRsp, error)
+		//  取多个算法绩效时间线  (dashboard top 4）
+		GetMultiAlgoAssess(ctx context.Context, in *MultiAlgoReq, opts ...grpc.CallOption) (*MultiAlgoRsp, error)
+		//  算法条件筛选
+		ChooseAlgoInfo(ctx context.Context, in *ChooseAlgoReq, opts ...grpc.CallOption) (*ChooseAlgoRsp, error)
+		//  多算法对比
+		CompareMultiAlgo(ctx context.Context, in *CompareReq, opts ...grpc.CallOption) (*CompareRsp, error)
+		//  多日分析
+		MultiDayAnalyse(ctx context.Context, in *MultiDayReq, opts ...grpc.CallOption) (*MultiDayRsp, error)
+		//  综合评分排名列表
+		TotalScoreRanking(ctx context.Context, in *ScoreRankReq, opts ...grpc.CallOption) (*ScoreRankRsp, error)
+		//  取默认数据，用于需选择算法的场景下默认无数据的页面
+		GetDefaultAlgo(ctx context.Context, in *DefaultReq, opts ...grpc.CallOption) (*DefaultRsp, error)
+		//  高阶分析：取用户画像绩效信息
+		GetUserProfile(ctx context.Context, in *UserProfileReq, opts ...grpc.CallOption) (*UserProfileRsp, error)
+		//  高阶分析：胜率分析
+		GetWinRatio(ctx context.Context, in *WinRatioReq, opts ...grpc.CallOption) (*WinRatioRsp, error)
+		//  高阶分析：信号分析
+		GetSignal(ctx context.Context, in *SignalReq, opts ...grpc.CallOption) (*SignalRsp, error)
+		//  订单导入:母单信息导入
+		ImportAlgoOrdr(ctx context.Context, in *AlgoOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error)
+		//  订单导入：子单信息导入
+		ImportChildOrder(ctx context.Context, in *ChildOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error)
+		//  -------绩效数据修复
+		PushAlgoOrder(ctx context.Context, in *AlgoOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error)
+		//  母单信息
+		QueryAlgoOrder(ctx context.Context, in *ReqQueryAlgoOrder, opts ...grpc.CallOption) (*RespQueryAlgoOrder, error)
+		//  子单绩效修复
+		PushChildOrder(ctx context.Context, in *ChildOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error)
+		//  子单信息
+		QueryChildOrder(ctx context.Context, in *ReqQueryChildOrder, opts ...grpc.CallOption) (*RespQueryChildOrder, error)
+		//  深市行情信息
+		PushSzQuoteLevel(ctx context.Context, in *ReqPushSzLevel, opts ...grpc.CallOption) (*PushDataRsp, error)
+		//  深市行情信息推送
+		QuerySzQuoteLevel(ctx context.Context, in *ReqQueryQuoteLevel, opts ...grpc.CallOption) (*RespQueryQuoteLevel, error)
+		//  沪市行情信息推送
+		PushShQuoteLevel(ctx context.Context, in *ReqPushShLevel, opts ...grpc.CallOption) (*PushDataRsp, error)
+		//  沪市行情信息
+		QueryShQuoteLevel(ctx context.Context, in *ReqQueryQuoteLevel, opts ...grpc.CallOption) (*RespQueryQuoteLevel, error)
+		//  原始订单分析
+		OrigOrderAnalyse(ctx context.Context, in *OrigAnalyseReq, opts ...grpc.CallOption) (*OrigAnalyseResp, error)
 	}
 
 	defaultAssessService struct {
@@ -37,4 +180,196 @@ func NewAssessService(cli zrpc.Client) AssessService {
 func (m *defaultAssessService) GetGeneral(ctx context.Context, in *GeneralReq, opts ...grpc.CallOption) (*GeneralRsp, error) {
 	client := proto.NewAssessServiceClient(m.cli.Conn())
 	return client.GetGeneral(ctx, in, opts...)
+}
+
+//  获取算法画像信息
+func (m *defaultAssessService) GetAlgoProfile(ctx context.Context, in *AlgoProfileReq, opts ...grpc.CallOption) (*AlgoProfileRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetAlgoProfile(ctx, in, opts...)
+}
+
+//  一键优选
+func (m *defaultAssessService) GetOptimize(ctx context.Context, in *OptimizeReq, opts ...grpc.CallOption) (*OptimizeRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetOptimize(ctx, in, opts...)
+}
+
+// 新增一键优选基础数据
+func (m *defaultAssessService) AddOptimizeBase(ctx context.Context, in *AddOptimizeBaseReq, opts ...grpc.CallOption) (*AddOptimizeBaseRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.AddOptimizeBase(ctx, in, opts...)
+}
+
+// 修改一键优选基础数据
+func (m *defaultAssessService) UpdateOptimizeBase(ctx context.Context, in *UpdateOptimizeBaseReq, opts ...grpc.CallOption) (*UpdateOptimizeBaseRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.UpdateOptimizeBase(ctx, in, opts...)
+}
+
+// 删除一键优选基础数据
+func (m *defaultAssessService) DeleteOptimizeBase(ctx context.Context, in *DeleteOptimizeBaseReq, opts ...grpc.CallOption) (*DeleteOptimizeBaseRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.DeleteOptimizeBase(ctx, in, opts...)
+}
+
+// 查询一键优选基础数据
+func (m *defaultAssessService) SelectOptimizeBase(ctx context.Context, in *SelectOptimizeBaseReq, opts ...grpc.CallOption) (*SelectOptimizeBaseRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.SelectOptimizeBase(ctx, in, opts...)
+}
+
+// 下载一键优选基础数据
+func (m *defaultAssessService) DownloadOptimizeBase(ctx context.Context, in *DownloadOptimizeBaseReq, opts ...grpc.CallOption) (*DownloadOptimizeBaseRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.DownloadOptimizeBase(ctx, in, opts...)
+}
+
+// 导入一键优选基础数据
+func (m *defaultAssessService) UploadOptimizeBase(ctx context.Context, in *UploadOptimizeBaseReq, opts ...grpc.CallOption) (*UploadOptimizeBaseRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.UploadOptimizeBase(ctx, in, opts...)
+}
+
+//  算法动态
+func (m *defaultAssessService) GetAlgoDynamic(ctx context.Context, in *DynamicReq, opts ...grpc.CallOption) (*DynamicRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetAlgoDynamic(ctx, in, opts...)
+}
+
+//  时间线图
+func (m *defaultAssessService) GetAlgoTimeLine(ctx context.Context, in *TimeLineReq, opts ...grpc.CallOption) (*TimeLineRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetAlgoTimeLine(ctx, in, opts...)
+}
+
+//  取用户订单汇总信息(dashboard 用户数量， 交易量，买卖占比，厂商个数，资金占比,完成度--查汇总表）
+func (m *defaultAssessService) GetUserOrderSummary(ctx context.Context, in *OrderSummaryReq, opts ...grpc.CallOption) (*OrderSummaryRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetUserOrderSummary(ctx, in, opts...)
+}
+
+//  根据算法类型取订单汇总信息 （dashboard 算法列表）
+func (m *defaultAssessService) GetAlgoOrderSummary(ctx context.Context, in *AlgoOrderReq, opts ...grpc.CallOption) (*AlgoOrderRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetAlgoOrderSummary(ctx, in, opts...)
+}
+
+//  取多个算法绩效时间线  (dashboard top 4）
+func (m *defaultAssessService) GetMultiAlgoAssess(ctx context.Context, in *MultiAlgoReq, opts ...grpc.CallOption) (*MultiAlgoRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetMultiAlgoAssess(ctx, in, opts...)
+}
+
+//  算法条件筛选
+func (m *defaultAssessService) ChooseAlgoInfo(ctx context.Context, in *ChooseAlgoReq, opts ...grpc.CallOption) (*ChooseAlgoRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.ChooseAlgoInfo(ctx, in, opts...)
+}
+
+//  多算法对比
+func (m *defaultAssessService) CompareMultiAlgo(ctx context.Context, in *CompareReq, opts ...grpc.CallOption) (*CompareRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.CompareMultiAlgo(ctx, in, opts...)
+}
+
+//  多日分析
+func (m *defaultAssessService) MultiDayAnalyse(ctx context.Context, in *MultiDayReq, opts ...grpc.CallOption) (*MultiDayRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.MultiDayAnalyse(ctx, in, opts...)
+}
+
+//  综合评分排名列表
+func (m *defaultAssessService) TotalScoreRanking(ctx context.Context, in *ScoreRankReq, opts ...grpc.CallOption) (*ScoreRankRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.TotalScoreRanking(ctx, in, opts...)
+}
+
+//  取默认数据，用于需选择算法的场景下默认无数据的页面
+func (m *defaultAssessService) GetDefaultAlgo(ctx context.Context, in *DefaultReq, opts ...grpc.CallOption) (*DefaultRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetDefaultAlgo(ctx, in, opts...)
+}
+
+//  高阶分析：取用户画像绩效信息
+func (m *defaultAssessService) GetUserProfile(ctx context.Context, in *UserProfileReq, opts ...grpc.CallOption) (*UserProfileRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetUserProfile(ctx, in, opts...)
+}
+
+//  高阶分析：胜率分析
+func (m *defaultAssessService) GetWinRatio(ctx context.Context, in *WinRatioReq, opts ...grpc.CallOption) (*WinRatioRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetWinRatio(ctx, in, opts...)
+}
+
+//  高阶分析：信号分析
+func (m *defaultAssessService) GetSignal(ctx context.Context, in *SignalReq, opts ...grpc.CallOption) (*SignalRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.GetSignal(ctx, in, opts...)
+}
+
+//  订单导入:母单信息导入
+func (m *defaultAssessService) ImportAlgoOrdr(ctx context.Context, in *AlgoOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.ImportAlgoOrdr(ctx, in, opts...)
+}
+
+//  订单导入：子单信息导入
+func (m *defaultAssessService) ImportChildOrder(ctx context.Context, in *ChildOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.ImportChildOrder(ctx, in, opts...)
+}
+
+//  -------绩效数据修复
+func (m *defaultAssessService) PushAlgoOrder(ctx context.Context, in *AlgoOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.PushAlgoOrder(ctx, in, opts...)
+}
+
+//  母单信息
+func (m *defaultAssessService) QueryAlgoOrder(ctx context.Context, in *ReqQueryAlgoOrder, opts ...grpc.CallOption) (*RespQueryAlgoOrder, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.QueryAlgoOrder(ctx, in, opts...)
+}
+
+//  子单绩效修复
+func (m *defaultAssessService) PushChildOrder(ctx context.Context, in *ChildOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.PushChildOrder(ctx, in, opts...)
+}
+
+//  子单信息
+func (m *defaultAssessService) QueryChildOrder(ctx context.Context, in *ReqQueryChildOrder, opts ...grpc.CallOption) (*RespQueryChildOrder, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.QueryChildOrder(ctx, in, opts...)
+}
+
+//  深市行情信息
+func (m *defaultAssessService) PushSzQuoteLevel(ctx context.Context, in *ReqPushSzLevel, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.PushSzQuoteLevel(ctx, in, opts...)
+}
+
+//  深市行情信息推送
+func (m *defaultAssessService) QuerySzQuoteLevel(ctx context.Context, in *ReqQueryQuoteLevel, opts ...grpc.CallOption) (*RespQueryQuoteLevel, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.QuerySzQuoteLevel(ctx, in, opts...)
+}
+
+//  沪市行情信息推送
+func (m *defaultAssessService) PushShQuoteLevel(ctx context.Context, in *ReqPushShLevel, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.PushShQuoteLevel(ctx, in, opts...)
+}
+
+//  沪市行情信息
+func (m *defaultAssessService) QueryShQuoteLevel(ctx context.Context, in *ReqQueryQuoteLevel, opts ...grpc.CallOption) (*RespQueryQuoteLevel, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.QueryShQuoteLevel(ctx, in, opts...)
+}
+
+//  原始订单分析
+func (m *defaultAssessService) OrigOrderAnalyse(ctx context.Context, in *OrigAnalyseReq, opts ...grpc.CallOption) (*OrigAnalyseResp, error) {
+	client := proto.NewAssessServiceClient(m.cli.Conn())
+	return client.OrigOrderAnalyse(ctx, in, opts...)
 }

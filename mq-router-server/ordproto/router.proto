@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "proto";
+package router;
+
+message RouterReq {
+  string id = 1;
+}
+
+message RouterRsp {
+  int32 code = 1;      // 返回码
+  string msg = 2;     // 返回消息
+}
+
+service RouterService {
+  // proto
+  rpc GetRouter(RouterReq) returns (RouterRsp);
+}

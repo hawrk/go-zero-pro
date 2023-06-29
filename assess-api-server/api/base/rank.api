@@ -1,0 +1,36 @@
+syntax = "v1"
+
+info (
+    title: "各种排名结构体"
+    desc: "二期绩效结构体"
+    author: "hawrk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+    TotalScore {
+        Ranking int32     `json:"ranking"`     // 名次
+        AlgoName string   `json:"algo_name"`   // 算法名称
+        Score   int32     `json:"score"`       // 分数
+        SecId   string    `json:"sec_id"`       // 证券代码
+        SecName string    `json:"sec_name"`     // 证券名称
+        UserId  string    `json:"user_id"`      // 用户ID
+        UserName string   `json:"user_name"`    // 用户名称
+    }
+
+    RankingReq {
+        Date            int64       `json:"date"`
+        RankingType     int32       `json:"rank_type"`         // 1.dashboard 算法总体评分排名   2.高阶股票排名 3. 高阶用户排名
+        UserId          string      `json:"user_id,optional"`           // 用户ID
+        UserType         int         `json:"user_type,optional"`
+        Page            int32       `json:"page"`                  // 当前页数
+        Limit           int32       `json:"limit"`                 // 每页数量
+    }
+
+    RankingRsp {
+        Code int                        `json:"code"`
+        Msg  string                     `json:"msg"`
+        Total int64                     `json:"total"`
+        Info []TotalScore               `json:"info"`
+    }
+)

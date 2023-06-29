@@ -1,0 +1,89 @@
+syntax = "v1"
+
+info(
+	title: "账户权限服务"
+	desc: "管理后台账号菜单管理系统，单体服务，不区分api和rpc"
+	author: "hawrk2012"
+	email: "hawrk2012@163.com"
+)
+
+import (
+	"base/user.api"
+	"base/role.api"
+)
+
+type (
+	// 登陆校验接口
+	LoginReq {
+		UserId      string `json:"user_id"`
+		Passwd      string `json:"password"`
+		ChanType    int    `json:"chan_type,default=1"`    // 1-绩效   2-管理平台
+		BusPasswd   string `json:"bus_passwd,optional"`    // 总线的密码
+		BusUserName string `json:"bus_user_name,optional"` // 总线用户名称
+		BusAllow    int    `json:"bus_allow,optional"`     // 总线密码是否匹配
+	}
+	LoginRsp {
+		Code       int    `json:"code"`
+		Msg        string `json:"msg"`
+		Allow      int    `json:"allow"`       // 0-不允许,1-允许登陆 2-首次登陆或密码已过期，需要修改密码
+		UserType   int    `json:"user_type"`   // 用户类型， 1-超级管理员，2-普通用户
+		FirstLogin int    `json:"first_login"` // 是否首次登陆， 0-首次登陆 1-非首次登陆
+	}
+
+	CheckPasswordReq {
+		UserId         string `json:"user_id"`
+		OriginPassword string `json:"ori_passwd"`
+		ChanType       int    `json:"chan_type,default=1"` // 1-绩效   2-管理平台
+	}
+
+	CheckPasswordRsp {
+		Code   int    `json:"code"`
+		Msg    string `json:"msg"`
+		Result int    `json:"result"` // 1-校验成功， 非1失败
+	}
+)
+
+@server(
+	prefix: algo-assess/v1
+	middleware: Cors
+)
+service auth-api {
+	@doc "登录接口"
+	@handler Login
+	post /auth/login (LoginReq) returns (LoginRsp)
+	
+	// 角色权限展示列表
+	@doc "角色权限列表"
+	@handler RoleList
+	post /auth/rolelist (RoleListReq) returns (RoleListRsp)
+	
+	// 角色权限  拉取默认角色列表
+	@doc "角色权限"
+	@handler RoleAuth
+	post /auth/role-auth (RoleAuthReq) returns (RoleAuthRsp)
+	
+	// 修改角色
+	@doc "角色权限修改（新增或更新）"
+	@handler RoleModify
+	post /auth/role-modify (RoleModifyReq) returns (RoleModifyRsp)
+	
+	// 权限用户列表查询
+	@doc "权限用户列表"
+	@handler AuthUserList
+	post /auth/user-list (UserListReq) returns (UserListRsp)
+	
+	// 用户修改 （新增或更新）
+	@doc "用户新增或修改"
+	@handler UserModify
+	post /auth/user-modify (UserModfiyReq) returns (UserModifyRsp)
+	
+	// 校验密码，用于修改密码时需要对原密码进行校验
+	@doc "原密码校验"
+	@handler CheckPassword
+	post /auth/check-password (CheckPasswordReq) returns (CheckPasswordRsp)
+	
+	// 用户权限查询，用于用户登陆获取菜单权限
+	@doc "用户菜单权限"
+	@handler UserAuth
+	post /auth/user-auth (UserAuthReq) returns (UserAuthRsp)
+}

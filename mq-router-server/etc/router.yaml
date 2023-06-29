@@ -1,0 +1,50 @@
+Name: router.rpc
+ListenOn: 127.0.0.1:3080
+#Etcd:
+#  Hosts:
+#  - 127.0.0.1:2379
+#  Key: router.rpc
+Redis:
+  Host: 192.168.1.82:6888
+
+Log:
+  ServiceName: mqmarket.rpc
+  Mode: console
+  Level: info
+  Encoding: json           #json , plain
+  KeepDays: 30
+
+AssessMQMRPC:
+  Endpoints:
+    - 127.0.0.1:5080
+  NonBlock: true
+  Timeout: 3000  #调用超时时间
+
+
+AssessMQSRPC:
+  Endpoints:
+    - 127.0.0.1:5080
+  NonBlock: true
+  Timeout: 3000  #调用超时时间
+
+#母单 kafka消息
+AlgoOrderTradeConf:
+  Name: AlgoOrderTrade
+  Brokers:
+    - 192.168.1.85:9092
+  Group:
+  Topic: algo_order_85
+  Offset: first
+  Consumers: 1
+  Processors: 1
+
+#子单Kafka消息
+ChildOrderTradeConf:
+  Name: ChildOrderTrade
+  Brokers:
+    - 192.168.1.85:9092
+  Group:
+  Topic: child_order_841
+  Offset: first
+  Consumers: 1
+  Processors: 1

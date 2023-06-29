@@ -1,0 +1,59 @@
+syntax = "v1"
+
+info (
+    title: "角色权限基本结构体"
+    desc: "账户权限结构体"
+    author: "hawrk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+
+    RoleListReq {
+        Scene    int   `json:"scene"`      // scene  1-角色列表  2-新增用户时，选择角色的下拉列表
+        RoleId   int    `json:"role_id,optional"`   // 角色ID
+        RoleName string `json:"role_name,optional"` // 角色名称
+        ChanType  int   `json:"chan_type,default=1"`    // 1-绩效   2-管理平台
+        Page     int32  `json:"page,optional"`               // 当前页数
+        Limit    int32  `json:"limit,optional"`              // 每页数量
+    }
+    RoleInfos {
+        Id        int64   `json:"id"`
+        RoleId     int    `json:"role_id"`     // 角色ID
+        RoleName   string `json:"role_name"`   // 角色名称
+        RoleAuth   string `json:"role_auth"`   // 角色权限
+        RoleDesc   string `json:"role_desc"`   // 角色列表展示
+        Stutus     int    `json:"status"`      // 状态
+        CreateTime string `json:"create_time"` // 创建时间
+    }
+    RoleListRsp {
+        Code  int         `json:"code"`
+        Msg   string      `json:"msg"`
+        Total int64       `json:"total"`
+        List  []RoleInfos `json:"list"`
+    }
+
+    RoleAuthReq {
+        UserType    int32   `json:"user_type,optional"`  // 用户类型 ：1-超级管理员 -2其他
+        ChanType  int       `json:"chan_type,default=1"`    // 1-绩效   2-管理平台
+    }
+
+    RoleAuthRsp {
+        Code  int               `json:"code"`
+        Msg   string            `json:"msg"`
+        RoleAuth   string       `json:"role_auth"`      // json 字符串
+    }
+
+    RoleModifyReq {
+        OperType  int32         `json:"oper_type"`  // 操作类型  1-新增， 2-修改   3-删除
+        RoleId    int32         `json:"role_id,optional"`       // 角色ID （后台返回，自增ID）
+        RoleName  string        `json:"role_name,optional"`    // 角色名称
+        RoleAuth  string        `json:"role_auth,optional"`    // 角色权限列表  （json字符串)
+        ChanType  int           `json:"chan_type,default=1"`    // 1-绩效   2-管理平台
+    }
+    RoleModifyRsp {
+        Code  int    `json:"code"`
+        Msg   string `json:"msg"`
+        result int32 `json:"result"`       // 1--成功    2--失败
+    }
+)

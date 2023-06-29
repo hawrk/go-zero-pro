@@ -26,6 +26,7 @@ message GeneralReq {
   int32 order_status_type = 4;              // 订单状态
   int64 start_time = 5;                     // 开始时间
   int64 end_time = 6;                       // 结束时间
+  string user_id = 7;                       // 交易账户ID
 }
 
 message GeneralRsp {
@@ -34,7 +35,859 @@ message GeneralRsp {
   repeated AssessInfo info = 3;
 }
 
+message AlgoInfo {
+  string AlgoTypeName = 1;
+  int32 count = 2;
+}
+
+message ProfileInfo {
+  string accout_id = 1;      // 用户ID
+  string account_name = 2;   // 用户名称
+  int32  algo_id = 3;  //算法ID
+  int32  algo_type = 4; // 算法类型
+  string algo_name = 5; // 算法名称
+  string sec_id = 6;  // 证券ID
+  int64 trade_vol = 7;  // 交易总额
+  double profit = 8;    //  盈亏金额
+  double profit_rate = 9;  //  收益率
+  int64 total_fee = 10;   // 总手续费
+  int64 cross_fee = 11;   // 流量费
+  double cancel_rate = 12;  // 撤单率
+  int64  min_split_order = 13;  // 最小拆单单位
+  double progress = 14;    //  完成度
+  double min_joint_rate = 15;  // 最小贴合度
+  double withdraw_rate = 16;   // 回撤比例
+  double vwap_dev = 17;      // vwap滑点值
+  double vwap_std_dev = 18;   // vwap 滑点标准差
+  string create_time = 19;     // 创建时间
+  string provider = 20;       // 算法厂商
+  double pf_rate_std_dev = 21;    // 收益率标准差
+  int64  batch_no = 22;      // 批次号
+  string sec_name = 23;      // 证券名称
+  int64 algo_order_id = 24;    // 母单号
+  string industry = 25;       // 行业分类
+  int32   fund_type = 26;      // 市值类型
+  int32   liquidity = 27;      // 流动性
+  double deal_effi = 28;       // 成交效率
+  double algo_order_fit = 29;     // 母单贴合度
+  double price_fit = 30;         // 价格贴合度
+  double trade_vol_fit = 31;     // 成交量贴合度
+  double trade_vol_fit_std_dev = 32;     // 成交量贴合度标准差
+  double time_fit_std_dev = 33;        // 时间贴合度标准差
+  double assess_profit_rate = 34;      // 绩效收益率
+  double avg_trade_price = 35;       // 执行均价（成交均价)
+  double avg_arrive_price = 36;      // 到达价均价
+  double pwp = 37;        // pwp价格
+  int64 algo_duration = 38;     // 母单有效时长
+  double twap = 39;      // TWAP值
+  double twap_dev = 40;    // TWAP滑点
+  double vwap = 41;        // VWAP值
+}
+
+message AlgoProfileReq {
+  string provider = 1;    // 算法厂商
+  string algo_type_name = 2;    // 算法类型
+  int32 algo_id = 3;      // 算法ID
+  string algo_name = 4;   // 算法名称
+  string user_id = 5;     //  用户账号
+  int64  start_time = 6;   // 开始时间
+  int64  end_time = 7;     // 结束时间
+  int32  page = 8;     // 当前页数
+  int32  limit = 9;    // 每页数量
+  int32 profile_type = 10;   // 获取画像类型  1-经济性，2-完成度，3-风险度，4-算法绩效 5-稳定性
+  int32 user_type = 11;     // 用户类型  0-普通用户  1-管理员
+  int32 source_from = 12; //数据来源
+  int64 batch_no = 13;     // 批次号
+
+}
+
+message AlgoProfileRsp {
+  int32 code = 1;
+  string msg = 2;
+  int64 total = 3;
+  repeated  ProfileInfo info = 4;
+}
+
+message Optimize {
+  int64 id = 1;     // 主键 ID
+  string sec_id = 2;    // 证券ID
+  string sec_name = 3;  // 证券名称
+  sint32 algo_id = 4;  // 算法id
+  string algo_name = 5;  // 算法名称
+  int32 provider_id = 6;// 厂商id
+  string provider_name = 7;// 厂商名称
+}
+
+message OptimizeReq {
+  repeated string security_id = 1;
+  repeated int32 algo_ids = 2;
+}
+
+message OptimizeRsp {
+  int32 code = 1;
+  string msg = 2;
+  int64 total = 3;
+  repeated Optimize list = 4;
+}
+
+message AddOptimizeBaseReq{
+  int32 provider_id = 1;
+  string provider_name = 2;
+  string sec_id = 3;
+  string sec_name = 4;
+  int32 algo_id = 5;
+  int32 algo_type = 6;
+  string algo_name = 7;
+  double open_rate = 8;
+  double income_rate = 9;
+  double basis_point = 10;
+}
+
+message AddOptimizeBaseRsp{
+  int32 code = 1;
+  string msg = 2;
+}
+
+message UpdateOptimizeBaseReq{
+  int64 id = 1;
+  int32 provider_id = 2;
+  string provider_name = 3;
+  string sec_id = 4;
+  string sec_name = 5;
+  int32 algo_id = 6;
+  int32 algo_type = 7;
+  string algo_name = 8;
+  double open_rate = 9;
+  double income_rate = 10;
+  double basis_point = 11;
+}
+
+message UpdateOptimizeBaseRsp{
+  int32 code = 1;
+  string msg = 2;
+}
+
+message DeleteOptimizeBaseReq{
+  int64 id = 1;
+}
+
+message DeleteOptimizeBaseRsp{
+  int32 code = 1;
+  string msg = 2;
+}
+
+message SelectOptimizeBaseReq{
+  int32 provider_id = 1;//算法厂商id
+  int32 algo_id = 3;
+  string sec_id = 4;
+  int32  page = 5;
+  int32 limit = 6;
+}
+
+message OptimizeBase{
+  int64 id = 1;
+  int32    provider_id = 2;
+  string provider_name = 3;
+  string     sec_id = 4;
+  string sec_name = 5;
+  int32   algo_id = 6;
+  int32 algo_type = 7;
+  string  algo_name = 8;
+  double open_rate = 9;
+  double   income_rate = 10;
+  double  basis_point = 11;
+  string  create_time = 12;
+  string  update_time = 13;
+}
+
+message SelectOptimizeBaseRsp{
+  int32 code = 1;
+  string msg = 2;
+  int64 total = 3;
+  repeated OptimizeBase list = 4;
+}
+
+message DownloadOptimizeBaseReq{
+}
+
+message DownloadOptimizeBaseRsp{
+  int32 code = 1;
+  string msg = 2;
+  int64 total = 3;
+  repeated OptimizeBase list = 4;
+}
+
+message UploadOptimizeBaseReq{
+  repeated OptimizeBase list = 1;
+}
+
+message UploadOptimizeBaseRsp{
+  int32 code = 1;
+  string msg = 2;
+}
+
+message AlgoDimension {
+  int32 profile_type = 1;
+  int32 profile_score = 2;
+  string profile_desc = 3;
+}
+
+message DynamicReq {
+  string provider = 1;    // 算法厂商
+  int32 algo_type = 2;   // 算法类型
+  int32 algo_id = 3;     // 算法ID
+  string algo_name = 4;   // 算法名称
+  string user_id = 5;     // 用户ID
+  int64 start_time = 6;   // 开始时间
+  int64 end_time = 7;     // 结束时间
+  bool cross_day_flag = 8;  // 跨天标识
+  int32 user_type = 9;     // 用户类型  0-普通用户  1-管理员
+  int32 source_from = 10; //数据来源
+  int64 batch_no = 11;     // 批次号
+
+}
+
+message DynamicRsp {
+  int32 code = 1;
+  string msg = 2;
+  repeated AlgoDimension dimension = 3;      // 五个维度列表
+  int32 total_score = 4;      // 综合评分
+  int32 ranking = 5;          // 排名
+  repeated string fund_rate = 6;       // 资金占比json串
+  repeated string trade_side = 7;      // 买卖方向json串
+  repeated string stock_type = 8;      // 股价类型json串
+  repeated string trade_vol = 9;      //  交易量占比json串
+  repeated string algo_names = 10;    // 绩效分析下多算法返回列表
+}
+
+message TimeLine {
+  string time_point = 1;
+  int32 assess_score = 2;   // 绩效评分
+  double progress = 3;     // 完成度
+  int32 risk_score = 4;    // 风险度评分
+}
+
+message TimeLineReq {
+  int32 line_type = 1;     // 类型， 1为绩效， 2为完成度， 如果需要多个，则拼成12
+  int64 start_time = 2;        // 开始时间
+  int64 end_time = 3;         // 结束时间
+  string user_id = 4;    // 用户ID
+  int32 algo_id = 5;     // 算法ID
+  bool  cross_day_flag = 6;    // 跨天标识
+  int32 user_type = 7;     // 用户类型  0-普通用户  1-管理员
+  int32 source_from = 8; //数据来源
+  int64 batch_no = 9;     // 批次号
+
+}
+
+message TimeLineRsp {
+  int32 code = 1;
+  string msg = 2;
+  repeated  TimeLine line = 3;
+}
+
+message OrderSummaryReq {
+  int64 date = 1;     //时间  20220615
+  string user_id = 2;    // 登录用户ID
+  int32 user_type = 3;     // 用户类型  0-普通用户  1-管理员
+}
+
+message FundRate {
+  double Huge = 1;
+  double Big = 2;
+  double middle = 3;
+  double small = 4;
+}
+
+message OrderSummaryRsp {
+  int32 code = 1;
+  string msg = 2;
+  int64 user_num = 3;    //用户数量(交易用户）
+  int64  total_trade_amount = 4;    // 总交易量
+  int64   order_num = 5;         // 订单数
+  double buy_rate = 6;       // 买占比
+  double sell_rate = 7;      // 卖占比
+  int64 provider_num = 8;    // 厂商总数
+  FundRate fund_rate = 9;    // 资金占比
+  double progress = 10;       // 完成度
+  int64 total_user_num = 11;   // 总用户数量（基础数据）
+  // 之前单独拉取算法信息的接口直接并到这里来
+  int32 algo_count = 12;    // 算法数量
+  int32 provider_count = 13;   // 厂商数量
+  int32 trade_algo_count = 14;    //当天有交易的算法数量
+  int32 trade_provider_count = 15;   // 当天有交易的厂商数量
+}
+
+message AlgoOrderReq {
+  int64 date = 1;    // 时间
+  int32 algo_type = 2;    // 算法类型
+  string user_id = 3;     // 登陆用户ID
+  int32  page = 4;
+  int32 limit = 5;
+  int32 user_type = 6;     // 用户类型  0-普通用户  1-管理员
+}
+
+message AlgoTradeInfo {
+  string provider = 1;              // 厂商名称
+  int64 user_num = 2;               // 用户数量
+  int64 total_trade_amount = 3;    // 交易总金额
+  double profit_rate = 4;          // 收益率
+  int64 order_num = 5;             // 订单数量
+  double buy_rate = 6;             // 买入占比
+  double sell_rate = 7;            // 卖出占比
+}
+message AlgoOrderRsp {
+  int32 code = 1;
+  string msg = 2;
+  int64 total = 3;
+  repeated AlgoTradeInfo info = 4;
+}
+
+message AssessSummary {
+  string algo_name = 1;          // 算法名称
+  int32 economy_score = 2;       // 经济性评分
+  int32 progress_score = 3;      // 完成度评分
+  int32 risk_score = 4;          // 风险度评分
+  int32 assess_score = 5;        // 绩效评分
+  int32 stable_score = 6;        // 稳定性评分
+  int32 total_score = 7;         // 综合评分
+  int32 ranking = 8;             // 排名
+  string desc = 9;               // 描述
+  repeated TimeLine tl = 10;     // 时间线
+}
+
+message MultiAlgoReq {
+  int64 date = 1;         //当前时间
+  int32 algo_type = 2;    // 算法类型
+  int32 scene_type = 3;   // 场景   1- dashboard top四个算法    2-对比分析
+  string user_id = 4;    // 用户ID
+  repeated string algo_name = 5;     // 算法名称 （对比分析）
+  int32 user_type = 6;     // 用户类型  0-普通用户  1-管理员
+}
+
+message MultiAlgoRsp {
+  int32 code = 1;
+  string msg = 2;
+  repeated AssessSummary summary = 3;
+}
+
+message ChooseAlgoReq {
+  int32 choose_type = 1;    // 筛选类型 // 筛选类型 1-拉取厂商列表  2-拉取算法类型列表  3-拉取算法名称列表
+  // 4-根据算法名称反查算法ID 5-拉取所有算法类型 6-根据算法类型名称反查算法类型 7-根据算法类型查询所有算法名称 8- 根据算法类型查询当天有交易的算法列表(查汇总表）
+  string provider = 2;       // 厂商名称
+  string algo_type_name = 3;   // 算法类型
+  string algo_name = 4;       // 算法名称
+  int64  date = 5;            // 日期
+}
+
+message ChooseAlgoRsp {
+  int32 code = 1;
+  string msg = 2;
+  repeated string provider = 3;
+  repeated string algo_type_name = 4;
+  repeated string algo_name = 5;
+  int32 algo_id = 6;     // 根据算法名称反查算法ID
+  int32 algo_type = 7;    // 根据算法类型名称反查算法类型ID
+}
+
+message CompareAlgoScore {
+  string algo_name = 1;
+  int32 total_score = 2;
+  int32 ranking = 3;
+  repeated AlgoDimension dimension = 4;
+  repeated  TimeLine tl = 5;
+}
+
+message CompareReq {
+  int64 start_time = 1;         //开始时间
+  int64 end_time = 2;       // 结束时间
+  string user_id = 3;    // 用户ID
+  repeated string algo_name = 4;     // 算法名称 （对比分析）
+  bool  cross_day_flag = 5;    // 跨天标识
+  int32 user_type = 6;     // 用户类型  0-普通用户  1-管理员
+}
+
+message CompareRsp {
+  int32 code = 1;
+  string msg = 2;
+  repeated CompareAlgoScore algo_score = 3;
+}
+
+message MultiDayReq {
+  int64 start_time = 1;        // 开始时间
+  int64 end_time = 2;          // 结束时间
+  bool  cross_day_flag = 3;    // 跨天标识
+  string user_id = 4;          // 用户ID
+  int32 algo_id = 5;           // 算法ID
+  int32 user_type = 6;     // 用户类型  0-普通用户  1-管理员
+}
+
+message MultiDayRsp {
+  int32 code = 1;
+  string msg = 2;
+  repeated  TimeLine tl = 3;
+}
+
+message ScoreRankReq {
+  int64  date = 1;     // 排名日期
+  int32  rank_type = 2;   // 排名类型
+  string user_id = 3;    // 用户ID
+  int32  page = 4;
+  int32 limit = 5;
+}
+
+message ScoreRankInfo {
+  int32 ranking = 1;      // 排名
+  string algo_name = 2;   // 算法名称
+  int32 score = 3;        // 分数
+  string sec_id = 4;     // 证券代杩
+  string sec_name = 5;    // 证券名称
+  string user_id = 6;     // 用户ID
+  string user_name = 7;   // 用户名称
+}
+
+message ScoreRankRsp {
+  int32 code = 1;
+  string msg = 2;
+  int64 total = 3;
+  repeated ScoreRankInfo info = 4;    // 排名列表
+}
+
+message LoginReq {
+  string login_name = 1;
+  string password = 2;
+}
+
+message LoginRsp {
+  int32 code = 1;
+  string msg = 2;
+  int32 allow = 3;
+  int32 role = 4;  // 角色：1-普通用户 2-算法厂商  3-管理员
+}
+
+message DefaultReq {
+  int32 scene = 1;        // 1-算法动态  2-多日分析   3- 对比分析    4-胜率/信号分析   5-绩效分析多个算法结果拉取
+  string user_id = 2;    // 登陆用户ID
+  int64 start_time = 3;    // 开始时间
+  int64 end_time = 4;     // 结束时间
+  int32 user_type = 5;     // 用户类型  0-普通用户  1-管理员
+  int64 batch_no = 6;      // 批次号
+}
+
+message DefaultRsp {
+  int32 code = 1;
+  string msg = 2;
+  int32 algo_id = 3;      // 算法ID
+  string algo_name = 4;   // 算法名称
+  string algo_type_name = 5; // 算法类型名称
+  string provider = 6;       // 算法厂商
+}
+
+message UserProfileReq {
+  string provider = 1;       // 算法厂商
+  int32 algo_type = 2;      // 算法类型
+  int32 algo_id = 3;       // 算法ID
+  string algo_name = 4;     // 算法名称
+  string user_id = 5;       // 用户ID
+  int64 cur_day = 6;       // 当天时间
+  int32 user_type = 7;     // 用户类型  0-普通用户  1-管理员
+}
+
+message UserProfileRsp {
+  int32 code = 1;
+  string msg = 2;
+  int64 profit = 3;            // 资金盈亏
+  int32 trade_cnt = 4;          // 交易次数
+  int64 trade_amount = 5;      // 当天交易金额
+  string user_grade = 6;        // 用户级别
+  double progress = 7;          // 完成度
+  repeated AlgoDimension dimension = 8;      // 五个维度列表
+  int32  total_score = 9;      // 综合评分
+  int32 ranking = 10;          // 排名
+}
+
+message WinRatioHead {
+  string algo_name = 1;   // 算法名称
+  string start_day = 2;   // 开始日期 20220503
+  string end_day = 3;    // 结束日期
+  int32 trade_days = 4;     // 交易天数
+  double avg_daily_profit = 5;     // 日均收益率
+  double annualized_profit = 6;    // 年化收益率
+  double total_profit = 7;         // 累计收益
+  double max_withdraw = 8;         // 最大回撤
+  double daily_progress = 9;       // 日均完成度
+  int32 daily_stocks = 10;     // 日均股数
+  int32 profit_days = 11;      // 盈利天数
+  double profit_day_rate = 12;     // 盈利天占比
+}
+
+message WinRatioInfo {
+  string day = 1;         // 日期
+  double win_ratio = 2;     // 胜率 （百分比）
+  double odds = 3;      // 赔率
+  double profit = 4;    // 盈亏金额
+}
+
+message WinRatioReq {
+  int32 algo_id = 1;    //算法ID
+  int64 start_day = 2;   // 开始日期 20220503
+  int64 end_day = 3;    // 结束日期
+  string user_id = 4;     // 用户ID
+  int32 user_type = 5;     // 用户类型
+}
+
+message WinRatioRsp {
+  int32 code = 1;
+  string msg = 2;
+  WinRatioHead win_head = 3;            // 表头
+  repeated WinRatioInfo info = 4;       // 列表
+}
+
+message SignalReq {
+  int32 algo_id = 1;    //算法ID
+  int64 start_day = 2;   // 开始日期 20220503
+  int64 end_day = 3;    // 结束日期
+  string user_id = 4;     // 用户ID
+  int32 user_type = 5;     // 用户类型
+}
+
+message SignalInfo {
+  string day = 1;         // 日期
+  int32 order_num = 2;     // 下单量
+  double progress = 3;     // 完成率
+}
+
+message SignalRsp {
+  int32 code = 1;
+  string msg = 2;
+  repeated  SignalInfo info = 3;
+}
+
+// ----------------绩效修复------------------
+// 子单下发绩效平台接口
+message ChildOrderPerf{
+  fixed32 Id = 1;   // uint32  子单号
+  string  BusUserId = 2;   // 总线用户ID
+  fixed32 BusUuserId = 3;   // 总线用户整型ID
+  fixed32 AlgoOrderId = 4;   // uint32   母单号
+  fixed32 AlgorithmType = 5;   // -->uint16 算法类型
+  fixed32 AlgorithmId = 6;   // -->uint16 算法ID
+  fixed32 USecurityId = 7;   // uint32 证券ID
+  string  SecurityId = 8;   // -->char[8] 证券代码
+  fixed32 Side = 9;   // 买卖方向  49-买   50-卖
+  fixed64 OrderQty = 10;   // uint64 委托数量
+  fixed64 Price = 11;   // uint64 委托价格
+  fixed32 OrderType = 12;   // -->uint8 订单类型
+  fixed64 CumQty = 13;   // uint64 总成交数量
+  fixed64 LastPx = 14;  // uint64 成交金额
+  fixed64 LastQty = 15;  // uint64 成交数量
+  double  Charge = 16;  // 手续费
+  fixed64 ArrivedPrice = 17;  // uint64 到达价格
+  fixed32 ChildOrdStatus = 18;  // -->uint8 子订单状态
+  fixed64 TransactTime = 19;  // uint64 交易时间
+  fixed32 Version = 20;   // 子单版本号
+  int64   BatchNo = 21;    // 批次号
+  string  BatchName = 22;    // 批次号名称
+  int32   SourceFrom = 23;    // 来源 0-总线 1-数据修复 2-数据导入
+}
+
+// 母单下发绩效平台接口
+message AlgoOrderPerf{
+  fixed32 Id = 1;   // uint32
+  fixed32 BasketId = 2;   // 篮子ID
+  fixed32 AlgorithmType = 3;   // -->uint16
+  fixed32 AlgorithmId = 4;   // -->uint16
+  fixed32 USecurityId = 5;   // uint32
+  string  SecurityId = 6;   // char[8]
+  fixed64 AlgoOrderQty = 7;   // uint64
+  fixed64 TransactTime = 8;   // uint64
+  fixed64 StartTime = 9;   // 母单开始时间
+  fixed64 EndTime = 10;  // 母单结束时间
+  string  BusUserId = 11;   // 总线用户ID
+  int64   BatchNo = 12;    // 批次号
+  string  BatchName = 13;    // 批次号名称
+  int32   SourceFrom = 14;    // 来源 0-总线 1-数据修复 2-数据导入
+}
+// 母单绩效修复
+message AlgoOrderPerfs{
+  repeated AlgoOrderPerf parts = 1;
+}
+
+// 子单绩效修复
+message ChildOrderPerfs{
+  repeated ChildOrderPerf parts = 1;
+}
+
+message PushDataRsp {
+  int32 code = 1;
+  string msg = 2;
+  int64 start_time = 3;
+  int64 end_time = 4;
+}
+
+message ReqQueryAlgoOrder{
+  int32 algoId = 1;      // 母单ID
+  string secId = 2;
+  int32 pageId = 3;
+  int32 pageNum = 4;
+  string AlgoName = 5;     // 算法名称
+  int32  scene = 6;    // 1:数据修复   2-订单导入
+  string userId = 7;
+  int32 userType = 8;
+  int32 startTime  = 9;     // 交易日期 20230503
+  int32 endTime   = 10;
+}
+
+message AlgoOrder {
+  int64 id = 1;
+  int32 basketId = 2;
+  int32 algoId = 3;
+  int32 algorithmId = 4;
+  int32 usecId = 5;
+  string secId = 6;
+  int64 algoOrderQty = 7;
+  string transTime = 8;
+  string startTime = 9;
+  string endTime = 10;
+  string createTime = 11;
+  int32 fixFlag = 12;    // 修复标识
+  string  AlgoName = 13;     // 算法名称
+  int64  batchNo = 14;   // 批次号
+  string batchName = 15;    // 批次号名称
+  string userId = 16;    // 用户名称
+  int64 unixTime = 17;    // 母单原始时间戳
+  int32 algorithmType = 18;    // 算法类型
+  int32  date = 19;        // 日期
+}
+
+message RespQueryAlgoOrder {
+  int32 code = 1;
+  string msg = 2;
+  int64 total = 3;
+  repeated AlgoOrder parts = 4;
+}
+
+message ReqQueryChildOrder {
+  string userId = 1;
+  string securityId = 2;
+  int64  ChildOrderId = 3;
+  int32 pageId = 4;
+  int32 pageNum = 5;
+  string  algoName = 6;    //  算法名称
+  int32 scene = 7;   // 1-数据修复  2-订单导入
+  int32 userType = 8;
+  int32 startTime  = 9;     // 交易日期 20230503
+  int32 endTime  = 10;
+  int64 algoOrderId = 11;    // 母单号
+}
+
+message ChildOrder{
+  uint64 id = 1;
+  int64 childOrderId = 2;
+  uint32  algoOrderId = 3;
+  uint32 algorithmType = 4;
+  uint32 algorithmId = 5;
+  string userId = 6;
+  uint32  usecurityId = 7;
+  string securityId = 8;
+  int32 tradeSide = 9;
+  int64 orderQty = 10;
+  int64  price = 11;
+  int32 orderType = 12;
+  int64 lastPx = 13;
+  int64 lastQty = 14;
+  int64 comQty = 15;
+  int64 arrivedPrice = 16;
+  double totalFee = 17;
+  int32 ordStatus = 18;
+  string transactTime = 19;
+  string  transactAt = 20;
+  int32 procStatus = 21;
+  string  createTime = 22;
+  int32 fixFlag = 23;    // 修复标识
+  string AlgoName = 24;    // 算法名称
+  int64 batchNo = 25;     // 批次号
+  string batchName = 26;     // 批次号名称
+  int32   date = 27;       // 日期
+}
+
+message RespQueryChildOrder {
+  int32 code = 1;
+  string msg = 2;
+  int64 total = 3;
+  repeated ChildOrder parts = 4;
+}
+
+message QuoteLevel {
+  int64 id = 1;//'自增ID'
+  string seculityId = 2;// '证券ID'
+  int64 orgiTime = 3; //'快照时间',
+  int64 lastPrice = 4;// '最新价',
+  string askPrice = 5;// '申卖价',
+  string askVol = 6;//'申卖量',
+  string bidPrice = 7;// '申买价',
+  string bidVol = 8;// '申买量',
+  int64 totalTradeVol = 9;// '成交总量',
+  int64 totalAskVol = 10;
+  int64 totalBidVol = 11;
+  float mkVwap = 12;
+  int32 fixFlag = 13;     // 修复标识
+}
+
+message ReqQueryQuoteLevel {
+  string securityId = 1;
+  int32 pageId = 2;
+  int32 pageNum = 3;
+  int64 max_id = 4;    // 最大id,透传
+}
+
+message RespQueryQuoteLevel {
+  int32 code = 1;
+  string msg = 2;
+  int64 total = 3;
+  repeated QuoteLevel parts = 4;
+  int64 max_id = 5;    // 最大id,用作大分页查询
+}
+
+message ReqPushShLevel {
+  //bytes fileBytes = 1;
+  repeated  QuoteLevel quote = 1;   // 沪市（限制最大100笔）
+}
+
+message ReqPushSzLevel {
+  //bytes fileBytes = 1;
+  repeated QuoteLevel quote = 1;   // 深市（限制最大100笔)
+}
+
+message OrigAlgo {
+  int64 batch_no = 1;
+  int32 basket_id = 2;
+  int32 algo_id = 3;
+}
+
+message OrigChild {
+  int64 batch_no = 1;
+  int32 algo_id = 2;
+  int32 child_id = 3;
+}
+
+message Analyse {
+  int32 date = 1;    // 日期
+  int32 id = 2;      // id号
+}
+
+message OrigAnalyseReq{
+  int32 orderType = 1; //1:ids为母单id，2：ids为子单id
+  repeated Analyse orders = 2;
+}
+
+message OrigAnalyseResp{
+  int32 code = 1;
+  string msg = 2;
+  int64 batchNo = 3;
+  int64 startTime = 4;
+  int64 endTime = 5;
+}
+
 service AssessService {
-   // 获取绩效概况
+  // 获取绩效概况
   rpc GetGeneral(GeneralReq) returns (GeneralRsp);
+
+  // 获取算法画像信息
+  rpc GetAlgoProfile(AlgoProfileReq) returns (AlgoProfileRsp);
+
+  // 一键优选
+  rpc GetOptimize(OptimizeReq) returns (OptimizeRsp);
+
+  //新增一键优选基础数据
+  rpc AddOptimizeBase(AddOptimizeBaseReq) returns (AddOptimizeBaseRsp);
+
+  //修改一键优选基础数据
+  rpc UpdateOptimizeBase(UpdateOptimizeBaseReq) returns (UpdateOptimizeBaseRsp);
+
+  //删除一键优选基础数据
+  rpc DeleteOptimizeBase(DeleteOptimizeBaseReq) returns (DeleteOptimizeBaseRsp);
+
+  //查询一键优选基础数据
+  rpc SelectOptimizeBase(SelectOptimizeBaseReq) returns (SelectOptimizeBaseRsp);
+
+  //下载一键优选基础数据
+  rpc DownloadOptimizeBase(DownloadOptimizeBaseReq) returns (DownloadOptimizeBaseRsp);
+
+  //导入一键优选基础数据
+  rpc UploadOptimizeBase(UploadOptimizeBaseReq) returns (UploadOptimizeBaseRsp);
+
+  // 算法动态
+  rpc GetAlgoDynamic(DynamicReq) returns (DynamicRsp);
+
+  // 时间线图
+  rpc GetAlgoTimeLine(TimeLineReq) returns (TimeLineRsp);
+
+  // 取用户订单汇总信息(dashboard 用户数量， 交易量，买卖占比，厂商个数，资金占比,完成度--查汇总表）
+  rpc GetUserOrderSummary(OrderSummaryReq) returns (OrderSummaryRsp);
+
+  // 根据算法类型取订单汇总信息 （dashboard 算法列表）
+  rpc GetAlgoOrderSummary(AlgoOrderReq) returns (AlgoOrderRsp);
+
+  // 取多个算法绩效时间线  (dashboard top 4）
+  rpc GetMultiAlgoAssess(MultiAlgoReq) returns (MultiAlgoRsp);
+
+  // 算法条件筛选
+  rpc ChooseAlgoInfo(ChooseAlgoReq) returns (ChooseAlgoRsp);
+
+  // 多算法对比
+  rpc CompareMultiAlgo(CompareReq) returns (CompareRsp);
+
+  // 多日分析
+  rpc MultiDayAnalyse(MultiDayReq) returns (MultiDayRsp);
+
+  // 综合评分排名列表
+  rpc TotalScoreRanking(ScoreRankReq) returns (ScoreRankRsp);
+
+  // 取默认数据，用于需选择算法的场景下默认无数据的页面
+  rpc GetDefaultAlgo(DefaultReq) returns (DefaultRsp);
+
+  // 高阶分析：取用户画像绩效信息
+  rpc GetUserProfile(UserProfileReq) returns (UserProfileRsp);
+
+  // 高阶分析：胜率分析
+  rpc GetWinRatio(WinRatioReq) returns (WinRatioRsp);
+
+  // 高阶分析：信号分析
+  rpc GetSignal(SignalReq) returns (SignalRsp);
+
+  // 订单导入:母单信息导入
+  rpc ImportAlgoOrdr(AlgoOrderPerfs) returns (PushDataRsp);
+
+  // 订单导入：子单信息导入
+  rpc ImportChildOrder(ChildOrderPerfs) returns (PushDataRsp);
+
+  // -------绩效数据修复
+  // 母单绩效修复
+  rpc PushAlgoOrder(AlgoOrderPerfs) returns (PushDataRsp);
+
+  // 母单信息
+  rpc QueryAlgoOrder(ReqQueryAlgoOrder) returns (RespQueryAlgoOrder);
+
+  // 子单绩效修复
+  rpc PushChildOrder(ChildOrderPerfs) returns (PushDataRsp);
+
+  // 子单信息
+  rpc QueryChildOrder(ReqQueryChildOrder) returns (RespQueryChildOrder);
+
+  // 深市行情信息
+  rpc PushSzQuoteLevel(ReqPushSzLevel) returns (PushDataRsp);
+
+  // 深市行情信息推送
+  rpc QuerySzQuoteLevel(ReqQueryQuoteLevel) returns (RespQueryQuoteLevel);
+
+  // 沪市行情信息推送
+  rpc PushShQuoteLevel(ReqPushShLevel) returns (PushDataRsp);
+
+  // 沪市行情信息
+  rpc QueryShQuoteLevel(ReqQueryQuoteLevel) returns (RespQueryQuoteLevel);
+
+  // 原始订单分析
+  rpc OrigOrderAnalyse(OrigAnalyseReq) returns (OrigAnalyseResp);
+
 }

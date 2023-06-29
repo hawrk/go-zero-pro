@@ -1,11 +1,9 @@
 Name: mqmarket.rpc
 ListenOn: 127.0.0.1:7080
-
 #Etcd:
 #  Hosts:
 #  - 127.0.0.1:2379
 #  Key: market.rpc
-
 Prometheus:
   Host: 192.168.1.82
   Port: 7081
@@ -13,43 +11,38 @@ Prometheus:
 
 #部署环境
 Deployment:
-  Env: test
+  Env: pro
 #日志
 Log:
   ServiceName: mqmarket.rpc
   Mode: console
   Level: info
+  Encoding: json           #json , plain
+  KeepDays: 30
 
 Mysql:
   DataSource: root:Root_123@tcp(192.168.1.81:3306)/assess?charset=utf8mb4&parseTime=true&loc=Local
   IdleConn : 10
   MaxOpenConn : 100
-  EnablePrintSQL : 1       #是否允许打印Sql语句，1打印， 0 不打印
+  EnablePrintSQL : 0       #是否允许打印Sql语句，1打印， 0 不打印
 
 Redis:
-  Host: 192.168.1.84:6379
-
-#mq rpc  etcd
-#AssessMQRPC:
-#  Etcd:
-#    Hosts:
-#      - 127.0.0.1:2379
-#    Key: mqassess.rpc
+  Host: 192.168.1.82:6888
 
 #mq rpc
 AssessMQRPC:
   Endpoints:
     - 127.0.0.1:5080
   NonBlock: true
-  Timeout: 1000  #调用超时时间
+  Timeout: 3000  #调用超时时间
 
 #行情信息推送  --sz
 AlgoPlatformMarketConf:
   Name: AlgoPlatformMarket
   Brokers:
-    - 192.168.1.85:9092
+    - 192.168.1.81:9092
   Group:
-  Topic: sz_quote
+  Topic: sz_quote_81
   Offset: first
   Consumers: 1
   Processors: 1
@@ -58,9 +51,30 @@ AlgoPlatformMarketConf:
 AlgoPlatFormSHMarketConf:
   Name: AlgoPlatFormSHMarketConf
   Brokers:
+    - 192.168.1.81:9092
+  Group:
+  Topic: sh_quote_1
+  Offset: first
+  Consumers: 1
+  Processors: 1
+
+
+PerfFixSZMarketConf:
+  Name: PerfFixSZMarketConf
+  Brokers:
     - 192.168.1.85:9092
   Group:
-  Topic: kkkk
+  Topic: algo_order_062111
+  Offset: first
+  Consumers: 1
+  Processors: 1
+
+PerfFixSHMarketConf:
+  Name: PerfFixSHMarketConf
+  Brokers:
+    - 192.168.1.85:9092
+  Group: performance-sh-market
+  Topic: algo_order_0621
   Offset: first
   Consumers: 1
   Processors: 1

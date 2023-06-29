@@ -1,0 +1,32 @@
+syntax = "v1"
+
+info(
+    title: "一键优选请求接口"
+    desc: "二期绩效结构体"
+    author: "hawrk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+    OptimizeInfo {
+        Id int64 `json:"id"`                       // 主键ID
+        provider_id int `json:"provider_id"`       //厂商id
+        provider_name string `json:"provider_name"`//厂商名称
+        SecId string `json:"sec_id"`               // 证券ID
+        SecName string `json:"sec_name"`           // 证券名称
+        AlgoId int `json:"algo_id"`                // 算法id
+        AlgoName string `json:"algo_name"`         // 算法名称
+    }
+
+    OptimizeReq {
+        SecurityId []string `json:"security_id, optional"` // 用户账户ID， 选择现有持仓时用
+        AlgoIds []int32 `json:"algo_ids"` // 算法id组
+    }
+
+    OptimizeRsp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Total int64 `json:"total"`
+        Data []OptimizeInfo `json:"data"`
+    }
+)

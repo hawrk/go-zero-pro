@@ -13,13 +13,17 @@ type Config struct {
 		MaxOpenConn    int
 		EnablePrintSQL int
 	}
-	Deployment struct {
-		Env string
-	}
+	//Deployment struct {
+	//	Env string
+	//}
 	// mq rpc
 	AssessMQRPC zrpc.RpcClientConf
 	//kq-sz
 	AlgoPlatformMarketConf kq.KqConf
 	//kq-sh
 	AlgoPlatFormSHMarketConf kq.KqConf
+	// 数据修复  -sz
+	PerfFixSZMarketConf kq.KqConf
+	// 数据修复 -sh
+	PerfFixSHMarketConf kq.KqConf
 }

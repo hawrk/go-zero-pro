@@ -1,0 +1,64 @@
+syntax = "v1"
+
+info (
+    title: "用户画像页面基本结构体定义"
+    desc: "三期绩效结构体"
+    author: "hawrk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+    // 用户资产信息
+    UserFund {
+        SecId  string   `json:"sec_id"`     // 证券代码
+        SecName string  `json:"sec_name"`   // 证券名称
+        Hold   float64  `json:"hold"`      // 持仓市值
+        Cost   float64  `json:"cost"`      // 成本
+    }
+
+    UDimensionInfo {
+        ProfileType  int32    `json:"profile_type"`   // 类型  1-经济性，2-完成度，3-风险度，4-算法绩效 5-稳定性
+        Score      int32    `json:"score"`            // 各维度评分
+        Desc       string    `json:"desc"`           // 评价描述
+    }
+
+    UTimeLine {
+        TimePoint string    `json:"time_point"`   // 时间点
+        Score     int32     `json:"score"`        // 分数
+    }
+
+    UDemensionLine {
+        ProfileType int32  `json:"profile_type"`  //1-经济性，2-完成度，3-风险度，4-算法绩效 5-稳定性
+        Point  []UTimeLine    `json:"point"`         // 时间曲线
+    }
+
+    UserSummaryReq {
+        UserId     string `json:"user_id, optional"`     // 用户ID
+        UserType   int  `json:"user_type,optional"`
+        AlgoName   string `json:"algo_name, optional"`             // 算法名称
+        StartTime  int64   `json:"start_time"`           // 开始时间
+        EndTime    int64   `json:"end_time"`             // 结束时间
+    }
+
+    UserSummaryRsp {
+        Code  int    `json:"code"`
+        Msg   string `json:"msg"`
+        Provider string                 `json:"provider"`           // 不选时需返回
+        AlgoTypeName string             `json:"algo_type_name"`    // 不选时需返回
+        AlgoName     string             `json:"algo_name"`        // 不选时需返回
+        Fund float64 `json:"fund"`   // 总资金
+        Profit float64  `json:"profit"`    // 盈亏金额
+        TradeCnt int32   `json:"trade_cnt"`   // 交易次数
+        CurTradeVol  float64   `json:"cur_trade_vol"`    // 当天交易金额
+        CurRollHold  float64   `json:"cur_roll_hold"`    // 当天滚动持仓
+        Progress     float64   `json:"progress"`         // 完成度
+        LoginCnt     int32     `json:"login_cnt"`        // 登陆次数
+        UserGrade    string    `json:"user_grade"`       // 用户级别
+        FundList     []UserFund  `json:"fund_list"`       // 用户资产列表
+        TotalScore   int32          `json:"total_score"`   // 综合评分
+        Ranking      int32            `json:"ranking"`     // 排名
+        Dimensions   []UDimensionInfo  `json:"dimensions"`   // 五个维度
+        AssessLine     UDemensionLine   `json:"assess_line"`       // 实时绩效
+        ProgressLine   UDemensionLine   `json:"progress_line"`     // 实时完成度
+    }
+)

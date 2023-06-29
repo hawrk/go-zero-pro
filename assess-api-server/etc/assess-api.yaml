@@ -1,62 +1,83 @@
 Name: assess-api
-Host: 0.0.0.0
+Host: 192.168.2.82
 Port: 20080
 MetricsUrl:
-
-#Etcd:
-#  Hosts:
-#  - 127.0.0.1:2379
-#  Key: assess.api
+Timeout: 30000  #等待超时时间
+MaxBytes: 1048576000
 
 Prometheus:
-  Host: 192.168.1.82
+  Host: 192.168.1.81
   Port: 8089
   Path: /metrics
 
-#rpc etcd conf
-#AssessRPC:
-#  Etcd:
-#    Hosts:
-#    - 127.0.0.1:2379
-#    Key: assess.rpc
+HRedis:
+  Host: 192.168.1.81:6379
+  DB: 14
+  NeedCheck: false
 
+#zookeeper
+Zookeeper:
+  Host: 192.168.1.81:2181
+  TimeOut : 30000
+  EnableRegister: false
 #rpc
 AssessRPC:
   Endpoints:
     - 127.0.0.1:6080
   NonBlock: true
-  Timeout: 1000
+  Timeout: 30000
+
+#mornano rpc
+MornanoRPC:
+  Endpoints:
+    - 127.0.0.1:4080
+  NonBlock: true
+  Timeout: 30000
 
 #mq rpc
-#AssessMQRPC:
-#  Etcd:
-#    Hosts:
-#      - 127.0.0.1:2379
-#    Key: mqassess.rpc
-
 AssessMQRPC:
   Endpoints:
     - 127.0.0.1:5080
   NonBlock: true
-  Timeout: 1000
+  Timeout: 3000  #调用超时时间
 
 #market mq rpc
-#MarketMQRPC:
-#  Etcd:
-#    Hosts:
-#      - 127.0.0.1:2379
-#    Key: market.rpc
 MarketMQRPC:
   Endpoints:
     - 127.0.0.1:7080
   NonBlock: true
-  Timeout: 1000
+  Timeout: 3000  #调用超时时间
+
+#market mq rpc
+PerformanceMQRPC:
+  Endpoints:
+    - 127.0.0.1:10080
+  NonBlock: true
+  Timeout: 3000  #调用超时时间
+
 #日志
 Log:
   ServiceName: assess-api
   Mode: console  # console 终端打印      file 落地日志文件
   Level: info
   Encoding: json   #options=[json,plain]
+  KeepDays: 7
+
+WorkControl:
+  EnableFakeMsg: false      #页面假数据,true拉取假数据
+  EnableFakeDay: true       #母单子单数据导出，是否切到当天日期
 
 WebSocket:
   DurationTime: 3     #websocket 间隔发送时间
+
+JwtAuth:
+  AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505ea0
+  AccessExpire: 86400
+  TokenCheck: false
+
+Domain:
+  DomainName: 314590ym44.zicp.vip:30005
+  UseDomain: false
+
+AccountAuth:
+  UrlPrefix: http://192.168.2.82:8888

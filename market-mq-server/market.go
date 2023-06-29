@@ -2,6 +2,7 @@ package main
 
 import (
 	"algo_assess/market-mq-server/internal/listen"
+	"algo_assess/market-mq-server/job"
 	"flag"
 	"fmt"
 
@@ -55,6 +56,12 @@ func main() {
 			serviceGroup.Add(mq)
 		}
 		serviceGroup.Start()
+	}()
+
+	done := make(chan struct{})
+	go job.StartMarketJob(c, done)
+	defer func() {
+		done <- struct{}{}
 	}()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)

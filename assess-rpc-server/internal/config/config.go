@@ -10,4 +10,13 @@ type Config struct {
 		MaxOpenConn    int
 		EnablePrintSQL int
 	}
+
+	Kafka struct {
+		Addrs         []string
+		SHMarketTopic string
+		SZMarketTopic string
+		AlgoTopic     string
+		ChildTopic    string
+	}
+
 }

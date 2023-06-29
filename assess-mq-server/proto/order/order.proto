@@ -4,30 +4,88 @@ package order;
 // 子单下发绩效平台接口
 message ChildOrderPerf{
     fixed32 Id              = 1;   // uint32  子单号
-    fixed32 AlgoOrderId     = 2;   // uint32   母单号
-    fixed32 AlgorithmType   = 3;   // -->uint16 算法类型
-    fixed32 AlgorithmId     = 4;   // -->uint16 算法ID
-    fixed32 USecurityId     = 5;   // uint32 证券ID
-    string  SecurityId      = 6;   // -->char[8] 证券代码
-    fixed64 OrderQty        = 7;   // uint64 委托数量
-    fixed64 Price           = 8;   // uint64 委托价格
-    fixed32 OrderType       = 9;   // -->uint8 订单类型
-    fixed64 CumQty          = 10;   // uint64 总成交数量
-    fixed64 LastPx          = 11;  // uint64 成交金额
-    fixed64 LastQty         = 12;  // uint64 成交数量
-    fixed64 ArrivedPrice    = 13;  // uint64 到达价格
-    fixed32 ChildOrdStatus  = 14;  // -->uint8 子订单状态
-    fixed64 TransactTime    = 15;  // uint64 交易时间
+    string  BusUserId       = 2;   // 总线用户ID
+    fixed32 BusUuserId      = 3;   // 总线用户整型ID
+    fixed32 AlgoOrderId     = 4;   // uint32   母单号
+    fixed32 AlgorithmType   = 5;   // -->uint16 算法类型
+    fixed32 AlgorithmId     = 6;   // -->uint16 算法ID
+    fixed32 USecurityId     = 7;   // uint32 证券ID
+    string  SecurityId      = 8;   // -->char[8] 证券代码
+    fixed32 Side            = 9;   // 买卖方向  49-买   50-卖
+    fixed64 OrderQty        = 10;   // uint64 委托数量
+    fixed64 Price           = 11;   // uint64 委托价格
+    fixed32 OrderType       = 12;   // -->uint8 订单类型
+    fixed64 CumQty          = 13;   // uint64 总成交数量
+    fixed64 LastPx          = 14;  // uint64 成交金额
+    fixed64 LastQty         = 15;  // uint64 成交数量
+    double  Charge          = 16;  // 手续费
+    fixed64 ArrivedPrice    = 17;  // uint64 到达价格
+    fixed32 ChildOrdStatus  = 18;  // -->uint8 子订单状态
+    fixed64 TransactTime    = 19;  // uint64 交易时间
+    fixed32 Version         = 20;   // 子单版本号
+    int64   BatchNo         = 21;    // 批次号
+    string  BatchName       = 22;    // 批次号名称
+    int32   SourceFrom      = 23;    // 来源 0-总线 1-数据修复 2-数据导入
 }
 
 // 母单下发绩效平台接口
 message AlgoOrderPerf{
-    fixed32 Id              = 1;   // uint32   母单ID
-    fixed32 AlgorithmType   = 2;   // -->uint16 算法类型
-    fixed32 AlgorithmId     = 3;   // -->uint16 算法ID
-    fixed32 USecurityId     = 4;   // uint32 证券ID
-    string  SecurityId      = 5;   // char[8] 证券代码
-    fixed64 AlgoOrderQty    = 6;   // uint64 母单数量
-    fixed64 TransactTime    = 7;   // uint64 交易时间
+    fixed32 Id              = 1;   // uint32
+    fixed32 BasketId        = 2;   // 篮子ID
+    fixed32 AlgorithmType   = 3;   // -->uint16
+    fixed32 AlgorithmId     = 4;   // -->uint16
+    fixed32 USecurityId     = 5;   // uint32
+    string  SecurityId      = 6;   // char[8]
+    fixed64 AlgoOrderQty    = 7;   // uint64
+    fixed64 TransactTime    = 8;   // uint64
+    fixed64 StartTime       = 9;   // 母单开始时间
+    fixed64 EndTime         = 10;  // 母单结束时间
+    string  BusUserId       = 11;   // 总线用户ID
+    int64   BatchNo         = 12;    // 批次号
+    string  BatchName       = 13;    // 批次号名称
+    int32   SourceFrom      = 14;    // 来源 0-总线 1-数据修复 2-数据导入
 }
 
+// 总线用户信息接口
+message UserInfoPerf{
+    fixed32 Id              = 1;   // 用户唯一ID
+    string  UserId          = 2;   // 用户ID， 交易账户ID
+    string  UserName        = 3;   // 用户名
+    fixed32 UserType        = 4;   // 用户类型
+    fixed32 RiskGroup       = 5;   // 风控组
+    string UuserId         = 6;   // 管理员ID
+}
+
+// 算法信息接口
+message AlgoInfoPerf{
+    fixed32 Id                = 1;   // 算法ID,主键
+    string  AlgoName          = 2;   // 算法名称
+    string  ProviderName      = 3;   // 算法厂商名称
+    fixed32 UuserId           = 4;   // 算法厂商用户ID
+    fixed32 AlgorithmType     = 5;   // 算法类型 1:T0日内回转 2:智能委托 3:调仓
+    string  AlgorithmTypeName = 6;   // 算法类型名称,算法厂商内部使用
+    fixed32 AlgorithmStatus   = 7;   // 算法状态 --  bit0: 0-不显示 1-显示; bit1: 0-不可用 1-可用
+    fixed32 RiskGroup         = 8;   // 风控组
+}
+
+// 证券信息接口
+message SecurityInfoPerf{
+    string  SecurityId        = 1;   // 证券代码
+    string  SecurityIdSource  = 2;   // 证券代码源
+    string  SecurityName      = 3;   // 证券简称
+    double  PrevClosePx       = 4;   // 前收盘价
+    fixed32 SecurityStatus    = 5;   // 证券状态
+    fixed32 HasPriceLimit     = 6;   // 是否有涨跌停限制
+    fixed32 LimitType         = 7;   // 涨跌限制类型,1=幅度(百分比),2=价格(绝对值)
+    fixed32 Property          = 8;   // 股票板块属性
+    fixed64 UpperLimitPrice   = 9;   // 上涨限价
+    fixed64 LowerLimitPrice   = 10;  // 下跌限价
+}
+
+// 数据同步接口
+message DataSyncPerf{
+    fixed32  MsgType                   = 1;   // 1-用户信息 2-算法信息 3-证券信息
+    repeated UserInfoPerf     userInfo = 2;   // 总线用户信息
+    repeated AlgoInfoPerf     algoInfo = 3;   // 算法信息
+    repeated SecurityInfoPerf secInfo  = 4;   // 证券信息
+}

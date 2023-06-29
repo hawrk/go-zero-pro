@@ -13,9 +13,10 @@ import (
 )
 
 type (
-	LevelInfo = proto.LevelInfo
-	MarkReq   = proto.MarkReq
-	MarkRsp   = proto.MarkRsp
+	LevelInfo  = proto.LevelInfo
+	MarkReq    = proto.MarkReq
+	MarkRsp    = proto.MarkRsp
+	QuoteLevel = proto.QuoteLevel
 
 	MarketService interface {
 		//  获取行情价格数量信息

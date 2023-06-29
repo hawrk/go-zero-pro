@@ -22,3 +22,9 @@ func Yuan2Fen(yuan float64) int64 {
 	return int64(f)
 
 }
+
+// MulPercent float64运算都会出现精度问题，进行百分比转换时，*100，需要用该函数进行转换
+func MulPercent(in float64) float64 {
+	f, _ := decimal.NewFromFloat(in).Mul(oneHundredDecimal).Float64()
+	return f
+}

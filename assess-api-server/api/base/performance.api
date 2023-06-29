@@ -1,0 +1,229 @@
+syntax = "v1"
+
+info(
+    title: "绩效优化接口"
+    desc: "二期绩效结构体"
+    author: "yuzh"
+)
+
+type (
+    BaseRsp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        BatchNo int64   `json:"batch_no"`
+        StartTime  int64     `json:"start_time"`  // 开始时间
+        EndTime    int64     `json:"end_time"`    // 结束时间
+    }
+
+    MarketReq {
+        SecId string `json:"secId"`
+    }
+    
+    TradeOrderReq {
+        ExportType  int32  `json:"export_type"`  // 导出类型  1-母单导出  2-子单导出
+        StartTime       int64    `json:"start_time,optional"`  // 导出日期  开始
+        EndTime         int64    `json:"end_time,optional"`   // 结束时间
+        UserId          string   `json:"user_id,optional"`   // 用户ID
+        AlgoOrderId     int64     `json:"algo_order_id,optional"`    // 母单号
+        ChildOrderId    int64     `json:"child_order_id,optional"`    // 子单号
+    }
+
+    MarketInfo {
+        Id int64 `json:"id"`
+        SeculityId string `json:"seculityId"`
+        OrgiTime int64 `json:"orgiTime"`
+        LastPrice int64 `json:"lastPrice"`
+        AskPrice string `json:"askPrice"`
+        AskVol string `json:"askVol"`
+        BidPrice string `json:"bidPrice"`
+        BidVol string `json:"bidVol"`
+        TotalTradeVol int64 `json:"totalTradeVol"`
+        TotalAskVol int64 `json:"totalAskVol"`
+        TotalBidVol int64 `json:"TotalBidVol"`
+        MkVwap float64 `json:"mkVwap"`
+    }
+
+    MarketResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Total int64 `json:"total"`
+        Data []MarketInfo `json:"data"`
+    }
+
+    AlgoOrder {
+        Id uint32 `json:"id",xml:"Id"`
+        BasketId uint32 `json:"basketId",xml:"BasketId"`
+        AlgorithmType uint16 `json:"algorithmType",xml:"AlgorithmType"`
+        AlgorithmId uint16 `json:"algorithmId",xml:"AlgorithmId"`
+        USecurityId uint32 `json:"uSecurityId",xml:"USecurityId"`
+        SecurityId string `json:"securityId",xml:"SecurityId"`
+        AlgoOrderQty uint64 `json:"algoOrderQty",xml:"AlgoOrderQty"`
+        TransactTime uint64 `json:"transactTime",xml:"TransactTime"`
+        StartTime uint64 `json:"startTime",xml:"StartTime"`
+        EndTime uint64 `json:"endTime",xml:"EndTime"`
+        BusUserId string `json:"busUserId",xml:"UserId"`
+    }
+
+    ChildOrder {
+        Id uint32 `json:"id",xml:"Id"`
+        BusUserId string `json:"busUserId",xml:"BusUserId"`
+        BusUuserId uint32 `json:"busUuserId",xml:"UuserId"`
+        AlgoOrderId uint32 `json:"algoOrderId",xml:"AlgoOrderId"`
+        AlgorithmType uint16 `json:"algorithmType",xml:"AlgorithmType"`
+        AlgorithmId uint16 `json:"algorithmId",xml:"AlgorithmId"`
+        USecurityId uint32 `json:"uSecurityId",xml:"USecurityId"`
+        SecurityId string `json:"securityId",xml:"SecurityId"`
+        Side uint16 `json:"side",xml:"Side"`
+        OrderQty uint64 `json:"orderQty",xml:"OrderQty"`
+        Price int64 `json:"price",xml:"Price"`
+        OrderType uint8 `json:"orderType",xml:"OrderType"`
+        CumQty uint64 `json:"cumQty",xml:"CumQty"`
+        LastPx int64 `json:"lastPx",xml:"LastPx"`
+        LastQty uint64 `json:"lastQty",xml:"LastQty"`
+        Charge float64 `json:"charge",xml:"Charge"`
+        ArrivedPrice int64 `json:"arrivedPrice",xml:"ArrivedPrice"`
+        ChildOrdStatus uint8 `json:"childOrdStatus",xml:"ChildOrdStatus"`
+        TransactTime uint64 `json:"transactTime",xml:"TransactTime"`
+    }
+
+    QueryAlgoOrder {
+        Id int64 `json:"id"`
+        Date   int32    `json:"date"`    // 日期
+        BasketId int32 `json:"basketId"`
+        AlgoId int32 `json:"algoId"`
+        AlgorithmId int32 `json:"algorithmId"`
+        UserId   string    `json:"userId"`
+        SecId string `json:"secId"`
+        AlgoOrderQty int64 `json:"algoOrderQty"`
+        TransTime string `json:"transTime"`
+        StartTime string `json:"startTime"`
+        EndTime string `json:"endTime"`
+        FixFlag  int32 `json:"fixFlag"`
+        CreateTime string `json:"createTime"`
+        AlgoName string   `json:"algoName"`
+        BatchNo   int64   `json:"batchNo"`
+        BatchName  string   `json:"batchName"`
+    }
+
+    ReqQueryAlgoOrder {
+        AlgoId int32 `json:"algo_order_id,optional"`   // 母单ID   --这个字段有歧义
+        SecId string `json:"security_id,optional"`    // 证券代码
+        AlgoName string  `json:"algo_name,optional"`     // 算法名称
+        Scene  int    `json:"scene,default = 1"`         // 场景： 1-数据修改   2-原始订单
+        pageId int32 `json:"page_id"`   // 当前页数
+        pageNum int32 `json:"page_num"`  // 每页数量
+        UserId string `json:"user_id,optional"`
+        UserType  int    `json:"user_type,optional"`     // 用户类型
+        StartTime       int64    `json:"start_time,optional"`  // 导出日期  开始
+        EndTime         int64    `json:"end_time,optional"`   // 结束时间
+    }
+
+    RespQueryAlgoOrder {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Total int64 `json:"total"`
+        Data []QueryAlgoOrder `json:"data"`
+    }
+
+    ChildOrderInfo {
+        Id uint64 `json:"id"`
+        Date   int32   `json:"date"`     // 日期 20230611
+        ChildOrderId int64 `json:"childOrderId"`
+        AlgoOrderId uint32 `json:"algoOrderId"`
+        AlgorithmType uint32 `json:"algorithmType"`
+        AlgorithmId uint32 `json:"algorithmId"`
+        UserId string `json:"userId"`
+        UsecurityId uint32 `json:"usecurityId"`
+        SecurityId string `json:"securityId"`
+        TradeSide int8 `json:"tradeSide"`
+        OrderQty int64 `json:"orderQty"`
+        Price float64 `json:"price"`
+        OrderType uint16 `json:"orderType"`
+        LastPx float64 `json:"lastPx"`
+        LastQty int64 `json:"lastQty"`
+        ComQty int64 `json:"comQty"`
+        ArrivedPrice float64 `json:"arrivedPrice"`
+        TotalFee float64 `json:"totalFee"`
+        OrdStatus uint16 `json:"ordStatus"`
+        TransactTime string `json:"transactTime"`
+        TransactAt string `json:"transactAt"`
+        ProcStatus uint16 `json:"procStatus"`
+        FixFlag   int32    `json:"fixFlag"`
+        CreateTime string `json:"createTime"`
+        AlgoName string    `json:"algoName"`
+        BatchNo    int64   `json:"batchNo"`
+        BatchName  string  `json:"batchName"`
+    }
+
+    ReqQueryChildOrder {
+        UserId string `json:"user_id,optional"`
+        UserType  int    `json:"user_type,optional"`     // 用户类型
+        SecurityId string `json:"security_id,optional"`    //
+        ChildOrderId int64 `json:"child_order_id,optional"`
+        AlgoName  string   `json:"algo_name,optional"`      // 算法名称
+        Scene     int       `json:"scene,default = 1"`  // 1.数据修复    2- 原始订单
+        pageId int32 `json:"page_id"`
+        pageNum int32 `json:"page_num"`
+        StartTime       int64    `json:"start_time,optional"`  // 导出日期  开始
+        EndTime         int64    `json:"end_time,optional"`   // 结束时间
+        AlgoOrderId     int64    `json:"algo_order_id,optional"`    // 母单ID
+    }
+
+    RespQueryChildOrder {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Total int64 `json:"total"`
+        Data []ChildOrderInfo `json:"data"`
+    }
+
+    ReqShQuoteLevel {
+        SecurityId string `json:"securityId,optional"`
+        PageId int32 `json:"pageId"`
+        PageNum int32 `json:"pageNum"`
+        MaxId   int64 `json:"max_id,optional"`
+    }
+
+    RespShQuoteLevel {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Total int64 `json:"total"`
+        MaxId  int64 `json:"max_id"`
+        Data []QuoteLevel `json:"data"`
+    }
+
+    QuoteLevel {
+        Id int64 `json:"id",xml:"Id"`                                                            //'自增ID'
+        SeculityId string `json:"seculityId",xml:"SeculityId"`                                   // '证券ID'
+        OrgiTime int64 `json:"orgiTime",xml:"orgiTime"`                                          //'快照时间',
+        LastPrice float64 `json:"lastPrice",xml:"LastPrice"`                                       // '最新价',
+        AskPrice string `json:"askPrice",xml:"AskPrice"`                                         // '申卖价',
+        AskVol string `json:"askVol",xml:"AskVol"`                                               //'申卖量',
+        BidPrice string `json:"bidPrice",xml:"BidPrice"`                                         // '申买价',
+        BidVol string `json:"bidVol",xml:"bidVol"`                                               // '申买量',
+        TotalTradeVol int64 `json:"totalTradeVol",xml:"TotalTradeVol"`                           // '成交总量',
+        TotalAskVol int64 `json:"totalAskVol",xml:"TotalAskVol"`
+        TotalBidVol int64 `json:"totalBidVol",xml:"TotalBidVol"`
+        MkVwap float64 `json:"mkVwap",xml:"MkVwap"`
+		FixFlag int   `json:"fixFlag",xml:"fixFlag"`     // 修复标识
+    }
+
+    ReqSzQuoteLevel {
+        SecurityId string `json:"securityId,optional"`
+        PageId int32 `json:"pageId"`
+        PageNum int32 `json:"pageNum"`
+        MaxId   int64   `json:"max_id,optional"`
+    }
+
+    RespSzQuoteLevel {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Total int64 `json:"total"`
+        MaxId  int64 `json:"max_id"`
+        Data []QuoteLevel `json:"data"`
+    }
+
+    TemplateExpReq {
+        ExportType int  `form:"export_type"`    // 导出类型： 1-深沪市行情模板导出   2-母单信息模板导出   3-子单信息模板导出
+    }
+
+)

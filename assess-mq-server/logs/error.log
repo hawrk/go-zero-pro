@@ -1,1 +1,3 @@
-{"@timestamp":"2022-05-16T10:41:31.192+08:00","level":"error","content":"agent.go:37 listen tcp 192.168.1.82:5081: bind: The requested address is not valid in its context."}
+{"@timestamp":"2023-05-31T10:26:00.175+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 192.168.1.82:5081: bind: The requested address is not valid in its context.","level":"error"}
+{"@timestamp":"2023-05-31T10:28:50.817+08:00","caller":"kq/queue.go:170","content":"Error on reading message, \"read tcp 192.168.2.82:60038-\u003e192.168.1.81:9092: i/o timeout\"","level":"error"}
+{"@timestamp":"2023-05-31T16:40:26.195+08:00","caller":"prometheus/agent.go:37","content":"listen tcp 192.168.1.82:5081: bind: The requested address is not valid in its context.","level":"error"}

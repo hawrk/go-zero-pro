@@ -1,0 +1,76 @@
+syntax = "v1"
+
+info(
+    title: "一键优选基础信息接口"
+    desc: "二期绩效结构体"
+    author: "yuzh"
+)
+
+type (
+    AddOptimizeBaseReq {
+        ProviderId int32 `json:"provider_id"`                                   // 算法厂商id
+        ProviderName string `json:"provider_name"`                              // 算法厂商名称
+        SecId string `json:"sec_id"`                                            // 证券id
+        SecName string `json:"sec_name"`                                        // 证券名称
+        AlgoId int32 `json:"algo_id"`                                           // 算法id
+        AlgoType int32 `json:"algo_type"`                                       // 算法类型 1:T0日内回转 2:智能委托 3:调仓
+        AlgoName string `json:"algo_name"`                                      // 算法名
+        OpenRate float64 `json:"open_rate"`                                     // 开仓率
+        IncomeRate float64 `json:"income_rate"`                                 // 收益率
+        BasisPoint float64 `json:"basis_point"`                                 // 基点
+    }
+
+    OptimizeBaseRsp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+    }
+
+    UpdateOptimizeBaseReq {
+        Id int64 `json:"id"`                                                    // id
+        ProviderId int32 `json:"provider_id"`                                   // 算法厂商id
+        ProviderName string `json:"provider_name"`                              // 算法厂商名称
+        SecId string `json:"sec_id"`                                            // 证券id
+        SecName string `json:"sec_name"`                                        // 证券名称
+        AlgoId int32 `json:"algo_id"`                                           // 算法id
+        AlgoType int32 `json:"algo_type"`                                       // 算法类型 1:T0日内回转 2:智能委托 3:调仓
+        AlgoName string `json:"algo_name"`                                      // 算法名
+        OpenRate float64 `json:"open_rate"`                                     // 开仓率
+        IncomeRate float64 `json:"income_rate"`                                 // 收益率
+        BasisPoint float64 `json:"basis_point"`                                 // 基点
+    }
+
+    DeleteOptimizeBaseReq {
+        Id int64 `json:"id"`
+    }
+
+    SelectOptimizeBaseReq {
+        ProviderId int32 `json:"provider_id"`                                   // 算法厂商id
+        AlgoId int32 `json:"algo_id"`                                           // 算法id
+        SecId string `json:"sec_id"`                                            // 证券id
+        Page int32 `json:"page"`                                                // 当前页数
+        Limit int32 `json:"limit"`                                              // 每页数量
+    }
+
+    OptimizeBase {
+        Id int64 `json:"id",xml:"Id"`                                                              // id
+        ProviderId int32 `json:"provider_id",xml:"ProviderId"`                                     // 算法厂商id
+        ProviderName string `json:"provider_name",xml:PproviderName"`                              // 算法厂商名称
+        SecId string `json:"sec_id",xml:"SecId"`                                                   // 证券id
+        SecName string `json:"sec_name",xml:"SecName"`                                             // 证券名称
+        AlgoId int32 `json:"algo_id",xml:"AlgoId"`                                                 // 算法id
+        AlgoType int32 `json:"algo_type",xml:"AlgoType"`                                           // 算法类型 1:T0日内回转 2:智能委托 3:调仓
+        AlgoName string `json:"algo_name",xml:"AlgoName"`                                          // 算法名
+        OpenRate float64 `json:"open_rate",xml:"OpenRate"`                                         // 开仓率
+        IncomeRate float64 `json:"income_rate",xml:"IncomeRate"`                                   // 收益率
+        BasisPoint float64 `json:"basis_point",xml:"BasisPoint"`                                   // 基点
+        CreateTime string `json:"create_time",xml:"CreateTime"`
+        UpdateTime string `json:"update_time",xml:"UpdateTime"`
+    }
+
+    SelectOptimizeBaseRsp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Total int64 `json:"total"`
+        Data []OptimizeBase `json:"data"`
+    }
+)

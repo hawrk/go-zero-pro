@@ -1,0 +1,56 @@
+syntax = "v1"
+
+info (
+    title: "用户基础属性配置"
+    desc: "配置用户的基本信息"
+    author: "hawrk"
+    email: "hawrk2012@163.com"
+)
+
+type (
+    UserInfo {
+        Id     int64          `json:"id"`
+        UserId  string        `json:"user_id"`
+        UserName string       `json:"user_name"`
+        UserType  int32       `json:"user_type"`      // 管理员， 算法厂商，普通用户
+        UserGrade  string     `json:"grade"`    // 用户级别
+        UpdateTime   string   `json:"update_time"`  // 更新时间
+    }
+
+    ListUserReq {
+        UserId     string   `json:"user_id,optional"`
+        Page      int32   `json:"page"`                  // 当前页数
+        Limit     int32   `json:"limit"`                 // 每页数量
+    }
+
+    ListUserRsp {
+        Code  int               `json:"code"`
+        Msg   string            `json:"msg"`
+        Total int64             `json:"total"`
+        Infos []UserInfo    `json:"infos"`
+    }
+
+    UserUpdates {
+        UserId   string      `json:"user_id"`
+        UserName  string     `json:"user_name,optional"`
+        Grade   string       `json:"grade,optional"`
+    }
+
+    ModifyUserReq {
+        OperType  int32      `json:"oper_type"`  // 操作类型  1-新增， 2-修改   3-删除
+        Lists []UserUpdates   `json:"lists"`
+    }
+
+    ModifyUserRsp {
+        Code  int    `json:"code"`
+        Msg   string `json:"msg"`
+        result int32 `json:"result"`       // 1--成功    2--失败
+    }
+
+    //用户信息导入返回结果
+    ImportUserRsp {
+        Code  int    `json:"code"`
+        Msg   string `json:"msg"`
+        result int32 `json:"result"`       // 1--成功    2--失败
+    }
+)

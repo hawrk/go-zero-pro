@@ -22,26 +22,80 @@ func NewAssessMqServiceServer(svcCtx *svc.ServiceContext) *AssessMqServiceServer
 	}
 }
 
-//  获取绩效概况
+//  获取绩效概况 （实时数据）
 func (s *AssessMqServiceServer) GetMqGeneral(ctx context.Context, in *proto.GeneralReq) (*proto.GeneralRsp, error) {
 	l := logic.NewGetMqGeneralLogic(ctx, s.svcCtx)
 	return l.GetMqGeneral(in)
 }
 
-//  推送行情数据--深交所
-func (s *AssessMqServiceServer) PullMarketData(ctx context.Context, in *proto.MarketDataReq) (*proto.MarketDataRsp, error) {
-	l := logic.NewPullMarketDataLogic(ctx, s.svcCtx)
-	return l.PullMarketData(in)
+//  配置： 证券列表
+func (s *AssessMqServiceServer) SecurityList(ctx context.Context, in *proto.SecurityListReq) (*proto.SecurityListRsp, error) {
+	l := logic.NewSecurityListLogic(ctx, s.svcCtx)
+	return l.SecurityList(in)
 }
 
-//  推送上交所行情数据
-func (s *AssessMqServiceServer) PullShMarketData(ctx context.Context, in *proto.MarketDataReq) (*proto.MarketDataReq, error) {
-	l := logic.NewPullShMarketDataLogic(ctx, s.svcCtx)
-	return l.PullShMarketData(in)
+//  配置： 证券属性修改
+func (s *AssessMqServiceServer) SecurityUpdate(ctx context.Context, in *proto.SecurityModifyReq) (*proto.SecurityModifyRsp, error) {
+	l := logic.NewSecurityUpdateLogic(ctx, s.svcCtx)
+	return l.SecurityUpdate(in)
 }
 
-//  -----------下面的接口为调试功能，不对外开放
-func (s *AssessMqServiceServer) GetAlgoOrder(ctx context.Context, in *proto.AlgoOrderReq) (*proto.AlgoOrderRsp, error) {
-	l := logic.NewGetAlgoOrderLogic(ctx, s.svcCtx)
-	return l.GetAlgoOrder(in)
+//  配置： 证券信息导入
+func (s *AssessMqServiceServer) ImportSecurityInfo(ctx context.Context, in *proto.ImportSecurityReq) (*proto.ImportSecurityRsp, error) {
+	l := logic.NewImportSecurityInfoLogic(ctx, s.svcCtx)
+	return l.ImportSecurityInfo(in)
+}
+
+//  配置：证券信息导出
+func (s *AssessMqServiceServer) ExportSecurityInfo(ctx context.Context, in *proto.ExportSecurityReq) (*proto.ExportSecurityRsp, error) {
+	l := logic.NewExportSecurityInfoLogic(ctx, s.svcCtx)
+	return l.ExportSecurityInfo(in)
+}
+
+//  配置：用户列表
+func (s *AssessMqServiceServer) UserList(ctx context.Context, in *proto.UserListReq) (*proto.UserListRsp, error) {
+	l := logic.NewUserListLogic(ctx, s.svcCtx)
+	return l.UserList(in)
+}
+
+//  配置：用户级别修改
+func (s *AssessMqServiceServer) UserUpdate(ctx context.Context, in *proto.UserModifyReq) (*proto.UserModifyRsp, error) {
+	l := logic.NewUserUpdateLogic(ctx, s.svcCtx)
+	return l.UserUpdate(in)
+}
+
+//  配置： 用户信息导入
+func (s *AssessMqServiceServer) ImportUserInfo(ctx context.Context, in *proto.ImportUserReq) (*proto.ImportUserRsp, error) {
+	l := logic.NewImportUserInfoLogic(ctx, s.svcCtx)
+	return l.ImportUserInfo(in)
+}
+
+//  配置： 用户信息导出
+func (s *AssessMqServiceServer) ExportUserInfo(ctx context.Context, in *proto.ExportUserReq) (*proto.ExportUserRsp, error) {
+	l := logic.NewExportUserInfoLogic(ctx, s.svcCtx)
+	return l.ExportUserInfo(in)
+}
+
+//  配置： 算法配置
+func (s *AssessMqServiceServer) AlgoConfig(ctx context.Context, in *proto.AlgoConfigReq) (*proto.AlgoConfigRsp, error) {
+	l := logic.NewAlgoConfigLogic(ctx, s.svcCtx)
+	return l.AlgoConfig(in)
+}
+
+//  配置： 算法配置查询
+func (s *AssessMqServiceServer) GetAlgoConfig(ctx context.Context, in *proto.GetAlgoConfigReq) (*proto.GetAlgoConfigRsp, error) {
+	l := logic.NewGetAlgoConfigLogic(ctx, s.svcCtx)
+	return l.GetAlgoConfig(in)
+}
+
+//  api测试接口母单
+func (s *AssessMqServiceServer) SendAlgoOrder(ctx context.Context, in *proto.ApiAlgoOrderReq) (*proto.ApiAlgoOrderRsp, error) {
+	l := logic.NewSendAlgoOrderLogic(ctx, s.svcCtx)
+	return l.SendAlgoOrder(in)
+}
+
+//  api测试接口子单
+func (s *AssessMqServiceServer) SendChildOrder(ctx context.Context, in *proto.ApiAlgoOrderReq) (*proto.ApiAlgoOrderRsp, error) {
+	l := logic.NewSendChildOrderLogic(ctx, s.svcCtx)
+	return l.SendChildOrder(in)
 }

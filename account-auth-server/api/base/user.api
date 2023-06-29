@@ -1,0 +1,64 @@
+syntax = "v1"
+
+info (
+    title: "用户权限基本结构体"
+    desc: "账户权限结构体"
+    author: "hawrk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+    UserListReq {
+        UserName string `json:"user_name,optional"`
+        ChanType  int   `json:"chan_type,default=1"`    // 1-绩效   2-管理平台
+        Page     int32  `json:"page"`  // 当前页数
+        Limit    int32  `json:"limit"` // 每页数量
+    }
+    UserInfos {
+        Id         int64  `json:"id"`
+        UserId     string `json:"user_id"`
+        UserName   string `json:"user_name"`
+        RoleId       int32 `json:"role_id"`
+        RoleName     string `json:"role_name"`
+        UserType    int32 `json:"user_type"`     // 0-普通用户 1-超级管理员
+        Status     int    `json:"status"`
+        CreateTime string `json:"create_time"`
+    }
+
+    UserListRsp {
+        Code  int         `json:"code"`
+        Msg   string      `json:"msg"`
+        Total int64       `json:"total"`
+        List  []UserInfos `json:"list"`
+    }
+
+    UserModfiyReq {
+        OperType  int32         `json:"oper_type"`  // 操作类型  1-新增， 2-修改   3-删除
+        UserId    string        `json:"user_id,optional"`    // 用户ID  (新增必填)
+        UserName  string        `json:"user_name,optional"`  // 用户名称 (新增必填)
+        RoleId    int32         `json:"role_id,optional"`    // 角色ID (新增必填)
+        RoleName  string        `json:"role_name,optional"`  // 角色名称 (新增必填)
+        UserType  int32         `json:"user_type,optional"`  // 用户类型
+        Password  string        `json:"password,optional"`   // 密码 (新增必填)
+        ChanType  int           `json:"chan_type,default=1"`    // 1-绩效   2-管理平台
+        Status    int           `json:"status,default=1"`    // 状态，新增时，默认为1， 修改时，根据指定状态带入
+    }
+
+    UserModifyRsp {
+        Code  int    `json:"code"`
+        Msg   string `json:"msg"`
+        result int32 `json:"result"`       // 1--成功    2--失败
+    }
+
+    UserAuthReq {
+        UserId      string      `json:"user_id"`      //用户ID
+        UserType    int32       `json:"user_type"`    // 用户类型 1-超级管理员，  2-其他
+        ChanType    int         `json:"chan_type,default=1"`    // 1-绩效   2-管理平台
+    }
+
+    UserAuthRsp {
+        Code  int         `json:"code"`
+        Msg   string      `json:"msg"`
+        Auth  string      `json:"auth"`    // json化后的用户权限表
+    }
+)

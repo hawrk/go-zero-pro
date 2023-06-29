@@ -27,3 +27,195 @@ func (s *AssessServiceServer) GetGeneral(ctx context.Context, in *proto.GeneralR
 	l := logic.NewGetGeneralLogic(ctx, s.svcCtx)
 	return l.GetGeneral(in)
 }
+
+//  获取算法画像信息
+func (s *AssessServiceServer) GetAlgoProfile(ctx context.Context, in *proto.AlgoProfileReq) (*proto.AlgoProfileRsp, error) {
+	l := logic.NewGetAlgoProfileLogic(ctx, s.svcCtx)
+	return l.GetAlgoProfile(in)
+}
+
+//  一键优选
+func (s *AssessServiceServer) GetOptimize(ctx context.Context, in *proto.OptimizeReq) (*proto.OptimizeRsp, error) {
+	l := logic.NewGetOptimizeLogic(ctx, s.svcCtx)
+	return l.GetOptimize(in)
+}
+
+// 新增一键优选基础数据
+func (s *AssessServiceServer) AddOptimizeBase(ctx context.Context, in *proto.AddOptimizeBaseReq) (*proto.AddOptimizeBaseRsp, error) {
+	l := logic.NewAddOptimizeBaseLogic(ctx, s.svcCtx)
+	return l.AddOptimizeBase(in)
+}
+
+// 修改一键优选基础数据
+func (s *AssessServiceServer) UpdateOptimizeBase(ctx context.Context, in *proto.UpdateOptimizeBaseReq) (*proto.UpdateOptimizeBaseRsp, error) {
+	l := logic.NewUpdateOptimizeBaseLogic(ctx, s.svcCtx)
+	return l.UpdateOptimizeBase(in)
+}
+
+// 删除一键优选基础数据
+func (s *AssessServiceServer) DeleteOptimizeBase(ctx context.Context, in *proto.DeleteOptimizeBaseReq) (*proto.DeleteOptimizeBaseRsp, error) {
+	l := logic.NewDeleteOptimizeBaseLogic(ctx, s.svcCtx)
+	return l.DeleteOptimizeBase(in)
+}
+
+// 查询一键优选基础数据
+func (s *AssessServiceServer) SelectOptimizeBase(ctx context.Context, in *proto.SelectOptimizeBaseReq) (*proto.SelectOptimizeBaseRsp, error) {
+	l := logic.NewSelectOptimizeBaseLogic(ctx, s.svcCtx)
+	return l.SelectOptimizeBase(in)
+}
+
+// 下载一键优选基础数据
+func (s *AssessServiceServer) DownloadOptimizeBase(ctx context.Context, in *proto.DownloadOptimizeBaseReq) (*proto.DownloadOptimizeBaseRsp, error) {
+	l := logic.NewDownloadOptimizeBaseLogic(ctx, s.svcCtx)
+	return l.DownloadOptimizeBase(in)
+}
+
+// 导入一键优选基础数据
+func (s *AssessServiceServer) UploadOptimizeBase(ctx context.Context, in *proto.UploadOptimizeBaseReq) (*proto.UploadOptimizeBaseRsp, error) {
+	l := logic.NewUploadOptimizeBaseLogic(ctx, s.svcCtx)
+	return l.UploadOptimizeBase(in)
+}
+
+//  算法动态
+func (s *AssessServiceServer) GetAlgoDynamic(ctx context.Context, in *proto.DynamicReq) (*proto.DynamicRsp, error) {
+	l := logic.NewGetAlgoDynamicLogic(ctx, s.svcCtx)
+	return l.GetAlgoDynamic(in)
+}
+
+//  时间线图
+func (s *AssessServiceServer) GetAlgoTimeLine(ctx context.Context, in *proto.TimeLineReq) (*proto.TimeLineRsp, error) {
+	l := logic.NewGetAlgoTimeLineLogic(ctx, s.svcCtx)
+	return l.GetAlgoTimeLine(in)
+}
+
+//  取用户订单汇总信息(dashboard 用户数量， 交易量，买卖占比，厂商个数，资金占比,完成度--查汇总表）
+func (s *AssessServiceServer) GetUserOrderSummary(ctx context.Context, in *proto.OrderSummaryReq) (*proto.OrderSummaryRsp, error) {
+	l := logic.NewGetUserOrderSummaryLogic(ctx, s.svcCtx)
+	return l.GetUserOrderSummary(in)
+}
+
+//  根据算法类型取订单汇总信息 （dashboard 算法列表）
+func (s *AssessServiceServer) GetAlgoOrderSummary(ctx context.Context, in *proto.AlgoOrderReq) (*proto.AlgoOrderRsp, error) {
+	l := logic.NewGetAlgoOrderSummaryLogic(ctx, s.svcCtx)
+	return l.GetAlgoOrderSummary(in)
+}
+
+//  取多个算法绩效时间线  (dashboard top 4）
+func (s *AssessServiceServer) GetMultiAlgoAssess(ctx context.Context, in *proto.MultiAlgoReq) (*proto.MultiAlgoRsp, error) {
+	l := logic.NewGetMultiAlgoAssessLogic(ctx, s.svcCtx)
+	return l.GetMultiAlgoAssess(in)
+}
+
+//  算法条件筛选
+func (s *AssessServiceServer) ChooseAlgoInfo(ctx context.Context, in *proto.ChooseAlgoReq) (*proto.ChooseAlgoRsp, error) {
+	l := logic.NewChooseAlgoInfoLogic(ctx, s.svcCtx)
+	return l.ChooseAlgoInfo(in)
+}
+
+//  多算法对比
+func (s *AssessServiceServer) CompareMultiAlgo(ctx context.Context, in *proto.CompareReq) (*proto.CompareRsp, error) {
+	l := logic.NewCompareMultiAlgoLogic(ctx, s.svcCtx)
+	return l.CompareMultiAlgo(in)
+}
+
+//  多日分析
+func (s *AssessServiceServer) MultiDayAnalyse(ctx context.Context, in *proto.MultiDayReq) (*proto.MultiDayRsp, error) {
+	l := logic.NewMultiDayAnalyseLogic(ctx, s.svcCtx)
+	return l.MultiDayAnalyse(in)
+}
+
+//  综合评分排名列表
+func (s *AssessServiceServer) TotalScoreRanking(ctx context.Context, in *proto.ScoreRankReq) (*proto.ScoreRankRsp, error) {
+	l := logic.NewTotalScoreRankingLogic(ctx, s.svcCtx)
+	return l.TotalScoreRanking(in)
+}
+
+//  取默认数据，用于需选择算法的场景下默认无数据的页面
+func (s *AssessServiceServer) GetDefaultAlgo(ctx context.Context, in *proto.DefaultReq) (*proto.DefaultRsp, error) {
+	l := logic.NewGetDefaultAlgoLogic(ctx, s.svcCtx)
+	return l.GetDefaultAlgo(in)
+}
+
+//  高阶分析：取用户画像绩效信息
+func (s *AssessServiceServer) GetUserProfile(ctx context.Context, in *proto.UserProfileReq) (*proto.UserProfileRsp, error) {
+	l := logic.NewGetUserProfileLogic(ctx, s.svcCtx)
+	return l.GetUserProfile(in)
+}
+
+//  高阶分析：胜率分析
+func (s *AssessServiceServer) GetWinRatio(ctx context.Context, in *proto.WinRatioReq) (*proto.WinRatioRsp, error) {
+	l := logic.NewGetWinRatioLogic(ctx, s.svcCtx)
+	return l.GetWinRatio(in)
+}
+
+//  高阶分析：信号分析
+func (s *AssessServiceServer) GetSignal(ctx context.Context, in *proto.SignalReq) (*proto.SignalRsp, error) {
+	l := logic.NewGetSignalLogic(ctx, s.svcCtx)
+	return l.GetSignal(in)
+}
+
+//  订单导入:母单信息导入
+func (s *AssessServiceServer) ImportAlgoOrdr(ctx context.Context, in *proto.AlgoOrderPerfs) (*proto.PushDataRsp, error) {
+	l := logic.NewImportAlgoOrdrLogic(ctx, s.svcCtx)
+	return l.ImportAlgoOrdr(in)
+}
+
+//  订单导入：子单信息导入
+func (s *AssessServiceServer) ImportChildOrder(ctx context.Context, in *proto.ChildOrderPerfs) (*proto.PushDataRsp, error) {
+	l := logic.NewImportChildOrderLogic(ctx, s.svcCtx)
+	return l.ImportChildOrder(in)
+}
+
+//  -------绩效数据修复
+func (s *AssessServiceServer) PushAlgoOrder(ctx context.Context, in *proto.AlgoOrderPerfs) (*proto.PushDataRsp, error) {
+	l := logic.NewPushAlgoOrderLogic(ctx, s.svcCtx)
+	return l.PushAlgoOrder(in)
+}
+
+//  母单信息
+func (s *AssessServiceServer) QueryAlgoOrder(ctx context.Context, in *proto.ReqQueryAlgoOrder) (*proto.RespQueryAlgoOrder, error) {
+	l := logic.NewQueryAlgoOrderLogic(ctx, s.svcCtx)
+	return l.QueryAlgoOrder(in)
+}
+
+//  子单绩效修复
+func (s *AssessServiceServer) PushChildOrder(ctx context.Context, in *proto.ChildOrderPerfs) (*proto.PushDataRsp, error) {
+	l := logic.NewPushChildOrderLogic(ctx, s.svcCtx)
+	return l.PushChildOrder(in)
+}
+
+//  子单信息
+func (s *AssessServiceServer) QueryChildOrder(ctx context.Context, in *proto.ReqQueryChildOrder) (*proto.RespQueryChildOrder, error) {
+	l := logic.NewQueryChildOrderLogic(ctx, s.svcCtx)
+	return l.QueryChildOrder(in)
+}
+
+//  深市行情信息
+func (s *AssessServiceServer) PushSzQuoteLevel(ctx context.Context, in *proto.ReqPushSzLevel) (*proto.PushDataRsp, error) {
+	l := logic.NewPushSzQuoteLevelLogic(ctx, s.svcCtx)
+	return l.PushSzQuoteLevel(in)
+}
+
+//  深市行情信息推送
+func (s *AssessServiceServer) QuerySzQuoteLevel(ctx context.Context, in *proto.ReqQueryQuoteLevel) (*proto.RespQueryQuoteLevel, error) {
+	l := logic.NewQuerySzQuoteLevelLogic(ctx, s.svcCtx)
+	return l.QuerySzQuoteLevel(in)
+}
+
+//  沪市行情信息推送
+func (s *AssessServiceServer) PushShQuoteLevel(ctx context.Context, in *proto.ReqPushShLevel) (*proto.PushDataRsp, error) {
+	l := logic.NewPushShQuoteLevelLogic(ctx, s.svcCtx)
+	return l.PushShQuoteLevel(in)
+}
+
+//  沪市行情信息
+func (s *AssessServiceServer) QueryShQuoteLevel(ctx context.Context, in *proto.ReqQueryQuoteLevel) (*proto.RespQueryQuoteLevel, error) {
+	l := logic.NewQueryShQuoteLevelLogic(ctx, s.svcCtx)
+	return l.QueryShQuoteLevel(in)
+}
+
+//  原始订单分析
+func (s *AssessServiceServer) OrigOrderAnalyse(ctx context.Context, in *proto.OrigAnalyseReq) (*proto.OrigAnalyseResp, error) {
+	l := logic.NewOrigOrderAnalyseLogic(ctx, s.svcCtx)
+	return l.OrigOrderAnalyse(in)
+}

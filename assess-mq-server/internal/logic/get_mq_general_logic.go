@@ -1,12 +1,10 @@
 package logic
 
 import (
-	"algo_assess/global"
-	"context"
-	"github.com/jinzhu/copier"
-
 	"algo_assess/assess-mq-server/internal/svc"
 	"algo_assess/assess-mq-server/proto"
+	"algo_assess/global"
+	"context"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -30,12 +28,34 @@ func (l *GetMqGeneralLogic) GetMqGeneral(in *proto.GeneralReq) (*proto.GeneralRs
 	l.Logger.Info("into mq GetGeneral:req:", in)
 	// 读取本地缓存数据
 	global.GlobalAssess.RWMutex.RLock()
+
 	infos := make([]*proto.AssessInfo, 0, len(global.GlobalAssess.CalAlgo))
 	for _, val := range global.GlobalAssess.CalAlgo {
-		var info proto.AssessInfo
-		//TODO: 优化掉
-		copier.Copy(&info, val)
-		infos = append(infos, &info)
+		if val.SecurityId != in.GetSecId() { // 非该证券的不取
+			continue
+		}
+		if val.AlgorithmId != int(in.GetAlgoId()) { // 非该算法的不取
+			continue
+		}
+		if val.UserId != in.GetUserId() { // 非该用户的不取
+			continue
+		}
+		info := &proto.AssessInfo{
+			TransactTime:          val.TransactAt,
+			OrderQty:              val.OrderQty,
+			LastQty:               val.LastQty,
+			CancelledQty:          val.CancelQty,
+			RejectedQty:           val.RejectedQty,
+			Vwap:                  val.Vwap,
+			VwapDeviation:         val.VwapDeviation,
+			LastPrice:             val.LastPrice,
+			ArrivedPrice:          val.ArrivedPrice,
+			ArrivedPriceDeviation: val.ArrivedPriceDeviation,
+			MarketRate:            val.MarketRate,
+			DealRate:              val.DealRate,
+			DealProgress:          val.DealProgress,
+		}
+		infos = append(infos, info)
 	}
 	global.GlobalAssess.RWMutex.RUnlock()
 	rsp := &proto.GeneralRsp{
@@ -43,5 +63,6 @@ func (l *GetMqGeneralLogic) GetMqGeneral(in *proto.GeneralReq) (*proto.GeneralRs
 		Msg:  "success",
 		Info: infos,
 	}
+	l.Logger.Infof("get cache assess, rsp:%+v", infos)
 	return rsp, nil
 }

@@ -21,7 +21,7 @@ func main() {
 		return
 	}
 	fmt.Println("begin to delete topic :", os.Args[1])
-	// 新建一个arama配置实例
+	// 新建一个sarama配置实例
 	config := sarama.NewConfig()
 	// WaitForAll waits for all in-sync replicas to commit before responding.
 	config.Producer.RequiredAcks = sarama.WaitForAll // 等待ack确认，防止发送消息丢失
@@ -35,7 +35,7 @@ func main() {
 		return
 	}
 	if err := t.DeleteTopic(os.Args[1]); err != nil {
-		log.Println("errr delete topic:", err)
+		log.Println("err delete topic:", err)
 		return
 	}
 	fmt.Println(" done!")

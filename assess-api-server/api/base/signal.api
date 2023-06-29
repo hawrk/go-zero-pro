@@ -1,0 +1,36 @@
+syntax = "v1"
+
+info(
+    title: "信号分析接口定义"
+    desc: "高阶分析下信号分析接口描述"
+    author: "harwk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+    SignalInfo {
+        Day   string   `json:"day"`            // 日期
+        OrderCnt int `json:"order_cnt"`        // 下单量
+        Progress float64  `json:"progress"`     // 完成率
+    }
+
+    SignalReq {
+        Provider string `json:"provider,optional"`
+        AlgoTypeName string     `json:"algo_type_name,optional"`
+        AlgoName string         `json:"algo_name,optional"`
+        UserId     string `json:"user_id, optional"`     // 用户ID
+        UserType   int  `json:"user_type,optional"`
+        StartTime int64     `json:"start_time,optional"`
+        EndTime   int64     `json:"end_time,optional"`
+    }
+
+    SignalRsp {
+        Code  int               `json:"code"`
+        Msg   string            `json:"msg"`
+        Provider string                 `json:"provider"`
+        AlgoTypeName string             `json:"algo_type_name"`
+        AlgoName     string             `json:"algo_name"`
+        Signals  []SignalInfo    `json:"signals"`
+    }
+
+)

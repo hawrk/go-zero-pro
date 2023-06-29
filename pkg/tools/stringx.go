@@ -7,7 +7,12 @@
 package tools
 
 import (
+	"algo_assess/global"
+	"encoding/json"
+	"github.com/spf13/cast"
 	"reflect"
+	"sort"
+	"strconv"
 	"unsafe"
 )
 
@@ -51,6 +56,15 @@ func DeleteU64SliceElms(i []uint64, elms ...uint64) []uint64 {
 	return t
 }
 
+func InSlice(items []int, item int) bool {
+	for _, v := range items {
+		if item == v {
+			return true
+		}
+	}
+	return false
+}
+
 // 零拷贝 string 转byte
 func String2Bytes(s string) []byte {
 	stringHeader := (*reflect.StringHeader)(unsafe.Pointer(&s))
@@ -70,4 +84,72 @@ func Bytes2String(b []byte) string {
 		Len:  sliceHeader.Len,
 	}
 	return *(*string)(unsafe.Pointer(&sh))
+}
+
+// Json2Str 结构体类型直接转换成String类型，
+// 注意这里直接忽略了Json失败的case
+func Json2Str(i interface{}) string {
+	v, _ := json.Marshal(i)
+	return Bytes2String(v)
+}
+
+func Str2FundRate(str string) global.FundRate {
+	var fr global.FundRate
+	_ = json.Unmarshal([]byte(str), &fr)
+	return fr
+}
+
+func Str2TradeVolDir(s string) global.TradeVolDirect {
+	var tv global.TradeVolDirect
+	_ = json.Unmarshal([]byte(s), &tv)
+	return tv
+}
+
+func Str2StockType(s string) global.StockType {
+	var st global.StockType
+	_ = json.Unmarshal([]byte(s), &st)
+	return st
+}
+
+func Str2TradeVolRate(s string) global.TradeVolRate {
+	var tr global.TradeVolRate
+	_ = json.Unmarshal([]byte(s), &tr)
+	return tr
+}
+
+// Hex2Binary 十六进制字符串转化为二进制字符串
+func Hex2Binary(x string) string {
+	base, _ := strconv.ParseInt(x, 16, 64)
+	b := strconv.FormatInt(base, 2)
+	return b
+}
+
+// GetDoubleTimePoint 根据传入的时间数组，经过排序后，输出最小时间和最大时间点
+// 入参 202306151041
+func GetDoubleTimePoint(t []int64) (int64, int64) {
+	var strKey []string
+	m := make(map[string]struct{})
+	for _, v := range t {
+		d := cast.ToString(v)[:8]
+		if _, exist := m[d]; !exist {
+			m[d] = struct{}{}
+			strKey = append(strKey, d) // 时间精确到天
+		}
+	}
+	//fmt.Println("get len:", len(strKey))
+	if len(strKey) == 0 {
+		return 0, 0
+	} else if len(strKey) == 1 { // 只有一条，即是当天的数据
+		start := TimeStr2TimeUnix(strKey[0] + "0000")
+		end := TimeStr2TimeUnix(strKey[0] + "2359")
+		return start, end
+	}
+	// 有2个以上元素，说明跨天了
+	//fmt.Println("before sort:", strKey)
+	sort.Strings(strKey)
+	//fmt.Println("after sort:", strKey)
+	// 取第一条和最后一条
+	start := TimeStr2TimeUnix(strKey[0] + "0000")
+	end := TimeStr2TimeUnix(strKey[len(strKey)-1] + "2359")
+	return start, end
 }

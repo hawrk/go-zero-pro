@@ -1,0 +1,60 @@
+syntax = "v1"
+
+info (
+    title: "证券股票属性配置"
+    desc: "配置证券股票的市值和股价等信息"
+    author: "hawrk"
+    email: "hawrk2012@163.com"
+)
+type (
+    // 列表查询
+    SecurityInfo {
+        Id          int64           `json:"id"`
+        SecId       string          `json:"sec_id"`
+        SecName     string          `json:"sec_name"`
+        Status      int32           `json:"status"`
+        FundType    int32           `json:"fund_type"`
+        StockType   int32           `json:"stock_type"`
+        Liquidity   int32           `json:"liquidity"`    // 流动性
+        Industry    string           `json:"industry"`    // 行业类型
+        UpdateTime  string           `json:"update_time"`
+    }
+
+    ListSecurityReq {
+        SecId string `json:"sec_id, optional"`
+        Page      int32   `json:"page"`                  // 当前页数
+        Limit     int32   `json:"limit"`                 // 每页数量
+    }
+
+    ListSecurityRsp {
+        Code  int               `json:"code"`
+        Msg   string            `json:"msg"`
+        Total int64             `json:"total"`
+        Infos []SecurityInfo    `json:"infos"`
+    }
+    // 配置修改
+    SecurityUpdates {
+        SecId    string         `json:"sec_id"`
+        SecName  string         `json:"sec_name,optional"`
+        FundType int32          `json:"fund_type,optional"`
+        StockType int32         `json:"stock_type,optional"`
+        Liquidity   int32           `json:"liquidity"`    // 流动性
+        Industry    string           `json:"industry"`    // 行业类型
+    }
+    ModifySecurityReq {
+        OperType    int32         `json:"oper_type"`     // 操作类型  1-新增， 2-修改   3-删除
+        Lists  []SecurityUpdates   `json:"lists"`
+    }
+    ModifySecurityRsp {
+        Code  int    `json:"code"`
+        Msg   string `json:"msg"`
+        result int32 `json:"result"`       // 1--成功    2--失败
+    }
+
+    //证券信息导入 返回结果
+    ImportSecurityRsp {
+        Code  int    `json:"code"`
+        Msg   string `json:"msg"`
+        result int32 `json:"result"`       // 1--成功    2--失败
+    }
+)

@@ -1,0 +1,85 @@
+syntax = "v1"
+
+info (
+    title: "算法dashboard基本结构体定义"
+    desc: "二期绩效结构体"
+    author: "hawrk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+
+    // 资金占比， 市值占比
+    DBMarketRateInfo {
+        HugeRate  float64   `json:"huge"`      // 超大市值
+        BigRate   float64   `json:"big"`       // 大市值
+        MiddleRate float64  `json:"middle"`    // 中等市值
+        SmallRate  float64  `json:"small"`    //  小市值
+    }
+        // 买卖方向
+    DBTradeSide {
+        BuyRate  float64    `json:"buy"`    // 买入占比
+        SellRate  float64   `json:"sell"`  // 卖出占比
+    }
+    // dashboard 汇总部分
+    AlgoComsumReq {
+        StartTime  int64   `json:"start_time"`
+        EndTime    int64   `json:"end_time"`
+        UserId     string  `json:"user_id,optional"`
+        UserType   int     `json:"user_type,optional"`
+    }
+
+    AlgoComsumRsp {
+        UserCnt  int64                  `json:"user_cnt"`             // 用户数量 (当天有交易)
+        TotalUserCnt  int64             `json:"total_user_cnt"`       // 用户总数量(基础数据)
+        AlgoCnt int64                   `json:"algo_cnt"`             // 算法数量
+        TotalAlgoCnt  int64             `json:"total_algo_cnt"`       // 算法总数量(基础数据)
+        TradeVol float64                `json:"trade_vol"`            // 交易量
+        OrderCnt int64                  `json:"order_cnt"`            //  订单数量 (以篮子为单位）
+        Side    DBTradeSide             `json:"side"`                 //  买卖占比
+        ProviderCnt int64               `json:"provider_cnt"`         //   厂商数量
+        TotalProviderCnt int64          `json:"total_provider_cnt"`   //  厂商总数量(基础数据)
+        MarketRate DBMarketRateInfo     `json:"market_rate"`    //   市场占比
+        Progress   float64              `json:"progress"`             //   完成度
+    }
+
+    // dashboard 算法列表部分
+    AlgoListInfo {
+        Provider   string   `json:"provider"`      // 厂商名称
+        UserCnt    int64    `json:"user_cnt"`      // 用户数量
+        TradeVol   float64  `json:"trade_vol"`     // 交易量
+        ProfitRate  float64 `json:"profit_rate"`    // 盈亏比例
+        OrderCnt    int64   `json:"order_cnt"`      // 订单数量
+        Side  DBTradeSide   `json:"side"`                 //  买卖占比
+    }
+
+        // dashborad 算法绩效评分
+    MTTimeLine {
+        TimePoint string        `json:"time_point"`
+        score int32             `json:"score"`
+    }
+    AlgoAccessInfo {
+        AlgoName  string        `json:"algo_name"`
+        TotalScore int32       `json:"total_score"`
+        TL   []MTTimeLine       `json:"time_line"`
+    }
+
+    AlgoListReq {
+        StartTime  int64        `json:"start_time"`
+        EndTime    int64        `json:"end_time"`
+        AlgoTypeName   string   `json:"algo_type_name"`
+        UserId         string   `json:"user_id,optional"`
+        UserType     int        `json:"user_type,optional"`
+        Page  int32             `json:"page"`
+        Limit  int32            `json:"limit"`
+    }
+
+    AlgoListRsp {
+        Code int                    `json:"code"`
+        Msg  string                 `json:"msg"`
+        Total int64                 `json:"total"`
+        List []AlgoListInfo         `json:"list"`
+        Infos []AlgoAccessInfo      `json:"assess"`
+    }
+
+)

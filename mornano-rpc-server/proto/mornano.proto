@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+option go_package = "proto";
+package mornano;
+
+message AlgoChooseReq {
+  string user_id = 1;
+  int32 select_type = 2;      //下拉选择类型 :  1-拉取厂商列表  2-拉取算法类型列表  3-拉取算法名称列表
+  string provider = 3;        // 厂商名称
+  string algo_type_name = 4;  // 算法类型名称
+  string algo_name = 5;       // 算法名称
+}
+
+message AlgoChooseRsp {
+  int32 code = 1;
+  string msg = 2;
+  repeated string provider = 3;      // 厂商列表
+  repeated string algo_type_name = 4;   // 算法类型列表
+  repeated string algo_name = 5;      // 算法列表
+}
+
+message LoginReq {
+  string login_name = 1;
+  string password = 2;
+}
+
+message LoginRsp {
+  int32 code = 1;
+  string msg = 2;
+  int32 allow = 3;
+  int32 role = 4;  // 角色：1-普通用户 2-算法厂商  3-管理员
+  string passwd = 5;    // 密码
+  string user_name = 6;    // 用户名称
+}
+
+message AlgoInfoReq {
+  int32 oper_type = 1;    // 1-查所有算法信息
+}
+
+message AlgoInfo {
+  int32 algo_id = 1;      // 算法ID
+  string algo_name = 2;   // 算法名称
+  int32 algo_type = 3;    // 算法类型
+  string algo_type_name = 4;    // 算法类型名称
+  string provider = 5;    // 算法厂商
+}
+
+message AlgoInfoRsp {
+  int32 code = 1;
+  string msg = 2;
+  repeated AlgoInfo infos = 3;
+}
+
+message CapitalReq {
+  string user_id = 1;      // 用户账户ID
+}
+
+message StockPosition {
+  string sec_id = 1;    // 证券代码
+  string sec_name = 2;   // 证券名称
+  double market_cap = 3;   // 市值
+  double cost  = 4;       // 成本
+}
+
+message CapitailRsp {
+  int32 code = 1;
+  string msg = 2;
+  double available = 3;      // 可用资金
+  repeated StockPosition stock_position = 4;      //持仓信息
+}
+
+service MornanoService {
+  // 算法选择框数据
+  rpc GetAlgoChooseList(AlgoChooseReq) returns (AlgoChooseRsp);
+
+  // 登陆校验   --原则上只返回密码和角色
+  rpc LoginCheck(LoginReq) returns (LoginRsp);
+
+  // 查询算法基础信息
+  rpc GetAlgoInfo(AlgoInfoReq) returns (AlgoInfoRsp);
+
+  // 查询用户资金和证券持仓信息  (用户画像)
+  rpc GetUserCapital(CapitalReq) returns (CapitailRsp);
+
+}

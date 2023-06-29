@@ -1,0 +1,36 @@
+syntax = "v1"
+
+info(
+    title: "算法配置"
+    desc: "算法配置基本数据结构定义"
+    author: "hawrk"
+    email: "hawrk2012@163.com"
+    version: "v1"
+)
+
+type (
+
+    AlgoConfigReq {
+        ProfileType   int32         `json:"profile_type"`
+        ConfigJson    string        `json:"config_json"`
+    }
+
+    AlgoConfigRsp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Result int32 `json:"result"`     // 1-成功  2-失败
+    }
+
+    QueryAlgoConfigReq {
+        QueryType int32  `json:"query_type"`  // 1-经济性 2-完成度 3-风险度 4-绩效 5-稳定性
+    }
+
+    QueryAlgoConfigRsp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        ConfigJson string   `json:"config_json"`
+    }
+
+)
+
+

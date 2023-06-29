@@ -1,0 +1,21 @@
+Name: mornano.rpc
+ListenOn: 127.0.0.1:4080
+Timeout: 30000  #等待超时时间
+#Etcd:
+#  Hosts:
+#  - 127.0.0.1:2379
+#  Key: mornano.rpc
+
+Mysql:
+  DataSource: root:Root_123@tcp(192.168.1.81:3306)/algo?charset=utf8mb4&parseTime=true&loc=Local
+  IdleConn : 10
+  MaxOpenConn : 100
+  EnablePrintSQL : 1      #是否允许打印Sql语句，1打印， 0 不打印
+
+#日志
+Log:
+  ServiceName: mornano.rpc
+  Mode: console
+  Level: info
+  Encoding: json           #json , plain
+  KeepDays: 7

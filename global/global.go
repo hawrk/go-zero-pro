@@ -11,11 +11,92 @@ const (
 	TimeFormat       = "2006-01-02 15:04:05"
 	TimeFormatMin    = "2006-01-02 15:04"
 	TimeFormatMinInt = "200601021504"
+	TimeFormatSecond = "20060102150405"
 	TimeFormatDay    = "20060102"
+	TimeFormatDaySp  = "2006.1.2"
 	AssessTimeSetKey = "assess-calculate"
 
-	MaxAssessTimeLen = 241       // 单日绩效汇总最大条数
-	Level2RedisPrx   = "level2:" // 行情十档数据Redis前缀
+	HeartBeatKey = "heartbeat"
+
+	MaxAssessTimeLen = 242      // 单日绩效汇总最大条数
+	Level2RedisPrx   = "level2" // 行情十档数据Redis前缀
+	//Level2FixRedisPrx = "level2fix:" // 行情十档修复数据Redis前缀  --行情共用一份数据
+
+	AlgoOrderIdPrx = "algoOrderId"
+
+	BasketsPrx    = "basket"
+	BasketsFixPrx = "fix:basket"
+
+	AlgoEntrustPrx = "algoEntrust" // 一期母单委托数量
+	AlgoDealPrx    = "algoDeal"
+
+	UserAlgoEntrust = "userAlgoEntrust" // 二期母单委托总数量
+	UserDealAlgo    = "userDealAlgo"    // 二期已成交数量
+	UserCancelAlgo  = "userCancelAlgo"  // 二期撤销数量
+
+	OrderSourceNor = "Nor" // 正常订单前缀
+	OrderSourceFix = "Fix" // 数据修复订单前缀
+	OrderSourceOri = "Ori" // 原始订单前缀
+	OrderSourceImp = "Imp" // 订单导入前缀
+	OrderSourceAbt = "Abt" // 异常，未开放的来源类型
+
+	TradeSideBuy  = 1 // 买
+	TradeSideSell = 2 // 卖
+
+	// 算法类型
+	AlgoTypeT0        = 1 // T0算法
+	AlgoTypeSplit     = 2 // 拆单算法  （智能委托）
+	AlgoTypeNameT0    = "日内回转"
+	AlgoTypeNameSplit = "智能委托"
+
+	// 账户类型
+	AccountTypeNormal   = 1 // 普通账户
+	AccountTypeProvider = 2 // 算法厂商账户
+	AccountTypeMngr     = 3 // 汇总账户
+	AccountTypeSuAdmin  = 4 // 超级管理员
+
+	// reload redis 加载的key
+	CacheNorProfileKey    = "cacheNorProfile"
+	CacheNorProfileSumKey = "cacheNorProfileSum"
+	CacheNorTimeLineKey   = "cacheNorTimeline"
+
+	CacheMngrProfileKey    = "cacheNorProfile"
+	CacheMngrProfileSumKey = "cacheNorProfileSum"
+	CacheMngrTimeLineKey   = "cacheNorTimeline"
+
+	CacheProviderProfileKey    = "cacheNorProfile"
+	CacheProviderProfileSumKey = "cacheNorProfileSum"
+	CacheProviderTimeLineKey   = "cacheNorTimeline"
+
+	CacheAdminProfileKey    = "cacheNorProfile"
+	CacheAdminProfileSumKey = "cacheNorProfileSum"
+	CacheAdminTimeLineKey   = "cacheNorTimeline"
+
+	// 落表失败时，写redis失败队列的key
+	FailProfileKey    = "FailProfileQueue"
+	FailTimeLineKey   = "FailTimeLineQueue"
+	FailProfileSumKey = "FailProfileSumQueue"
+
+	// 存储在redis中的自定义Key过期时间
+	RedisKeyExpireTime = 86400 // 86400秒， 1 day
+	// 通用管理员账户
+	AdminUserId = "admin"
+	// 用户类型: 0-普通用户   1-管理员
+	UserTypeNormal = 0
+	UserTypeAdmin  = 1
+
+	// 默认批次号
+	DefaultBatchNo = 1
+
+	// 数据来源
+	SourceFromBus    = 0 // 总线
+	SourceFromFix    = 1 // 数据修复
+	SourceFromOrigin = 2 // 原始订单
+	SourceFromImport = 3 // 订单导入
+
+	MaxChannelBuffer = 1000000
+
+	ConsisHasNode = "ConsisHashKey"
 )
 
 const (
@@ -30,16 +111,5 @@ const (
 	OrderStatusCancel    = 8 // 撤单
 )
 
-const (
-	DivMillion     = 1000000
-	DivTenThousand = 10000
-	DivHundred     = 100
-)
-
-// 部署环境
-const (
-	EnvPro  = "pro"  // 生产环境
-	EnvGray = "gray" // 灰度环境
-	EnvTest = "test" // 测试环境
-	EvnDev  = "dev"  // 开发环境
-)
+var ShOriginTime int64 = 202202280900
+var SzOriginTime int64 = 202202280900

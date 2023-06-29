@@ -15,13 +15,6 @@ import (
 	"github.com/spf13/cast"
 )
 
-func GetTimePoint(s string) string {
-	if len(s) < 12 {
-		return ""
-	}
-	return s[8:10] + ":" + s[10:]
-}
-
 // MakeMarketInfo 拼组行情信息
 func MakeMarketInfo(t int64, qRsp *mkservice.MarkRsp) (lastPrice, mVwap float64, tradeVol int64, askPrice, askVol, bidPrice, bidVol string) {
 	if _, exist := qRsp.Attrs[t]; exist {
@@ -39,7 +32,7 @@ func MakeMarketInfo(t int64, qRsp *mkservice.MarkRsp) (lastPrice, mVwap float64,
 // MakeAssessMqRsp 拼组实时缓存绩效信息
 func MakeAssessMqRsp(m map[string]types.GeneralData, mrsp *mqservice.GeneralRsp, qRsp *mkservice.MarkRsp) {
 	for _, v := range mrsp.Info {
-		timePoint := GetTimePoint(cast.ToString(v.TransactTime))
+		timePoint := tools.GetTimePoint(cast.ToString(v.TransactTime))
 		lp, mvwap, tv, ap, av, bp, bv := MakeMarketInfo(v.TransactTime, qRsp)
 		detail := types.GeneralData{
 			TransTime:    timePoint,
@@ -69,7 +62,7 @@ func MakeAssessMqRsp(m map[string]types.GeneralData, mrsp *mqservice.GeneralRsp,
 // MakeAssessRPCRsp 拼组落地DB绩效信息
 func MakeAssessRPCRsp(m map[string]types.GeneralData, grsp *assessservice.GeneralRsp, qRsp *mkservice.MarkRsp) {
 	for _, value := range grsp.Info {
-		timePoint := GetTimePoint(cast.ToString(value.TransactTime))
+		timePoint := tools.GetTimePoint(cast.ToString(value.TransactTime))
 		lp, mvwap, tv, ap, av, bp, bv := MakeMarketInfo(value.TransactTime, qRsp)
 		detail := types.GeneralData{
 			TransTime:    timePoint,
@@ -99,7 +92,7 @@ func MakeAssessRPCRsp(m map[string]types.GeneralData, grsp *assessservice.Genera
 func MakeEmptyDataRsp(start string, qRsp *mkservice.MarkRsp, progress float64) types.GeneralData {
 	lp, mvwap, tv, ap, av, bp, bv := MakeMarketInfo(cast.ToInt64(start), qRsp)
 	out := types.GeneralData{
-		TransTime:    GetTimePoint(start),
+		TransTime:    tools.GetTimePoint(start),
 		OrderQty:     0,
 		LastQty:      0,
 		CancelQty:    0,

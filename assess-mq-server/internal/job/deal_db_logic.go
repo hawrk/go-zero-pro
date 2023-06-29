@@ -7,7 +7,8 @@
 package job
 
 import (
-	"algo_assess/assess-mq-server/internal/logic"
+	"algo_assess/assess-mq-server/internal/consumer"
+	"algo_assess/assess-mq-server/internal/dao"
 	"algo_assess/global"
 	"fmt"
 	"github.com/spf13/cast"
@@ -45,8 +46,9 @@ func (o *AssessJob) DealDBAssess() {
 			data := global.ChildOrderData{
 				OrderId:          detail.ChildOrderId,
 				AlgoOrderId:      int64(detail.AlgoOrderId),
-				AlgorithmType:    detail.AlgorithmType,
-				AlgoId:           detail.AlgorithmId,
+				AlgorithmType:    int(detail.AlgorithmType),
+				AlgoId:           int(detail.AlgorithmId),
+				UserId:           detail.UserId,
 				UsecId:           detail.UsecurityId,
 				SecId:            detail.SecurityId,
 				OrderQty:         detail.OrderQty,
@@ -66,18 +68,40 @@ func (o *AssessJob) DealDBAssess() {
 		o.Logger.Info("no task to process,finish")
 		return
 	}
+
+	s := consumer.NewAlgoPlatformOrderTrade(o.ctx, o.s)
 	// 合并到本地缓存中
-	global.GlobalAssess.RWMutex.Lock()
 	for _, data := range datas {
-		algoKey := fmt.Sprintf("%d:%d:%s", data.TransTime, data.AlgoId, data.SecId)
-		v := global.GlobalAssess.CalAlgo[algoKey]
-		out, err := logic.RealTimeCal(o.s, v, &data)
-		if err != nil {
-			o.Logger.Error("error cal assess:", err)
-			continue
+		var virtualUser, normalUser string
+		var adminUser []string
+		virtualUser = "0"
+		dao.GAccountMap.RWMutex.RLock()
+		if _, exist := dao.GAccountMap.Account[data.UserId]; exist {
+			if dao.GAccountMap.Account[data.UserId].UserType == 1 { // 普通账户，还需要找到其管理员账户
+				normalUser = data.UserId
+				adminUser = dao.GAccountMap.Account[data.UserId].ParUserId
+			} else if dao.GAccountMap.Account[data.UserId].UserType == 3 { // 管理员账户，直接取其user_id
+				adminUser = []string{data.UserId}
+			} else if dao.GAccountMap.Account[data.UserId].UserType == 2 { // 算法厂商用户
+				virtualUser = data.UserId
+			}
+		} else {
+			o.Logger.Error(" userId not found:", data.UserId)
+			// 本地缓存找不到账户信息时，只能计算所有用户的汇总绩效
 		}
-		global.GlobalAssess.CalAlgo[algoKey] = out
+		dao.GAccountMap.RWMutex.RUnlock()
+		if normalUser != "" {
+			algoKey := fmt.Sprintf("%d:%s:%d:%s", data.TransTime, normalUser, data.AlgoId, data.SecId)
+			s.Dispatch(normalUser, algoKey, &data)
+		}
+		for _, v := range adminUser {
+			algoKey := fmt.Sprintf("%d:%s:%d:%s", data.TransTime, v, data.AlgoId, data.SecId)
+			s.Dispatch(v, algoKey, &data)
+		}
+		if virtualUser != "" {
+			algoKey := fmt.Sprintf("%d:%s:%d:%s", data.TransTime, virtualUser, data.AlgoId, data.SecId)
+			s.Dispatch(virtualUser, algoKey, &data)
+		}
 	}
-	global.GlobalAssess.RWMutex.Unlock()
 
 }

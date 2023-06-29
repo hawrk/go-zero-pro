@@ -19,6 +19,216 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/assess/general",
 					Handler: GeneralHandler(serverCtx),
 				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/profile",
+					Handler: ProfileHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/dashboard/summary",
+					Handler: SummaryHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/dashboard/algolist",
+					Handler: AlgoListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/dynamic",
+					Handler: AlgoDynamicHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/analyse",
+					Handler: AlgoAnalyseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/mulit-analyse",
+					Handler: MultiAlgoAnalyseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/optimize",
+					Handler: AlgoOptimizeHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/add-optimize-base",
+					Handler: AddAlgoOptimizeBaseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/update-optimize-base",
+					Handler: UpdateAlgoOptimizeBaseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/delete-optimize-base",
+					Handler: DeleteAlgoOptimizeBaseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/select-optimize-base",
+					Handler: selectAlgoOptimizeBaseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/assess/download-optimize-base",
+					Handler: downloadAlgoOptimizeBaseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/upload-optimize-base",
+					Handler: uploadAlgoOptimizeBaseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/select",
+					Handler: AlgoSelectHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/ranking",
+					Handler: ScoreRankingHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/login",
+					Handler: LoginHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/logout",
+					Handler: LogoutHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/profile",
+					Handler: UserProfileHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/profile/export",
+					Handler: UserProfileExportHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/algoconfig",
+					Handler: AlgoConfigHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/query-algoconfig",
+					Handler: AlgoConfigQueryHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/security-list",
+					Handler: SecurityListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/config/security/update",
+					Handler: SecurityModifyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/config/security/import",
+					Handler: ImportSecurityHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/config/security/export",
+					Handler: ExportSecurityHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/config/user/list",
+					Handler: UserListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/config/user/update",
+					Handler: UserModifyHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/config/user/import",
+					Handler: ImportUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/config/user/export",
+					Handler: ExportUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/performance/algo-fix",
+					Handler: AlgoFixHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/performance/query-algo",
+					Handler: QueryAlgoHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/performance/child-fix",
+					Handler: ChildFixHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/performance/query-child",
+					Handler: QueryChildHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/performance/query-sh-level",
+					Handler: QueryShQuoteLevelHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/upload-sh-level",
+					Handler: ShQuoteLevelUploadHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/performance/query-sz-level",
+					Handler: QuerySzQuoteLevelHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/upload-sz-level",
+					Handler: SzQuoteLevelUploadHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/assess/template-export",
+					Handler: TemplateExportHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/win-ratio-analyse",
+					Handler: WinRatioAnalyseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/signal-analyse",
+					Handler: SignalAnalyseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/orig-order-analyse",
+					Handler: OrigOrderAnalyseHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/assess/export-trade-order",
+					Handler: ExportTradeOrderHandler(serverCtx),
+				},
 			}...,
 		),
 		rest.WithPrefix("/algo-assess/v1"),

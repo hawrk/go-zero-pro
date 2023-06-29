@@ -178,6 +178,7 @@ type GeneralReq struct {
 	OrderStatusType int32  `protobuf:"varint,4,opt,name=order_status_type,json=orderStatusType,proto3" json:"order_status_type,omitempty"` // 订单状态
 	StartTime       int64  `protobuf:"varint,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`                     // 开始时间
 	EndTime         int64  `protobuf:"varint,6,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                           // 结束时间
+	UserId          string `protobuf:"bytes,7,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                               // 交易账户ID
 }
 
 func (x *GeneralReq) Reset() {
@@ -254,6 +255,13 @@ func (x *GeneralReq) GetEndTime() int64 {
 	return 0
 }
 
+func (x *GeneralReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
 type GeneralRsp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -317,6 +325,7151 @@ func (x *GeneralRsp) GetInfo() []*AssessInfo {
 	return nil
 }
 
+type AlgoInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AlgoTypeName string `protobuf:"bytes,1,opt,name=AlgoTypeName,proto3" json:"AlgoTypeName,omitempty"`
+	Count        int32  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+}
+
+func (x *AlgoInfo) Reset() {
+	*x = AlgoInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoInfo) ProtoMessage() {}
+
+func (x *AlgoInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoInfo.ProtoReflect.Descriptor instead.
+func (*AlgoInfo) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *AlgoInfo) GetAlgoTypeName() string {
+	if x != nil {
+		return x.AlgoTypeName
+	}
+	return ""
+}
+
+func (x *AlgoInfo) GetCount() int32 {
+	if x != nil {
+		return x.Count
+	}
+	return 0
+}
+
+type ProfileInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AccoutId          string  `protobuf:"bytes,1,opt,name=accout_id,json=accoutId,proto3" json:"accout_id,omitempty"`                                     // 用户ID
+	AccountName       string  `protobuf:"bytes,2,opt,name=account_name,json=accountName,proto3" json:"account_name,omitempty"`                            // 用户名称
+	AlgoId            int32   `protobuf:"varint,3,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`                                          //算法ID
+	AlgoType          int32   `protobuf:"varint,4,opt,name=algo_type,json=algoType,proto3" json:"algo_type,omitempty"`                                    // 算法类型
+	AlgoName          string  `protobuf:"bytes,5,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`                                     // 算法名称
+	SecId             string  `protobuf:"bytes,6,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"`                                              // 证券ID
+	TradeVol          int64   `protobuf:"varint,7,opt,name=trade_vol,json=tradeVol,proto3" json:"trade_vol,omitempty"`                                    // 交易总额
+	Profit            float64 `protobuf:"fixed64,8,opt,name=profit,proto3" json:"profit,omitempty"`                                                       //  盈亏金额
+	ProfitRate        float64 `protobuf:"fixed64,9,opt,name=profit_rate,json=profitRate,proto3" json:"profit_rate,omitempty"`                             //  收益率
+	TotalFee          int64   `protobuf:"varint,10,opt,name=total_fee,json=totalFee,proto3" json:"total_fee,omitempty"`                                   // 总手续费
+	CrossFee          int64   `protobuf:"varint,11,opt,name=cross_fee,json=crossFee,proto3" json:"cross_fee,omitempty"`                                   // 流量费
+	CancelRate        float64 `protobuf:"fixed64,12,opt,name=cancel_rate,json=cancelRate,proto3" json:"cancel_rate,omitempty"`                            // 撤单率
+	MinSplitOrder     int64   `protobuf:"varint,13,opt,name=min_split_order,json=minSplitOrder,proto3" json:"min_split_order,omitempty"`                  // 最小拆单单位
+	Progress          float64 `protobuf:"fixed64,14,opt,name=progress,proto3" json:"progress,omitempty"`                                                  //  完成度
+	MinJointRate      float64 `protobuf:"fixed64,15,opt,name=min_joint_rate,json=minJointRate,proto3" json:"min_joint_rate,omitempty"`                    // 最小贴合度
+	WithdrawRate      float64 `protobuf:"fixed64,16,opt,name=withdraw_rate,json=withdrawRate,proto3" json:"withdraw_rate,omitempty"`                      // 回撤比例
+	VwapDev           float64 `protobuf:"fixed64,17,opt,name=vwap_dev,json=vwapDev,proto3" json:"vwap_dev,omitempty"`                                     // vwap滑点值
+	VwapStdDev        float64 `protobuf:"fixed64,18,opt,name=vwap_std_dev,json=vwapStdDev,proto3" json:"vwap_std_dev,omitempty"`                          // vwap 滑点标准差
+	CreateTime        string  `protobuf:"bytes,19,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`                              // 创建时间
+	Provider          string  `protobuf:"bytes,20,opt,name=provider,proto3" json:"provider,omitempty"`                                                    // 算法厂商
+	PfRateStdDev      float64 `protobuf:"fixed64,21,opt,name=pf_rate_std_dev,json=pfRateStdDev,proto3" json:"pf_rate_std_dev,omitempty"`                  // 收益率标准差
+	BatchNo           int64   `protobuf:"varint,22,opt,name=batch_no,json=batchNo,proto3" json:"batch_no,omitempty"`                                      // 批次号
+	SecName           string  `protobuf:"bytes,23,opt,name=sec_name,json=secName,proto3" json:"sec_name,omitempty"`                                       // 证券名称
+	AlgoOrderId       int64   `protobuf:"varint,24,opt,name=algo_order_id,json=algoOrderId,proto3" json:"algo_order_id,omitempty"`                        // 母单号
+	Industry          string  `protobuf:"bytes,25,opt,name=industry,proto3" json:"industry,omitempty"`                                                    // 行业分类
+	FundType          int32   `protobuf:"varint,26,opt,name=fund_type,json=fundType,proto3" json:"fund_type,omitempty"`                                   // 市值类型
+	Liquidity         int32   `protobuf:"varint,27,opt,name=liquidity,proto3" json:"liquidity,omitempty"`                                                 // 流动性
+	DealEffi          float64 `protobuf:"fixed64,28,opt,name=deal_effi,json=dealEffi,proto3" json:"deal_effi,omitempty"`                                  // 成交效率
+	AlgoOrderFit      float64 `protobuf:"fixed64,29,opt,name=algo_order_fit,json=algoOrderFit,proto3" json:"algo_order_fit,omitempty"`                    // 母单贴合度
+	PriceFit          float64 `protobuf:"fixed64,30,opt,name=price_fit,json=priceFit,proto3" json:"price_fit,omitempty"`                                  // 价格贴合度
+	TradeVolFit       float64 `protobuf:"fixed64,31,opt,name=trade_vol_fit,json=tradeVolFit,proto3" json:"trade_vol_fit,omitempty"`                       // 成交量贴合度
+	TradeVolFitStdDev float64 `protobuf:"fixed64,32,opt,name=trade_vol_fit_std_dev,json=tradeVolFitStdDev,proto3" json:"trade_vol_fit_std_dev,omitempty"` // 成交量贴合度标准差
+	TimeFitStdDev     float64 `protobuf:"fixed64,33,opt,name=time_fit_std_dev,json=timeFitStdDev,proto3" json:"time_fit_std_dev,omitempty"`               // 时间贴合度标准差
+	AssessProfitRate  float64 `protobuf:"fixed64,34,opt,name=assess_profit_rate,json=assessProfitRate,proto3" json:"assess_profit_rate,omitempty"`        // 绩效收益率
+	AvgTradePrice     float64 `protobuf:"fixed64,35,opt,name=avg_trade_price,json=avgTradePrice,proto3" json:"avg_trade_price,omitempty"`                 // 执行均价（成交均价)
+	AvgArrivePrice    float64 `protobuf:"fixed64,36,opt,name=avg_arrive_price,json=avgArrivePrice,proto3" json:"avg_arrive_price,omitempty"`              // 到达价均价
+	Pwp               float64 `protobuf:"fixed64,37,opt,name=pwp,proto3" json:"pwp,omitempty"`                                                            // pwp价格
+	AlgoDuration      int64   `protobuf:"varint,38,opt,name=algo_duration,json=algoDuration,proto3" json:"algo_duration,omitempty"`                       // 母单有效时长
+	Twap              float64 `protobuf:"fixed64,39,opt,name=twap,proto3" json:"twap,omitempty"`                                                          // TWAP值
+	TwapDev           float64 `protobuf:"fixed64,40,opt,name=twap_dev,json=twapDev,proto3" json:"twap_dev,omitempty"`                                     // TWAP滑点
+	Vwap              float64 `protobuf:"fixed64,41,opt,name=vwap,proto3" json:"vwap,omitempty"`                                                          // VWAP值
+}
+
+func (x *ProfileInfo) Reset() {
+	*x = ProfileInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ProfileInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProfileInfo) ProtoMessage() {}
+
+func (x *ProfileInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProfileInfo.ProtoReflect.Descriptor instead.
+func (*ProfileInfo) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ProfileInfo) GetAccoutId() string {
+	if x != nil {
+		return x.AccoutId
+	}
+	return ""
+}
+
+func (x *ProfileInfo) GetAccountName() string {
+	if x != nil {
+		return x.AccountName
+	}
+	return ""
+}
+
+func (x *ProfileInfo) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetAlgoType() int32 {
+	if x != nil {
+		return x.AlgoType
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *ProfileInfo) GetSecId() string {
+	if x != nil {
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *ProfileInfo) GetTradeVol() int64 {
+	if x != nil {
+		return x.TradeVol
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetProfit() float64 {
+	if x != nil {
+		return x.Profit
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetProfitRate() float64 {
+	if x != nil {
+		return x.ProfitRate
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetTotalFee() int64 {
+	if x != nil {
+		return x.TotalFee
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetCrossFee() int64 {
+	if x != nil {
+		return x.CrossFee
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetCancelRate() float64 {
+	if x != nil {
+		return x.CancelRate
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetMinSplitOrder() int64 {
+	if x != nil {
+		return x.MinSplitOrder
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetProgress() float64 {
+	if x != nil {
+		return x.Progress
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetMinJointRate() float64 {
+	if x != nil {
+		return x.MinJointRate
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetWithdrawRate() float64 {
+	if x != nil {
+		return x.WithdrawRate
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetVwapDev() float64 {
+	if x != nil {
+		return x.VwapDev
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetVwapStdDev() float64 {
+	if x != nil {
+		return x.VwapStdDev
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetCreateTime() string {
+	if x != nil {
+		return x.CreateTime
+	}
+	return ""
+}
+
+func (x *ProfileInfo) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *ProfileInfo) GetPfRateStdDev() float64 {
+	if x != nil {
+		return x.PfRateStdDev
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetSecName() string {
+	if x != nil {
+		return x.SecName
+	}
+	return ""
+}
+
+func (x *ProfileInfo) GetAlgoOrderId() int64 {
+	if x != nil {
+		return x.AlgoOrderId
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetIndustry() string {
+	if x != nil {
+		return x.Industry
+	}
+	return ""
+}
+
+func (x *ProfileInfo) GetFundType() int32 {
+	if x != nil {
+		return x.FundType
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetLiquidity() int32 {
+	if x != nil {
+		return x.Liquidity
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetDealEffi() float64 {
+	if x != nil {
+		return x.DealEffi
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetAlgoOrderFit() float64 {
+	if x != nil {
+		return x.AlgoOrderFit
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetPriceFit() float64 {
+	if x != nil {
+		return x.PriceFit
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetTradeVolFit() float64 {
+	if x != nil {
+		return x.TradeVolFit
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetTradeVolFitStdDev() float64 {
+	if x != nil {
+		return x.TradeVolFitStdDev
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetTimeFitStdDev() float64 {
+	if x != nil {
+		return x.TimeFitStdDev
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetAssessProfitRate() float64 {
+	if x != nil {
+		return x.AssessProfitRate
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetAvgTradePrice() float64 {
+	if x != nil {
+		return x.AvgTradePrice
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetAvgArrivePrice() float64 {
+	if x != nil {
+		return x.AvgArrivePrice
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetPwp() float64 {
+	if x != nil {
+		return x.Pwp
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetAlgoDuration() int64 {
+	if x != nil {
+		return x.AlgoDuration
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetTwap() float64 {
+	if x != nil {
+		return x.Twap
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetTwapDev() float64 {
+	if x != nil {
+		return x.TwapDev
+	}
+	return 0
+}
+
+func (x *ProfileInfo) GetVwap() float64 {
+	if x != nil {
+		return x.Vwap
+	}
+	return 0
+}
+
+type AlgoProfileReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Provider     string `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"`                               // 算法厂商
+	AlgoTypeName string `protobuf:"bytes,2,opt,name=algo_type_name,json=algoTypeName,proto3" json:"algo_type_name,omitempty"` // 算法类型
+	AlgoId       int32  `protobuf:"varint,3,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`                    // 算法ID
+	AlgoName     string `protobuf:"bytes,4,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`               // 算法名称
+	UserId       string `protobuf:"bytes,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                     //  用户账号
+	StartTime    int64  `protobuf:"varint,6,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`           // 开始时间
+	EndTime      int64  `protobuf:"varint,7,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                 // 结束时间
+	Page         int32  `protobuf:"varint,8,opt,name=page,proto3" json:"page,omitempty"`                                      // 当前页数
+	Limit        int32  `protobuf:"varint,9,opt,name=limit,proto3" json:"limit,omitempty"`                                    // 每页数量
+	ProfileType  int32  `protobuf:"varint,10,opt,name=profile_type,json=profileType,proto3" json:"profile_type,omitempty"`    // 获取画像类型  1-经济性，2-完成度，3-风险度，4-算法绩效 5-稳定性
+	UserType     int32  `protobuf:"varint,11,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`             // 用户类型  0-普通用户  1-管理员
+	SourceFrom   int32  `protobuf:"varint,12,opt,name=source_from,json=sourceFrom,proto3" json:"source_from,omitempty"`       //数据来源
+	BatchNo      int64  `protobuf:"varint,13,opt,name=batch_no,json=batchNo,proto3" json:"batch_no,omitempty"`                // 批次号
+}
+
+func (x *AlgoProfileReq) Reset() {
+	*x = AlgoProfileReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoProfileReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoProfileReq) ProtoMessage() {}
+
+func (x *AlgoProfileReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoProfileReq.ProtoReflect.Descriptor instead.
+func (*AlgoProfileReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *AlgoProfileReq) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *AlgoProfileReq) GetAlgoTypeName() string {
+	if x != nil {
+		return x.AlgoTypeName
+	}
+	return ""
+}
+
+func (x *AlgoProfileReq) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *AlgoProfileReq) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *AlgoProfileReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *AlgoProfileReq) GetStartTime() int64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *AlgoProfileReq) GetEndTime() int64 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
+func (x *AlgoProfileReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *AlgoProfileReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+func (x *AlgoProfileReq) GetProfileType() int32 {
+	if x != nil {
+		return x.ProfileType
+	}
+	return 0
+}
+
+func (x *AlgoProfileReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+func (x *AlgoProfileReq) GetSourceFrom() int32 {
+	if x != nil {
+		return x.SourceFrom
+	}
+	return 0
+}
+
+func (x *AlgoProfileReq) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+type AlgoProfileRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32          `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string         `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64          `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Info  []*ProfileInfo `protobuf:"bytes,4,rep,name=info,proto3" json:"info,omitempty"`
+}
+
+func (x *AlgoProfileRsp) Reset() {
+	*x = AlgoProfileRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoProfileRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoProfileRsp) ProtoMessage() {}
+
+func (x *AlgoProfileRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoProfileRsp.ProtoReflect.Descriptor instead.
+func (*AlgoProfileRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *AlgoProfileRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *AlgoProfileRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *AlgoProfileRsp) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *AlgoProfileRsp) GetInfo() []*ProfileInfo {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
+type Optimize struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id           int64  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                        // 主键 ID
+	SecId        string `protobuf:"bytes,2,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"`                      // 证券ID
+	SecName      string `protobuf:"bytes,3,opt,name=sec_name,json=secName,proto3" json:"sec_name,omitempty"`                // 证券名称
+	AlgoId       int32  `protobuf:"zigzag32,4,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`                // 算法id
+	AlgoName     string `protobuf:"bytes,5,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`             // 算法名称
+	ProviderId   int32  `protobuf:"varint,6,opt,name=provider_id,json=providerId,proto3" json:"provider_id,omitempty"`      // 厂商id
+	ProviderName string `protobuf:"bytes,7,opt,name=provider_name,json=providerName,proto3" json:"provider_name,omitempty"` // 厂商名称
+}
+
+func (x *Optimize) Reset() {
+	*x = Optimize{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Optimize) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Optimize) ProtoMessage() {}
+
+func (x *Optimize) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Optimize.ProtoReflect.Descriptor instead.
+func (*Optimize) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *Optimize) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *Optimize) GetSecId() string {
+	if x != nil {
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *Optimize) GetSecName() string {
+	if x != nil {
+		return x.SecName
+	}
+	return ""
+}
+
+func (x *Optimize) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *Optimize) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *Optimize) GetProviderId() int32 {
+	if x != nil {
+		return x.ProviderId
+	}
+	return 0
+}
+
+func (x *Optimize) GetProviderName() string {
+	if x != nil {
+		return x.ProviderName
+	}
+	return ""
+}
+
+type OptimizeReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SecurityId []string `protobuf:"bytes,1,rep,name=security_id,json=securityId,proto3" json:"security_id,omitempty"`
+	AlgoIds    []int32  `protobuf:"varint,2,rep,packed,name=algo_ids,json=algoIds,proto3" json:"algo_ids,omitempty"`
+}
+
+func (x *OptimizeReq) Reset() {
+	*x = OptimizeReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OptimizeReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OptimizeReq) ProtoMessage() {}
+
+func (x *OptimizeReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OptimizeReq.ProtoReflect.Descriptor instead.
+func (*OptimizeReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *OptimizeReq) GetSecurityId() []string {
+	if x != nil {
+		return x.SecurityId
+	}
+	return nil
+}
+
+func (x *OptimizeReq) GetAlgoIds() []int32 {
+	if x != nil {
+		return x.AlgoIds
+	}
+	return nil
+}
+
+type OptimizeRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string      `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64       `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	List  []*Optimize `protobuf:"bytes,4,rep,name=list,proto3" json:"list,omitempty"`
+}
+
+func (x *OptimizeRsp) Reset() {
+	*x = OptimizeRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OptimizeRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OptimizeRsp) ProtoMessage() {}
+
+func (x *OptimizeRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OptimizeRsp.ProtoReflect.Descriptor instead.
+func (*OptimizeRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *OptimizeRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *OptimizeRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *OptimizeRsp) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *OptimizeRsp) GetList() []*Optimize {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+type AddOptimizeBaseReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ProviderId   int32   `protobuf:"varint,1,opt,name=provider_id,json=providerId,proto3" json:"provider_id,omitempty"`
+	ProviderName string  `protobuf:"bytes,2,opt,name=provider_name,json=providerName,proto3" json:"provider_name,omitempty"`
+	SecId        string  `protobuf:"bytes,3,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"`
+	SecName      string  `protobuf:"bytes,4,opt,name=sec_name,json=secName,proto3" json:"sec_name,omitempty"`
+	AlgoId       int32   `protobuf:"varint,5,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`
+	AlgoType     int32   `protobuf:"varint,6,opt,name=algo_type,json=algoType,proto3" json:"algo_type,omitempty"`
+	AlgoName     string  `protobuf:"bytes,7,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`
+	OpenRate     float64 `protobuf:"fixed64,8,opt,name=open_rate,json=openRate,proto3" json:"open_rate,omitempty"`
+	IncomeRate   float64 `protobuf:"fixed64,9,opt,name=income_rate,json=incomeRate,proto3" json:"income_rate,omitempty"`
+	BasisPoint   float64 `protobuf:"fixed64,10,opt,name=basis_point,json=basisPoint,proto3" json:"basis_point,omitempty"`
+}
+
+func (x *AddOptimizeBaseReq) Reset() {
+	*x = AddOptimizeBaseReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AddOptimizeBaseReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddOptimizeBaseReq) ProtoMessage() {}
+
+func (x *AddOptimizeBaseReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddOptimizeBaseReq.ProtoReflect.Descriptor instead.
+func (*AddOptimizeBaseReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *AddOptimizeBaseReq) GetProviderId() int32 {
+	if x != nil {
+		return x.ProviderId
+	}
+	return 0
+}
+
+func (x *AddOptimizeBaseReq) GetProviderName() string {
+	if x != nil {
+		return x.ProviderName
+	}
+	return ""
+}
+
+func (x *AddOptimizeBaseReq) GetSecId() string {
+	if x != nil {
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *AddOptimizeBaseReq) GetSecName() string {
+	if x != nil {
+		return x.SecName
+	}
+	return ""
+}
+
+func (x *AddOptimizeBaseReq) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *AddOptimizeBaseReq) GetAlgoType() int32 {
+	if x != nil {
+		return x.AlgoType
+	}
+	return 0
+}
+
+func (x *AddOptimizeBaseReq) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *AddOptimizeBaseReq) GetOpenRate() float64 {
+	if x != nil {
+		return x.OpenRate
+	}
+	return 0
+}
+
+func (x *AddOptimizeBaseReq) GetIncomeRate() float64 {
+	if x != nil {
+		return x.IncomeRate
+	}
+	return 0
+}
+
+func (x *AddOptimizeBaseReq) GetBasisPoint() float64 {
+	if x != nil {
+		return x.BasisPoint
+	}
+	return 0
+}
+
+type AddOptimizeBaseRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg  string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+}
+
+func (x *AddOptimizeBaseRsp) Reset() {
+	*x = AddOptimizeBaseRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AddOptimizeBaseRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddOptimizeBaseRsp) ProtoMessage() {}
+
+func (x *AddOptimizeBaseRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddOptimizeBaseRsp.ProtoReflect.Descriptor instead.
+func (*AddOptimizeBaseRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *AddOptimizeBaseRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *AddOptimizeBaseRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+type UpdateOptimizeBaseReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id           int64   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	ProviderId   int32   `protobuf:"varint,2,opt,name=provider_id,json=providerId,proto3" json:"provider_id,omitempty"`
+	ProviderName string  `protobuf:"bytes,3,opt,name=provider_name,json=providerName,proto3" json:"provider_name,omitempty"`
+	SecId        string  `protobuf:"bytes,4,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"`
+	SecName      string  `protobuf:"bytes,5,opt,name=sec_name,json=secName,proto3" json:"sec_name,omitempty"`
+	AlgoId       int32   `protobuf:"varint,6,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`
+	AlgoType     int32   `protobuf:"varint,7,opt,name=algo_type,json=algoType,proto3" json:"algo_type,omitempty"`
+	AlgoName     string  `protobuf:"bytes,8,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`
+	OpenRate     float64 `protobuf:"fixed64,9,opt,name=open_rate,json=openRate,proto3" json:"open_rate,omitempty"`
+	IncomeRate   float64 `protobuf:"fixed64,10,opt,name=income_rate,json=incomeRate,proto3" json:"income_rate,omitempty"`
+	BasisPoint   float64 `protobuf:"fixed64,11,opt,name=basis_point,json=basisPoint,proto3" json:"basis_point,omitempty"`
+}
+
+func (x *UpdateOptimizeBaseReq) Reset() {
+	*x = UpdateOptimizeBaseReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateOptimizeBaseReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateOptimizeBaseReq) ProtoMessage() {}
+
+func (x *UpdateOptimizeBaseReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateOptimizeBaseReq.ProtoReflect.Descriptor instead.
+func (*UpdateOptimizeBaseReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *UpdateOptimizeBaseReq) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateOptimizeBaseReq) GetProviderId() int32 {
+	if x != nil {
+		return x.ProviderId
+	}
+	return 0
+}
+
+func (x *UpdateOptimizeBaseReq) GetProviderName() string {
+	if x != nil {
+		return x.ProviderName
+	}
+	return ""
+}
+
+func (x *UpdateOptimizeBaseReq) GetSecId() string {
+	if x != nil {
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *UpdateOptimizeBaseReq) GetSecName() string {
+	if x != nil {
+		return x.SecName
+	}
+	return ""
+}
+
+func (x *UpdateOptimizeBaseReq) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *UpdateOptimizeBaseReq) GetAlgoType() int32 {
+	if x != nil {
+		return x.AlgoType
+	}
+	return 0
+}
+
+func (x *UpdateOptimizeBaseReq) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *UpdateOptimizeBaseReq) GetOpenRate() float64 {
+	if x != nil {
+		return x.OpenRate
+	}
+	return 0
+}
+
+func (x *UpdateOptimizeBaseReq) GetIncomeRate() float64 {
+	if x != nil {
+		return x.IncomeRate
+	}
+	return 0
+}
+
+func (x *UpdateOptimizeBaseReq) GetBasisPoint() float64 {
+	if x != nil {
+		return x.BasisPoint
+	}
+	return 0
+}
+
+type UpdateOptimizeBaseRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg  string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+}
+
+func (x *UpdateOptimizeBaseRsp) Reset() {
+	*x = UpdateOptimizeBaseRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateOptimizeBaseRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateOptimizeBaseRsp) ProtoMessage() {}
+
+func (x *UpdateOptimizeBaseRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateOptimizeBaseRsp.ProtoReflect.Descriptor instead.
+func (*UpdateOptimizeBaseRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *UpdateOptimizeBaseRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *UpdateOptimizeBaseRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+type DeleteOptimizeBaseReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *DeleteOptimizeBaseReq) Reset() {
+	*x = DeleteOptimizeBaseReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteOptimizeBaseReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteOptimizeBaseReq) ProtoMessage() {}
+
+func (x *DeleteOptimizeBaseReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteOptimizeBaseReq.ProtoReflect.Descriptor instead.
+func (*DeleteOptimizeBaseReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *DeleteOptimizeBaseReq) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type DeleteOptimizeBaseRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg  string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+}
+
+func (x *DeleteOptimizeBaseRsp) Reset() {
+	*x = DeleteOptimizeBaseRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteOptimizeBaseRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteOptimizeBaseRsp) ProtoMessage() {}
+
+func (x *DeleteOptimizeBaseRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteOptimizeBaseRsp.ProtoReflect.Descriptor instead.
+func (*DeleteOptimizeBaseRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *DeleteOptimizeBaseRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *DeleteOptimizeBaseRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+type SelectOptimizeBaseReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ProviderId int32  `protobuf:"varint,1,opt,name=provider_id,json=providerId,proto3" json:"provider_id,omitempty"` //算法厂商id
+	AlgoId     int32  `protobuf:"varint,3,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`
+	SecId      string `protobuf:"bytes,4,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"`
+	Page       int32  `protobuf:"varint,5,opt,name=page,proto3" json:"page,omitempty"`
+	Limit      int32  `protobuf:"varint,6,opt,name=limit,proto3" json:"limit,omitempty"`
+}
+
+func (x *SelectOptimizeBaseReq) Reset() {
+	*x = SelectOptimizeBaseReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SelectOptimizeBaseReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SelectOptimizeBaseReq) ProtoMessage() {}
+
+func (x *SelectOptimizeBaseReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SelectOptimizeBaseReq.ProtoReflect.Descriptor instead.
+func (*SelectOptimizeBaseReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *SelectOptimizeBaseReq) GetProviderId() int32 {
+	if x != nil {
+		return x.ProviderId
+	}
+	return 0
+}
+
+func (x *SelectOptimizeBaseReq) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *SelectOptimizeBaseReq) GetSecId() string {
+	if x != nil {
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *SelectOptimizeBaseReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *SelectOptimizeBaseReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type OptimizeBase struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id           int64   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	ProviderId   int32   `protobuf:"varint,2,opt,name=provider_id,json=providerId,proto3" json:"provider_id,omitempty"`
+	ProviderName string  `protobuf:"bytes,3,opt,name=provider_name,json=providerName,proto3" json:"provider_name,omitempty"`
+	SecId        string  `protobuf:"bytes,4,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"`
+	SecName      string  `protobuf:"bytes,5,opt,name=sec_name,json=secName,proto3" json:"sec_name,omitempty"`
+	AlgoId       int32   `protobuf:"varint,6,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`
+	AlgoType     int32   `protobuf:"varint,7,opt,name=algo_type,json=algoType,proto3" json:"algo_type,omitempty"`
+	AlgoName     string  `protobuf:"bytes,8,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`
+	OpenRate     float64 `protobuf:"fixed64,9,opt,name=open_rate,json=openRate,proto3" json:"open_rate,omitempty"`
+	IncomeRate   float64 `protobuf:"fixed64,10,opt,name=income_rate,json=incomeRate,proto3" json:"income_rate,omitempty"`
+	BasisPoint   float64 `protobuf:"fixed64,11,opt,name=basis_point,json=basisPoint,proto3" json:"basis_point,omitempty"`
+	CreateTime   string  `protobuf:"bytes,12,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	UpdateTime   string  `protobuf:"bytes,13,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+}
+
+func (x *OptimizeBase) Reset() {
+	*x = OptimizeBase{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OptimizeBase) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OptimizeBase) ProtoMessage() {}
+
+func (x *OptimizeBase) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OptimizeBase.ProtoReflect.Descriptor instead.
+func (*OptimizeBase) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *OptimizeBase) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *OptimizeBase) GetProviderId() int32 {
+	if x != nil {
+		return x.ProviderId
+	}
+	return 0
+}
+
+func (x *OptimizeBase) GetProviderName() string {
+	if x != nil {
+		return x.ProviderName
+	}
+	return ""
+}
+
+func (x *OptimizeBase) GetSecId() string {
+	if x != nil {
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *OptimizeBase) GetSecName() string {
+	if x != nil {
+		return x.SecName
+	}
+	return ""
+}
+
+func (x *OptimizeBase) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *OptimizeBase) GetAlgoType() int32 {
+	if x != nil {
+		return x.AlgoType
+	}
+	return 0
+}
+
+func (x *OptimizeBase) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *OptimizeBase) GetOpenRate() float64 {
+	if x != nil {
+		return x.OpenRate
+	}
+	return 0
+}
+
+func (x *OptimizeBase) GetIncomeRate() float64 {
+	if x != nil {
+		return x.IncomeRate
+	}
+	return 0
+}
+
+func (x *OptimizeBase) GetBasisPoint() float64 {
+	if x != nil {
+		return x.BasisPoint
+	}
+	return 0
+}
+
+func (x *OptimizeBase) GetCreateTime() string {
+	if x != nil {
+		return x.CreateTime
+	}
+	return ""
+}
+
+func (x *OptimizeBase) GetUpdateTime() string {
+	if x != nil {
+		return x.UpdateTime
+	}
+	return ""
+}
+
+type SelectOptimizeBaseRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32           `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string          `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64           `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	List  []*OptimizeBase `protobuf:"bytes,4,rep,name=list,proto3" json:"list,omitempty"`
+}
+
+func (x *SelectOptimizeBaseRsp) Reset() {
+	*x = SelectOptimizeBaseRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SelectOptimizeBaseRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SelectOptimizeBaseRsp) ProtoMessage() {}
+
+func (x *SelectOptimizeBaseRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SelectOptimizeBaseRsp.ProtoReflect.Descriptor instead.
+func (*SelectOptimizeBaseRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *SelectOptimizeBaseRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *SelectOptimizeBaseRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *SelectOptimizeBaseRsp) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *SelectOptimizeBaseRsp) GetList() []*OptimizeBase {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+type DownloadOptimizeBaseReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DownloadOptimizeBaseReq) Reset() {
+	*x = DownloadOptimizeBaseReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DownloadOptimizeBaseReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadOptimizeBaseReq) ProtoMessage() {}
+
+func (x *DownloadOptimizeBaseReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadOptimizeBaseReq.ProtoReflect.Descriptor instead.
+func (*DownloadOptimizeBaseReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{19}
+}
+
+type DownloadOptimizeBaseRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32           `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string          `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64           `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	List  []*OptimizeBase `protobuf:"bytes,4,rep,name=list,proto3" json:"list,omitempty"`
+}
+
+func (x *DownloadOptimizeBaseRsp) Reset() {
+	*x = DownloadOptimizeBaseRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DownloadOptimizeBaseRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DownloadOptimizeBaseRsp) ProtoMessage() {}
+
+func (x *DownloadOptimizeBaseRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DownloadOptimizeBaseRsp.ProtoReflect.Descriptor instead.
+func (*DownloadOptimizeBaseRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *DownloadOptimizeBaseRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *DownloadOptimizeBaseRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *DownloadOptimizeBaseRsp) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *DownloadOptimizeBaseRsp) GetList() []*OptimizeBase {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+type UploadOptimizeBaseReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	List []*OptimizeBase `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
+}
+
+func (x *UploadOptimizeBaseReq) Reset() {
+	*x = UploadOptimizeBaseReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UploadOptimizeBaseReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadOptimizeBaseReq) ProtoMessage() {}
+
+func (x *UploadOptimizeBaseReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadOptimizeBaseReq.ProtoReflect.Descriptor instead.
+func (*UploadOptimizeBaseReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *UploadOptimizeBaseReq) GetList() []*OptimizeBase {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+type UploadOptimizeBaseRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg  string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+}
+
+func (x *UploadOptimizeBaseRsp) Reset() {
+	*x = UploadOptimizeBaseRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UploadOptimizeBaseRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadOptimizeBaseRsp) ProtoMessage() {}
+
+func (x *UploadOptimizeBaseRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadOptimizeBaseRsp.ProtoReflect.Descriptor instead.
+func (*UploadOptimizeBaseRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *UploadOptimizeBaseRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *UploadOptimizeBaseRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+type AlgoDimension struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ProfileType  int32  `protobuf:"varint,1,opt,name=profile_type,json=profileType,proto3" json:"profile_type,omitempty"`
+	ProfileScore int32  `protobuf:"varint,2,opt,name=profile_score,json=profileScore,proto3" json:"profile_score,omitempty"`
+	ProfileDesc  string `protobuf:"bytes,3,opt,name=profile_desc,json=profileDesc,proto3" json:"profile_desc,omitempty"`
+}
+
+func (x *AlgoDimension) Reset() {
+	*x = AlgoDimension{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoDimension) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoDimension) ProtoMessage() {}
+
+func (x *AlgoDimension) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoDimension.ProtoReflect.Descriptor instead.
+func (*AlgoDimension) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *AlgoDimension) GetProfileType() int32 {
+	if x != nil {
+		return x.ProfileType
+	}
+	return 0
+}
+
+func (x *AlgoDimension) GetProfileScore() int32 {
+	if x != nil {
+		return x.ProfileScore
+	}
+	return 0
+}
+
+func (x *AlgoDimension) GetProfileDesc() string {
+	if x != nil {
+		return x.ProfileDesc
+	}
+	return ""
+}
+
+type DynamicReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Provider     string `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"`                                // 算法厂商
+	AlgoType     int32  `protobuf:"varint,2,opt,name=algo_type,json=algoType,proto3" json:"algo_type,omitempty"`               // 算法类型
+	AlgoId       int32  `protobuf:"varint,3,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`                     // 算法ID
+	AlgoName     string `protobuf:"bytes,4,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`                // 算法名称
+	UserId       string `protobuf:"bytes,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                      // 用户ID
+	StartTime    int64  `protobuf:"varint,6,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`            // 开始时间
+	EndTime      int64  `protobuf:"varint,7,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                  // 结束时间
+	CrossDayFlag bool   `protobuf:"varint,8,opt,name=cross_day_flag,json=crossDayFlag,proto3" json:"cross_day_flag,omitempty"` // 跨天标识
+	UserType     int32  `protobuf:"varint,9,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`               // 用户类型  0-普通用户  1-管理员
+	SourceFrom   int32  `protobuf:"varint,10,opt,name=source_from,json=sourceFrom,proto3" json:"source_from,omitempty"`        //数据来源
+	BatchNo      int64  `protobuf:"varint,11,opt,name=batch_no,json=batchNo,proto3" json:"batch_no,omitempty"`                 // 批次号
+}
+
+func (x *DynamicReq) Reset() {
+	*x = DynamicReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DynamicReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DynamicReq) ProtoMessage() {}
+
+func (x *DynamicReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DynamicReq.ProtoReflect.Descriptor instead.
+func (*DynamicReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *DynamicReq) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *DynamicReq) GetAlgoType() int32 {
+	if x != nil {
+		return x.AlgoType
+	}
+	return 0
+}
+
+func (x *DynamicReq) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *DynamicReq) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *DynamicReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *DynamicReq) GetStartTime() int64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *DynamicReq) GetEndTime() int64 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
+func (x *DynamicReq) GetCrossDayFlag() bool {
+	if x != nil {
+		return x.CrossDayFlag
+	}
+	return false
+}
+
+func (x *DynamicReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+func (x *DynamicReq) GetSourceFrom() int32 {
+	if x != nil {
+		return x.SourceFrom
+	}
+	return 0
+}
+
+func (x *DynamicReq) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+type DynamicRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code       int32            `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg        string           `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Dimension  []*AlgoDimension `protobuf:"bytes,3,rep,name=dimension,proto3" json:"dimension,omitempty"`                      // 五个维度列表
+	TotalScore int32            `protobuf:"varint,4,opt,name=total_score,json=totalScore,proto3" json:"total_score,omitempty"` // 综合评分
+	Ranking    int32            `protobuf:"varint,5,opt,name=ranking,proto3" json:"ranking,omitempty"`                         // 排名
+	FundRate   []string         `protobuf:"bytes,6,rep,name=fund_rate,json=fundRate,proto3" json:"fund_rate,omitempty"`        // 资金占比json串
+	TradeSide  []string         `protobuf:"bytes,7,rep,name=trade_side,json=tradeSide,proto3" json:"trade_side,omitempty"`     // 买卖方向json串
+	StockType  []string         `protobuf:"bytes,8,rep,name=stock_type,json=stockType,proto3" json:"stock_type,omitempty"`     // 股价类型json串
+	TradeVol   []string         `protobuf:"bytes,9,rep,name=trade_vol,json=tradeVol,proto3" json:"trade_vol,omitempty"`        //  交易量占比json串
+	AlgoNames  []string         `protobuf:"bytes,10,rep,name=algo_names,json=algoNames,proto3" json:"algo_names,omitempty"`    // 绩效分析下多算法返回列表
+}
+
+func (x *DynamicRsp) Reset() {
+	*x = DynamicRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DynamicRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DynamicRsp) ProtoMessage() {}
+
+func (x *DynamicRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DynamicRsp.ProtoReflect.Descriptor instead.
+func (*DynamicRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *DynamicRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *DynamicRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *DynamicRsp) GetDimension() []*AlgoDimension {
+	if x != nil {
+		return x.Dimension
+	}
+	return nil
+}
+
+func (x *DynamicRsp) GetTotalScore() int32 {
+	if x != nil {
+		return x.TotalScore
+	}
+	return 0
+}
+
+func (x *DynamicRsp) GetRanking() int32 {
+	if x != nil {
+		return x.Ranking
+	}
+	return 0
+}
+
+func (x *DynamicRsp) GetFundRate() []string {
+	if x != nil {
+		return x.FundRate
+	}
+	return nil
+}
+
+func (x *DynamicRsp) GetTradeSide() []string {
+	if x != nil {
+		return x.TradeSide
+	}
+	return nil
+}
+
+func (x *DynamicRsp) GetStockType() []string {
+	if x != nil {
+		return x.StockType
+	}
+	return nil
+}
+
+func (x *DynamicRsp) GetTradeVol() []string {
+	if x != nil {
+		return x.TradeVol
+	}
+	return nil
+}
+
+func (x *DynamicRsp) GetAlgoNames() []string {
+	if x != nil {
+		return x.AlgoNames
+	}
+	return nil
+}
+
+type TimeLine struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TimePoint   string  `protobuf:"bytes,1,opt,name=time_point,json=timePoint,proto3" json:"time_point,omitempty"`
+	AssessScore int32   `protobuf:"varint,2,opt,name=assess_score,json=assessScore,proto3" json:"assess_score,omitempty"` // 绩效评分
+	Progress    float64 `protobuf:"fixed64,3,opt,name=progress,proto3" json:"progress,omitempty"`                         // 完成度
+	RiskScore   int32   `protobuf:"varint,4,opt,name=risk_score,json=riskScore,proto3" json:"risk_score,omitempty"`       // 风险度评分
+}
+
+func (x *TimeLine) Reset() {
+	*x = TimeLine{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TimeLine) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimeLine) ProtoMessage() {}
+
+func (x *TimeLine) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimeLine.ProtoReflect.Descriptor instead.
+func (*TimeLine) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *TimeLine) GetTimePoint() string {
+	if x != nil {
+		return x.TimePoint
+	}
+	return ""
+}
+
+func (x *TimeLine) GetAssessScore() int32 {
+	if x != nil {
+		return x.AssessScore
+	}
+	return 0
+}
+
+func (x *TimeLine) GetProgress() float64 {
+	if x != nil {
+		return x.Progress
+	}
+	return 0
+}
+
+func (x *TimeLine) GetRiskScore() int32 {
+	if x != nil {
+		return x.RiskScore
+	}
+	return 0
+}
+
+type TimeLineReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	LineType     int32  `protobuf:"varint,1,opt,name=line_type,json=lineType,proto3" json:"line_type,omitempty"`               // 类型， 1为绩效， 2为完成度， 如果需要多个，则拼成12
+	StartTime    int64  `protobuf:"varint,2,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`            // 开始时间
+	EndTime      int64  `protobuf:"varint,3,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                  // 结束时间
+	UserId       string `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                      // 用户ID
+	AlgoId       int32  `protobuf:"varint,5,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`                     // 算法ID
+	CrossDayFlag bool   `protobuf:"varint,6,opt,name=cross_day_flag,json=crossDayFlag,proto3" json:"cross_day_flag,omitempty"` // 跨天标识
+	UserType     int32  `protobuf:"varint,7,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`               // 用户类型  0-普通用户  1-管理员
+	SourceFrom   int32  `protobuf:"varint,8,opt,name=source_from,json=sourceFrom,proto3" json:"source_from,omitempty"`         //数据来源
+	BatchNo      int64  `protobuf:"varint,9,opt,name=batch_no,json=batchNo,proto3" json:"batch_no,omitempty"`                  // 批次号
+}
+
+func (x *TimeLineReq) Reset() {
+	*x = TimeLineReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[27]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TimeLineReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimeLineReq) ProtoMessage() {}
+
+func (x *TimeLineReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[27]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimeLineReq.ProtoReflect.Descriptor instead.
+func (*TimeLineReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *TimeLineReq) GetLineType() int32 {
+	if x != nil {
+		return x.LineType
+	}
+	return 0
+}
+
+func (x *TimeLineReq) GetStartTime() int64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *TimeLineReq) GetEndTime() int64 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
+func (x *TimeLineReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *TimeLineReq) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *TimeLineReq) GetCrossDayFlag() bool {
+	if x != nil {
+		return x.CrossDayFlag
+	}
+	return false
+}
+
+func (x *TimeLineReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+func (x *TimeLineReq) GetSourceFrom() int32 {
+	if x != nil {
+		return x.SourceFrom
+	}
+	return 0
+}
+
+func (x *TimeLineReq) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+type TimeLineRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg  string      `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Line []*TimeLine `protobuf:"bytes,3,rep,name=line,proto3" json:"line,omitempty"`
+}
+
+func (x *TimeLineRsp) Reset() {
+	*x = TimeLineRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[28]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TimeLineRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimeLineRsp) ProtoMessage() {}
+
+func (x *TimeLineRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[28]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimeLineRsp.ProtoReflect.Descriptor instead.
+func (*TimeLineRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *TimeLineRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *TimeLineRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *TimeLineRsp) GetLine() []*TimeLine {
+	if x != nil {
+		return x.Line
+	}
+	return nil
+}
+
+type OrderSummaryReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Date     int64  `protobuf:"varint,1,opt,name=date,proto3" json:"date,omitempty"`                         //时间  20220615
+	UserId   string `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`        // 登录用户ID
+	UserType int32  `protobuf:"varint,3,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"` // 用户类型  0-普通用户  1-管理员
+}
+
+func (x *OrderSummaryReq) Reset() {
+	*x = OrderSummaryReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[29]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrderSummaryReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrderSummaryReq) ProtoMessage() {}
+
+func (x *OrderSummaryReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[29]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrderSummaryReq.ProtoReflect.Descriptor instead.
+func (*OrderSummaryReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *OrderSummaryReq) GetDate() int64 {
+	if x != nil {
+		return x.Date
+	}
+	return 0
+}
+
+func (x *OrderSummaryReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *OrderSummaryReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+type FundRate struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Huge   float64 `protobuf:"fixed64,1,opt,name=Huge,proto3" json:"Huge,omitempty"`
+	Big    float64 `protobuf:"fixed64,2,opt,name=Big,proto3" json:"Big,omitempty"`
+	Middle float64 `protobuf:"fixed64,3,opt,name=middle,proto3" json:"middle,omitempty"`
+	Small  float64 `protobuf:"fixed64,4,opt,name=small,proto3" json:"small,omitempty"`
+}
+
+func (x *FundRate) Reset() {
+	*x = FundRate{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[30]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FundRate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FundRate) ProtoMessage() {}
+
+func (x *FundRate) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[30]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FundRate.ProtoReflect.Descriptor instead.
+func (*FundRate) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *FundRate) GetHuge() float64 {
+	if x != nil {
+		return x.Huge
+	}
+	return 0
+}
+
+func (x *FundRate) GetBig() float64 {
+	if x != nil {
+		return x.Big
+	}
+	return 0
+}
+
+func (x *FundRate) GetMiddle() float64 {
+	if x != nil {
+		return x.Middle
+	}
+	return 0
+}
+
+func (x *FundRate) GetSmall() float64 {
+	if x != nil {
+		return x.Small
+	}
+	return 0
+}
+
+type OrderSummaryRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code             int32     `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg              string    `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	UserNum          int64     `protobuf:"varint,3,opt,name=user_num,json=userNum,proto3" json:"user_num,omitempty"`                              //用户数量(交易用户）
+	TotalTradeAmount int64     `protobuf:"varint,4,opt,name=total_trade_amount,json=totalTradeAmount,proto3" json:"total_trade_amount,omitempty"` // 总交易量
+	OrderNum         int64     `protobuf:"varint,5,opt,name=order_num,json=orderNum,proto3" json:"order_num,omitempty"`                           // 订单数
+	BuyRate          float64   `protobuf:"fixed64,6,opt,name=buy_rate,json=buyRate,proto3" json:"buy_rate,omitempty"`                             // 买占比
+	SellRate         float64   `protobuf:"fixed64,7,opt,name=sell_rate,json=sellRate,proto3" json:"sell_rate,omitempty"`                          // 卖占比
+	ProviderNum      int64     `protobuf:"varint,8,opt,name=provider_num,json=providerNum,proto3" json:"provider_num,omitempty"`                  // 厂商总数
+	FundRate         *FundRate `protobuf:"bytes,9,opt,name=fund_rate,json=fundRate,proto3" json:"fund_rate,omitempty"`                            // 资金占比
+	Progress         float64   `protobuf:"fixed64,10,opt,name=progress,proto3" json:"progress,omitempty"`                                         // 完成度
+	TotalUserNum     int64     `protobuf:"varint,11,opt,name=total_user_num,json=totalUserNum,proto3" json:"total_user_num,omitempty"`            // 总用户数量（基础数据）
+	// 之前单独拉取算法信息的接口直接并到这里来
+	AlgoCount          int32 `protobuf:"varint,12,opt,name=algo_count,json=algoCount,proto3" json:"algo_count,omitempty"`                              // 算法数量
+	ProviderCount      int32 `protobuf:"varint,13,opt,name=provider_count,json=providerCount,proto3" json:"provider_count,omitempty"`                  // 厂商数量
+	TradeAlgoCount     int32 `protobuf:"varint,14,opt,name=trade_algo_count,json=tradeAlgoCount,proto3" json:"trade_algo_count,omitempty"`             //当天有交易的算法数量
+	TradeProviderCount int32 `protobuf:"varint,15,opt,name=trade_provider_count,json=tradeProviderCount,proto3" json:"trade_provider_count,omitempty"` // 当天有交易的厂商数量
+}
+
+func (x *OrderSummaryRsp) Reset() {
+	*x = OrderSummaryRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[31]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrderSummaryRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrderSummaryRsp) ProtoMessage() {}
+
+func (x *OrderSummaryRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[31]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrderSummaryRsp.ProtoReflect.Descriptor instead.
+func (*OrderSummaryRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *OrderSummaryRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *OrderSummaryRsp) GetUserNum() int64 {
+	if x != nil {
+		return x.UserNum
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetTotalTradeAmount() int64 {
+	if x != nil {
+		return x.TotalTradeAmount
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetOrderNum() int64 {
+	if x != nil {
+		return x.OrderNum
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetBuyRate() float64 {
+	if x != nil {
+		return x.BuyRate
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetSellRate() float64 {
+	if x != nil {
+		return x.SellRate
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetProviderNum() int64 {
+	if x != nil {
+		return x.ProviderNum
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetFundRate() *FundRate {
+	if x != nil {
+		return x.FundRate
+	}
+	return nil
+}
+
+func (x *OrderSummaryRsp) GetProgress() float64 {
+	if x != nil {
+		return x.Progress
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetTotalUserNum() int64 {
+	if x != nil {
+		return x.TotalUserNum
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetAlgoCount() int32 {
+	if x != nil {
+		return x.AlgoCount
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetProviderCount() int32 {
+	if x != nil {
+		return x.ProviderCount
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetTradeAlgoCount() int32 {
+	if x != nil {
+		return x.TradeAlgoCount
+	}
+	return 0
+}
+
+func (x *OrderSummaryRsp) GetTradeProviderCount() int32 {
+	if x != nil {
+		return x.TradeProviderCount
+	}
+	return 0
+}
+
+type AlgoOrderReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Date     int64  `protobuf:"varint,1,opt,name=date,proto3" json:"date,omitempty"`                         // 时间
+	AlgoType int32  `protobuf:"varint,2,opt,name=algo_type,json=algoType,proto3" json:"algo_type,omitempty"` // 算法类型
+	UserId   string `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`        // 登陆用户ID
+	Page     int32  `protobuf:"varint,4,opt,name=page,proto3" json:"page,omitempty"`
+	Limit    int32  `protobuf:"varint,5,opt,name=limit,proto3" json:"limit,omitempty"`
+	UserType int32  `protobuf:"varint,6,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"` // 用户类型  0-普通用户  1-管理员
+}
+
+func (x *AlgoOrderReq) Reset() {
+	*x = AlgoOrderReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[32]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoOrderReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoOrderReq) ProtoMessage() {}
+
+func (x *AlgoOrderReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[32]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoOrderReq.ProtoReflect.Descriptor instead.
+func (*AlgoOrderReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *AlgoOrderReq) GetDate() int64 {
+	if x != nil {
+		return x.Date
+	}
+	return 0
+}
+
+func (x *AlgoOrderReq) GetAlgoType() int32 {
+	if x != nil {
+		return x.AlgoType
+	}
+	return 0
+}
+
+func (x *AlgoOrderReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *AlgoOrderReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *AlgoOrderReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+func (x *AlgoOrderReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+type AlgoTradeInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Provider         string  `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"`                                            // 厂商名称
+	UserNum          int64   `protobuf:"varint,2,opt,name=user_num,json=userNum,proto3" json:"user_num,omitempty"`                              // 用户数量
+	TotalTradeAmount int64   `protobuf:"varint,3,opt,name=total_trade_amount,json=totalTradeAmount,proto3" json:"total_trade_amount,omitempty"` // 交易总金额
+	ProfitRate       float64 `protobuf:"fixed64,4,opt,name=profit_rate,json=profitRate,proto3" json:"profit_rate,omitempty"`                    // 收益率
+	OrderNum         int64   `protobuf:"varint,5,opt,name=order_num,json=orderNum,proto3" json:"order_num,omitempty"`                           // 订单数量
+	BuyRate          float64 `protobuf:"fixed64,6,opt,name=buy_rate,json=buyRate,proto3" json:"buy_rate,omitempty"`                             // 买入占比
+	SellRate         float64 `protobuf:"fixed64,7,opt,name=sell_rate,json=sellRate,proto3" json:"sell_rate,omitempty"`                          // 卖出占比
+}
+
+func (x *AlgoTradeInfo) Reset() {
+	*x = AlgoTradeInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[33]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoTradeInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoTradeInfo) ProtoMessage() {}
+
+func (x *AlgoTradeInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[33]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoTradeInfo.ProtoReflect.Descriptor instead.
+func (*AlgoTradeInfo) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *AlgoTradeInfo) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *AlgoTradeInfo) GetUserNum() int64 {
+	if x != nil {
+		return x.UserNum
+	}
+	return 0
+}
+
+func (x *AlgoTradeInfo) GetTotalTradeAmount() int64 {
+	if x != nil {
+		return x.TotalTradeAmount
+	}
+	return 0
+}
+
+func (x *AlgoTradeInfo) GetProfitRate() float64 {
+	if x != nil {
+		return x.ProfitRate
+	}
+	return 0
+}
+
+func (x *AlgoTradeInfo) GetOrderNum() int64 {
+	if x != nil {
+		return x.OrderNum
+	}
+	return 0
+}
+
+func (x *AlgoTradeInfo) GetBuyRate() float64 {
+	if x != nil {
+		return x.BuyRate
+	}
+	return 0
+}
+
+func (x *AlgoTradeInfo) GetSellRate() float64 {
+	if x != nil {
+		return x.SellRate
+	}
+	return 0
+}
+
+type AlgoOrderRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32            `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string           `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64            `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Info  []*AlgoTradeInfo `protobuf:"bytes,4,rep,name=info,proto3" json:"info,omitempty"`
+}
+
+func (x *AlgoOrderRsp) Reset() {
+	*x = AlgoOrderRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoOrderRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoOrderRsp) ProtoMessage() {}
+
+func (x *AlgoOrderRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoOrderRsp.ProtoReflect.Descriptor instead.
+func (*AlgoOrderRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *AlgoOrderRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *AlgoOrderRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *AlgoOrderRsp) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *AlgoOrderRsp) GetInfo() []*AlgoTradeInfo {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
+type AssessSummary struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AlgoName      string      `protobuf:"bytes,1,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`                 // 算法名称
+	EconomyScore  int32       `protobuf:"varint,2,opt,name=economy_score,json=economyScore,proto3" json:"economy_score,omitempty"`    // 经济性评分
+	ProgressScore int32       `protobuf:"varint,3,opt,name=progress_score,json=progressScore,proto3" json:"progress_score,omitempty"` // 完成度评分
+	RiskScore     int32       `protobuf:"varint,4,opt,name=risk_score,json=riskScore,proto3" json:"risk_score,omitempty"`             // 风险度评分
+	AssessScore   int32       `protobuf:"varint,5,opt,name=assess_score,json=assessScore,proto3" json:"assess_score,omitempty"`       // 绩效评分
+	StableScore   int32       `protobuf:"varint,6,opt,name=stable_score,json=stableScore,proto3" json:"stable_score,omitempty"`       // 稳定性评分
+	TotalScore    int32       `protobuf:"varint,7,opt,name=total_score,json=totalScore,proto3" json:"total_score,omitempty"`          // 综合评分
+	Ranking       int32       `protobuf:"varint,8,opt,name=ranking,proto3" json:"ranking,omitempty"`                                  // 排名
+	Desc          string      `protobuf:"bytes,9,opt,name=desc,proto3" json:"desc,omitempty"`                                         // 描述
+	Tl            []*TimeLine `protobuf:"bytes,10,rep,name=tl,proto3" json:"tl,omitempty"`                                            // 时间线
+}
+
+func (x *AssessSummary) Reset() {
+	*x = AssessSummary{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[35]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AssessSummary) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssessSummary) ProtoMessage() {}
+
+func (x *AssessSummary) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[35]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssessSummary.ProtoReflect.Descriptor instead.
+func (*AssessSummary) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *AssessSummary) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *AssessSummary) GetEconomyScore() int32 {
+	if x != nil {
+		return x.EconomyScore
+	}
+	return 0
+}
+
+func (x *AssessSummary) GetProgressScore() int32 {
+	if x != nil {
+		return x.ProgressScore
+	}
+	return 0
+}
+
+func (x *AssessSummary) GetRiskScore() int32 {
+	if x != nil {
+		return x.RiskScore
+	}
+	return 0
+}
+
+func (x *AssessSummary) GetAssessScore() int32 {
+	if x != nil {
+		return x.AssessScore
+	}
+	return 0
+}
+
+func (x *AssessSummary) GetStableScore() int32 {
+	if x != nil {
+		return x.StableScore
+	}
+	return 0
+}
+
+func (x *AssessSummary) GetTotalScore() int32 {
+	if x != nil {
+		return x.TotalScore
+	}
+	return 0
+}
+
+func (x *AssessSummary) GetRanking() int32 {
+	if x != nil {
+		return x.Ranking
+	}
+	return 0
+}
+
+func (x *AssessSummary) GetDesc() string {
+	if x != nil {
+		return x.Desc
+	}
+	return ""
+}
+
+func (x *AssessSummary) GetTl() []*TimeLine {
+	if x != nil {
+		return x.Tl
+	}
+	return nil
+}
+
+type MultiAlgoReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Date      int64    `protobuf:"varint,1,opt,name=date,proto3" json:"date,omitempty"`                            //当前时间
+	AlgoType  int32    `protobuf:"varint,2,opt,name=algo_type,json=algoType,proto3" json:"algo_type,omitempty"`    // 算法类型
+	SceneType int32    `protobuf:"varint,3,opt,name=scene_type,json=sceneType,proto3" json:"scene_type,omitempty"` // 场景   1- dashboard top四个算法    2-对比分析
+	UserId    string   `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`           // 用户ID
+	AlgoName  []string `protobuf:"bytes,5,rep,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`     // 算法名称 （对比分析）
+	UserType  int32    `protobuf:"varint,6,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`    // 用户类型  0-普通用户  1-管理员
+}
+
+func (x *MultiAlgoReq) Reset() {
+	*x = MultiAlgoReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MultiAlgoReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MultiAlgoReq) ProtoMessage() {}
+
+func (x *MultiAlgoReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MultiAlgoReq.ProtoReflect.Descriptor instead.
+func (*MultiAlgoReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *MultiAlgoReq) GetDate() int64 {
+	if x != nil {
+		return x.Date
+	}
+	return 0
+}
+
+func (x *MultiAlgoReq) GetAlgoType() int32 {
+	if x != nil {
+		return x.AlgoType
+	}
+	return 0
+}
+
+func (x *MultiAlgoReq) GetSceneType() int32 {
+	if x != nil {
+		return x.SceneType
+	}
+	return 0
+}
+
+func (x *MultiAlgoReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *MultiAlgoReq) GetAlgoName() []string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return nil
+}
+
+func (x *MultiAlgoReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+type MultiAlgoRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32            `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg     string           `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Summary []*AssessSummary `protobuf:"bytes,3,rep,name=summary,proto3" json:"summary,omitempty"`
+}
+
+func (x *MultiAlgoRsp) Reset() {
+	*x = MultiAlgoRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[37]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MultiAlgoRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MultiAlgoRsp) ProtoMessage() {}
+
+func (x *MultiAlgoRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[37]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MultiAlgoRsp.ProtoReflect.Descriptor instead.
+func (*MultiAlgoRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *MultiAlgoRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *MultiAlgoRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *MultiAlgoRsp) GetSummary() []*AssessSummary {
+	if x != nil {
+		return x.Summary
+	}
+	return nil
+}
+
+type ChooseAlgoReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ChooseType int32 `protobuf:"varint,1,opt,name=choose_type,json=chooseType,proto3" json:"choose_type,omitempty"` // 筛选类型 // 筛选类型 1-拉取厂商列表  2-拉取算法类型列表  3-拉取算法名称列表
+	// 4-根据算法名称反查算法ID 5-拉取所有算法类型 6-根据算法类型名称反查算法类型 7-根据算法类型查询所有算法名称 8- 根据算法类型查询当天有交易的算法列表(查汇总表）
+	Provider     string `protobuf:"bytes,2,opt,name=provider,proto3" json:"provider,omitempty"`                               // 厂商名称
+	AlgoTypeName string `protobuf:"bytes,3,opt,name=algo_type_name,json=algoTypeName,proto3" json:"algo_type_name,omitempty"` // 算法类型
+	AlgoName     string `protobuf:"bytes,4,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`               // 算法名称
+	Date         int64  `protobuf:"varint,5,opt,name=date,proto3" json:"date,omitempty"`                                      // 日期
+}
+
+func (x *ChooseAlgoReq) Reset() {
+	*x = ChooseAlgoReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[38]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChooseAlgoReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChooseAlgoReq) ProtoMessage() {}
+
+func (x *ChooseAlgoReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[38]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChooseAlgoReq.ProtoReflect.Descriptor instead.
+func (*ChooseAlgoReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *ChooseAlgoReq) GetChooseType() int32 {
+	if x != nil {
+		return x.ChooseType
+	}
+	return 0
+}
+
+func (x *ChooseAlgoReq) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *ChooseAlgoReq) GetAlgoTypeName() string {
+	if x != nil {
+		return x.AlgoTypeName
+	}
+	return ""
+}
+
+func (x *ChooseAlgoReq) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *ChooseAlgoReq) GetDate() int64 {
+	if x != nil {
+		return x.Date
+	}
+	return 0
+}
+
+type ChooseAlgoRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code         int32    `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg          string   `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Provider     []string `protobuf:"bytes,3,rep,name=provider,proto3" json:"provider,omitempty"`
+	AlgoTypeName []string `protobuf:"bytes,4,rep,name=algo_type_name,json=algoTypeName,proto3" json:"algo_type_name,omitempty"`
+	AlgoName     []string `protobuf:"bytes,5,rep,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`
+	AlgoId       int32    `protobuf:"varint,6,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`       // 根据算法名称反查算法ID
+	AlgoType     int32    `protobuf:"varint,7,opt,name=algo_type,json=algoType,proto3" json:"algo_type,omitempty"` // 根据算法类型名称反查算法类型ID
+}
+
+func (x *ChooseAlgoRsp) Reset() {
+	*x = ChooseAlgoRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[39]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChooseAlgoRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChooseAlgoRsp) ProtoMessage() {}
+
+func (x *ChooseAlgoRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[39]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChooseAlgoRsp.ProtoReflect.Descriptor instead.
+func (*ChooseAlgoRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *ChooseAlgoRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *ChooseAlgoRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *ChooseAlgoRsp) GetProvider() []string {
+	if x != nil {
+		return x.Provider
+	}
+	return nil
+}
+
+func (x *ChooseAlgoRsp) GetAlgoTypeName() []string {
+	if x != nil {
+		return x.AlgoTypeName
+	}
+	return nil
+}
+
+func (x *ChooseAlgoRsp) GetAlgoName() []string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return nil
+}
+
+func (x *ChooseAlgoRsp) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *ChooseAlgoRsp) GetAlgoType() int32 {
+	if x != nil {
+		return x.AlgoType
+	}
+	return 0
+}
+
+type CompareAlgoScore struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AlgoName   string           `protobuf:"bytes,1,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`
+	TotalScore int32            `protobuf:"varint,2,opt,name=total_score,json=totalScore,proto3" json:"total_score,omitempty"`
+	Ranking    int32            `protobuf:"varint,3,opt,name=ranking,proto3" json:"ranking,omitempty"`
+	Dimension  []*AlgoDimension `protobuf:"bytes,4,rep,name=dimension,proto3" json:"dimension,omitempty"`
+	Tl         []*TimeLine      `protobuf:"bytes,5,rep,name=tl,proto3" json:"tl,omitempty"`
+}
+
+func (x *CompareAlgoScore) Reset() {
+	*x = CompareAlgoScore{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[40]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CompareAlgoScore) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompareAlgoScore) ProtoMessage() {}
+
+func (x *CompareAlgoScore) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[40]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompareAlgoScore.ProtoReflect.Descriptor instead.
+func (*CompareAlgoScore) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *CompareAlgoScore) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *CompareAlgoScore) GetTotalScore() int32 {
+	if x != nil {
+		return x.TotalScore
+	}
+	return 0
+}
+
+func (x *CompareAlgoScore) GetRanking() int32 {
+	if x != nil {
+		return x.Ranking
+	}
+	return 0
+}
+
+func (x *CompareAlgoScore) GetDimension() []*AlgoDimension {
+	if x != nil {
+		return x.Dimension
+	}
+	return nil
+}
+
+func (x *CompareAlgoScore) GetTl() []*TimeLine {
+	if x != nil {
+		return x.Tl
+	}
+	return nil
+}
+
+type CompareReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	StartTime    int64    `protobuf:"varint,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`            //开始时间
+	EndTime      int64    `protobuf:"varint,2,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                  // 结束时间
+	UserId       string   `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                      // 用户ID
+	AlgoName     []string `protobuf:"bytes,4,rep,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`                // 算法名称 （对比分析）
+	CrossDayFlag bool     `protobuf:"varint,5,opt,name=cross_day_flag,json=crossDayFlag,proto3" json:"cross_day_flag,omitempty"` // 跨天标识
+	UserType     int32    `protobuf:"varint,6,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`               // 用户类型  0-普通用户  1-管理员
+}
+
+func (x *CompareReq) Reset() {
+	*x = CompareReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[41]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CompareReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompareReq) ProtoMessage() {}
+
+func (x *CompareReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[41]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompareReq.ProtoReflect.Descriptor instead.
+func (*CompareReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *CompareReq) GetStartTime() int64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *CompareReq) GetEndTime() int64 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
+func (x *CompareReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *CompareReq) GetAlgoName() []string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return nil
+}
+
+func (x *CompareReq) GetCrossDayFlag() bool {
+	if x != nil {
+		return x.CrossDayFlag
+	}
+	return false
+}
+
+func (x *CompareReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+type CompareRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code      int32               `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg       string              `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	AlgoScore []*CompareAlgoScore `protobuf:"bytes,3,rep,name=algo_score,json=algoScore,proto3" json:"algo_score,omitempty"`
+}
+
+func (x *CompareRsp) Reset() {
+	*x = CompareRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[42]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CompareRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompareRsp) ProtoMessage() {}
+
+func (x *CompareRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[42]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompareRsp.ProtoReflect.Descriptor instead.
+func (*CompareRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *CompareRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *CompareRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *CompareRsp) GetAlgoScore() []*CompareAlgoScore {
+	if x != nil {
+		return x.AlgoScore
+	}
+	return nil
+}
+
+type MultiDayReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	StartTime    int64  `protobuf:"varint,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`            // 开始时间
+	EndTime      int64  `protobuf:"varint,2,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`                  // 结束时间
+	CrossDayFlag bool   `protobuf:"varint,3,opt,name=cross_day_flag,json=crossDayFlag,proto3" json:"cross_day_flag,omitempty"` // 跨天标识
+	UserId       string `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                      // 用户ID
+	AlgoId       int32  `protobuf:"varint,5,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`                     // 算法ID
+	UserType     int32  `protobuf:"varint,6,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`               // 用户类型  0-普通用户  1-管理员
+}
+
+func (x *MultiDayReq) Reset() {
+	*x = MultiDayReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[43]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MultiDayReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MultiDayReq) ProtoMessage() {}
+
+func (x *MultiDayReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[43]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MultiDayReq.ProtoReflect.Descriptor instead.
+func (*MultiDayReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *MultiDayReq) GetStartTime() int64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *MultiDayReq) GetEndTime() int64 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
+func (x *MultiDayReq) GetCrossDayFlag() bool {
+	if x != nil {
+		return x.CrossDayFlag
+	}
+	return false
+}
+
+func (x *MultiDayReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *MultiDayReq) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *MultiDayReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+type MultiDayRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg  string      `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Tl   []*TimeLine `protobuf:"bytes,3,rep,name=tl,proto3" json:"tl,omitempty"`
+}
+
+func (x *MultiDayRsp) Reset() {
+	*x = MultiDayRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[44]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MultiDayRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MultiDayRsp) ProtoMessage() {}
+
+func (x *MultiDayRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[44]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MultiDayRsp.ProtoReflect.Descriptor instead.
+func (*MultiDayRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *MultiDayRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *MultiDayRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *MultiDayRsp) GetTl() []*TimeLine {
+	if x != nil {
+		return x.Tl
+	}
+	return nil
+}
+
+type ScoreRankReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Date     int64  `protobuf:"varint,1,opt,name=date,proto3" json:"date,omitempty"`                         // 排名日期
+	RankType int32  `protobuf:"varint,2,opt,name=rank_type,json=rankType,proto3" json:"rank_type,omitempty"` // 排名类型
+	UserId   string `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`        // 用户ID
+	Page     int32  `protobuf:"varint,4,opt,name=page,proto3" json:"page,omitempty"`
+	Limit    int32  `protobuf:"varint,5,opt,name=limit,proto3" json:"limit,omitempty"`
+}
+
+func (x *ScoreRankReq) Reset() {
+	*x = ScoreRankReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[45]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ScoreRankReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ScoreRankReq) ProtoMessage() {}
+
+func (x *ScoreRankReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[45]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ScoreRankReq.ProtoReflect.Descriptor instead.
+func (*ScoreRankReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *ScoreRankReq) GetDate() int64 {
+	if x != nil {
+		return x.Date
+	}
+	return 0
+}
+
+func (x *ScoreRankReq) GetRankType() int32 {
+	if x != nil {
+		return x.RankType
+	}
+	return 0
+}
+
+func (x *ScoreRankReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *ScoreRankReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ScoreRankReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type ScoreRankInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Ranking  int32  `protobuf:"varint,1,opt,name=ranking,proto3" json:"ranking,omitempty"`                  // 排名
+	AlgoName string `protobuf:"bytes,2,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"` // 算法名称
+	Score    int32  `protobuf:"varint,3,opt,name=score,proto3" json:"score,omitempty"`                      // 分数
+	SecId    string `protobuf:"bytes,4,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"`          // 证券代杩
+	SecName  string `protobuf:"bytes,5,opt,name=sec_name,json=secName,proto3" json:"sec_name,omitempty"`    // 证券名称
+	UserId   string `protobuf:"bytes,6,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`       // 用户ID
+	UserName string `protobuf:"bytes,7,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"` // 用户名称
+}
+
+func (x *ScoreRankInfo) Reset() {
+	*x = ScoreRankInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[46]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ScoreRankInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ScoreRankInfo) ProtoMessage() {}
+
+func (x *ScoreRankInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[46]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ScoreRankInfo.ProtoReflect.Descriptor instead.
+func (*ScoreRankInfo) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *ScoreRankInfo) GetRanking() int32 {
+	if x != nil {
+		return x.Ranking
+	}
+	return 0
+}
+
+func (x *ScoreRankInfo) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *ScoreRankInfo) GetScore() int32 {
+	if x != nil {
+		return x.Score
+	}
+	return 0
+}
+
+func (x *ScoreRankInfo) GetSecId() string {
+	if x != nil {
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *ScoreRankInfo) GetSecName() string {
+	if x != nil {
+		return x.SecName
+	}
+	return ""
+}
+
+func (x *ScoreRankInfo) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *ScoreRankInfo) GetUserName() string {
+	if x != nil {
+		return x.UserName
+	}
+	return ""
+}
+
+type ScoreRankRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32            `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string           `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64            `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Info  []*ScoreRankInfo `protobuf:"bytes,4,rep,name=info,proto3" json:"info,omitempty"` // 排名列表
+}
+
+func (x *ScoreRankRsp) Reset() {
+	*x = ScoreRankRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[47]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ScoreRankRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ScoreRankRsp) ProtoMessage() {}
+
+func (x *ScoreRankRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[47]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ScoreRankRsp.ProtoReflect.Descriptor instead.
+func (*ScoreRankRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *ScoreRankRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *ScoreRankRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *ScoreRankRsp) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *ScoreRankRsp) GetInfo() []*ScoreRankInfo {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
+type LoginReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	LoginName string `protobuf:"bytes,1,opt,name=login_name,json=loginName,proto3" json:"login_name,omitempty"`
+	Password  string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+}
+
+func (x *LoginReq) Reset() {
+	*x = LoginReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[48]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LoginReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginReq) ProtoMessage() {}
+
+func (x *LoginReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[48]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginReq.ProtoReflect.Descriptor instead.
+func (*LoginReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *LoginReq) GetLoginName() string {
+	if x != nil {
+		return x.LoginName
+	}
+	return ""
+}
+
+func (x *LoginReq) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type LoginRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Allow int32  `protobuf:"varint,3,opt,name=allow,proto3" json:"allow,omitempty"`
+	Role  int32  `protobuf:"varint,4,opt,name=role,proto3" json:"role,omitempty"` // 角色：1-普通用户 2-算法厂商  3-管理员
+}
+
+func (x *LoginRsp) Reset() {
+	*x = LoginRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[49]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LoginRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginRsp) ProtoMessage() {}
+
+func (x *LoginRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[49]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginRsp.ProtoReflect.Descriptor instead.
+func (*LoginRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *LoginRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *LoginRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *LoginRsp) GetAllow() int32 {
+	if x != nil {
+		return x.Allow
+	}
+	return 0
+}
+
+func (x *LoginRsp) GetRole() int32 {
+	if x != nil {
+		return x.Role
+	}
+	return 0
+}
+
+type DefaultReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Scene     int32  `protobuf:"varint,1,opt,name=scene,proto3" json:"scene,omitempty"`                          // 1-算法动态  2-多日分析   3- 对比分析    4-胜率/信号分析   5-绩效分析多个算法结果拉取
+	UserId    string `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`           // 登陆用户ID
+	StartTime int64  `protobuf:"varint,3,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"` // 开始时间
+	EndTime   int64  `protobuf:"varint,4,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`       // 结束时间
+	UserType  int32  `protobuf:"varint,5,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`    // 用户类型  0-普通用户  1-管理员
+	BatchNo   int64  `protobuf:"varint,6,opt,name=batch_no,json=batchNo,proto3" json:"batch_no,omitempty"`       // 批次号
+}
+
+func (x *DefaultReq) Reset() {
+	*x = DefaultReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[50]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DefaultReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DefaultReq) ProtoMessage() {}
+
+func (x *DefaultReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[50]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DefaultReq.ProtoReflect.Descriptor instead.
+func (*DefaultReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *DefaultReq) GetScene() int32 {
+	if x != nil {
+		return x.Scene
+	}
+	return 0
+}
+
+func (x *DefaultReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *DefaultReq) GetStartTime() int64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *DefaultReq) GetEndTime() int64 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
+func (x *DefaultReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+func (x *DefaultReq) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+type DefaultRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code         int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg          string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	AlgoId       int32  `protobuf:"varint,3,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`                    // 算法ID
+	AlgoName     string `protobuf:"bytes,4,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`               // 算法名称
+	AlgoTypeName string `protobuf:"bytes,5,opt,name=algo_type_name,json=algoTypeName,proto3" json:"algo_type_name,omitempty"` // 算法类型名称
+	Provider     string `protobuf:"bytes,6,opt,name=provider,proto3" json:"provider,omitempty"`                               // 算法厂商
+}
+
+func (x *DefaultRsp) Reset() {
+	*x = DefaultRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[51]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DefaultRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DefaultRsp) ProtoMessage() {}
+
+func (x *DefaultRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[51]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DefaultRsp.ProtoReflect.Descriptor instead.
+func (*DefaultRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{51}
+}
+
+func (x *DefaultRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *DefaultRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *DefaultRsp) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *DefaultRsp) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *DefaultRsp) GetAlgoTypeName() string {
+	if x != nil {
+		return x.AlgoTypeName
+	}
+	return ""
+}
+
+func (x *DefaultRsp) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+type UserProfileReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Provider string `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"`                  // 算法厂商
+	AlgoType int32  `protobuf:"varint,2,opt,name=algo_type,json=algoType,proto3" json:"algo_type,omitempty"` // 算法类型
+	AlgoId   int32  `protobuf:"varint,3,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`       // 算法ID
+	AlgoName string `protobuf:"bytes,4,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`  // 算法名称
+	UserId   string `protobuf:"bytes,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`        // 用户ID
+	CurDay   int64  `protobuf:"varint,6,opt,name=cur_day,json=curDay,proto3" json:"cur_day,omitempty"`       // 当天时间
+	UserType int32  `protobuf:"varint,7,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"` // 用户类型  0-普通用户  1-管理员
+}
+
+func (x *UserProfileReq) Reset() {
+	*x = UserProfileReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[52]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UserProfileReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserProfileReq) ProtoMessage() {}
+
+func (x *UserProfileReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[52]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserProfileReq.ProtoReflect.Descriptor instead.
+func (*UserProfileReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{52}
+}
+
+func (x *UserProfileReq) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *UserProfileReq) GetAlgoType() int32 {
+	if x != nil {
+		return x.AlgoType
+	}
+	return 0
+}
+
+func (x *UserProfileReq) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *UserProfileReq) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *UserProfileReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *UserProfileReq) GetCurDay() int64 {
+	if x != nil {
+		return x.CurDay
+	}
+	return 0
+}
+
+func (x *UserProfileReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+type UserProfileRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code        int32            `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg         string           `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Profit      int64            `protobuf:"varint,3,opt,name=profit,proto3" json:"profit,omitempty"`                              // 资金盈亏
+	TradeCnt    int32            `protobuf:"varint,4,opt,name=trade_cnt,json=tradeCnt,proto3" json:"trade_cnt,omitempty"`          // 交易次数
+	TradeAmount int64            `protobuf:"varint,5,opt,name=trade_amount,json=tradeAmount,proto3" json:"trade_amount,omitempty"` // 当天交易金额
+	UserGrade   string           `protobuf:"bytes,6,opt,name=user_grade,json=userGrade,proto3" json:"user_grade,omitempty"`        // 用户级别
+	Progress    float64          `protobuf:"fixed64,7,opt,name=progress,proto3" json:"progress,omitempty"`                         // 完成度
+	Dimension   []*AlgoDimension `protobuf:"bytes,8,rep,name=dimension,proto3" json:"dimension,omitempty"`                         // 五个维度列表
+	TotalScore  int32            `protobuf:"varint,9,opt,name=total_score,json=totalScore,proto3" json:"total_score,omitempty"`    // 综合评分
+	Ranking     int32            `protobuf:"varint,10,opt,name=ranking,proto3" json:"ranking,omitempty"`                           // 排名
+}
+
+func (x *UserProfileRsp) Reset() {
+	*x = UserProfileRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[53]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UserProfileRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserProfileRsp) ProtoMessage() {}
+
+func (x *UserProfileRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[53]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserProfileRsp.ProtoReflect.Descriptor instead.
+func (*UserProfileRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{53}
+}
+
+func (x *UserProfileRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *UserProfileRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *UserProfileRsp) GetProfit() int64 {
+	if x != nil {
+		return x.Profit
+	}
+	return 0
+}
+
+func (x *UserProfileRsp) GetTradeCnt() int32 {
+	if x != nil {
+		return x.TradeCnt
+	}
+	return 0
+}
+
+func (x *UserProfileRsp) GetTradeAmount() int64 {
+	if x != nil {
+		return x.TradeAmount
+	}
+	return 0
+}
+
+func (x *UserProfileRsp) GetUserGrade() string {
+	if x != nil {
+		return x.UserGrade
+	}
+	return ""
+}
+
+func (x *UserProfileRsp) GetProgress() float64 {
+	if x != nil {
+		return x.Progress
+	}
+	return 0
+}
+
+func (x *UserProfileRsp) GetDimension() []*AlgoDimension {
+	if x != nil {
+		return x.Dimension
+	}
+	return nil
+}
+
+func (x *UserProfileRsp) GetTotalScore() int32 {
+	if x != nil {
+		return x.TotalScore
+	}
+	return 0
+}
+
+func (x *UserProfileRsp) GetRanking() int32 {
+	if x != nil {
+		return x.Ranking
+	}
+	return 0
+}
+
+type WinRatioHead struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AlgoName         string  `protobuf:"bytes,1,opt,name=algo_name,json=algoName,proto3" json:"algo_name,omitempty"`                           // 算法名称
+	StartDay         string  `protobuf:"bytes,2,opt,name=start_day,json=startDay,proto3" json:"start_day,omitempty"`                           // 开始日期 20220503
+	EndDay           string  `protobuf:"bytes,3,opt,name=end_day,json=endDay,proto3" json:"end_day,omitempty"`                                 // 结束日期
+	TradeDays        int32   `protobuf:"varint,4,opt,name=trade_days,json=tradeDays,proto3" json:"trade_days,omitempty"`                       // 交易天数
+	AvgDailyProfit   float64 `protobuf:"fixed64,5,opt,name=avg_daily_profit,json=avgDailyProfit,proto3" json:"avg_daily_profit,omitempty"`     // 日均收益率
+	AnnualizedProfit float64 `protobuf:"fixed64,6,opt,name=annualized_profit,json=annualizedProfit,proto3" json:"annualized_profit,omitempty"` // 年化收益率
+	TotalProfit      float64 `protobuf:"fixed64,7,opt,name=total_profit,json=totalProfit,proto3" json:"total_profit,omitempty"`                // 累计收益
+	MaxWithdraw      float64 `protobuf:"fixed64,8,opt,name=max_withdraw,json=maxWithdraw,proto3" json:"max_withdraw,omitempty"`                // 最大回撤
+	DailyProgress    float64 `protobuf:"fixed64,9,opt,name=daily_progress,json=dailyProgress,proto3" json:"daily_progress,omitempty"`          // 日均完成度
+	DailyStocks      int32   `protobuf:"varint,10,opt,name=daily_stocks,json=dailyStocks,proto3" json:"daily_stocks,omitempty"`                // 日均股数
+	ProfitDays       int32   `protobuf:"varint,11,opt,name=profit_days,json=profitDays,proto3" json:"profit_days,omitempty"`                   // 盈利天数
+	ProfitDayRate    float64 `protobuf:"fixed64,12,opt,name=profit_day_rate,json=profitDayRate,proto3" json:"profit_day_rate,omitempty"`       // 盈利天占比
+}
+
+func (x *WinRatioHead) Reset() {
+	*x = WinRatioHead{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[54]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WinRatioHead) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WinRatioHead) ProtoMessage() {}
+
+func (x *WinRatioHead) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[54]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WinRatioHead.ProtoReflect.Descriptor instead.
+func (*WinRatioHead) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{54}
+}
+
+func (x *WinRatioHead) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *WinRatioHead) GetStartDay() string {
+	if x != nil {
+		return x.StartDay
+	}
+	return ""
+}
+
+func (x *WinRatioHead) GetEndDay() string {
+	if x != nil {
+		return x.EndDay
+	}
+	return ""
+}
+
+func (x *WinRatioHead) GetTradeDays() int32 {
+	if x != nil {
+		return x.TradeDays
+	}
+	return 0
+}
+
+func (x *WinRatioHead) GetAvgDailyProfit() float64 {
+	if x != nil {
+		return x.AvgDailyProfit
+	}
+	return 0
+}
+
+func (x *WinRatioHead) GetAnnualizedProfit() float64 {
+	if x != nil {
+		return x.AnnualizedProfit
+	}
+	return 0
+}
+
+func (x *WinRatioHead) GetTotalProfit() float64 {
+	if x != nil {
+		return x.TotalProfit
+	}
+	return 0
+}
+
+func (x *WinRatioHead) GetMaxWithdraw() float64 {
+	if x != nil {
+		return x.MaxWithdraw
+	}
+	return 0
+}
+
+func (x *WinRatioHead) GetDailyProgress() float64 {
+	if x != nil {
+		return x.DailyProgress
+	}
+	return 0
+}
+
+func (x *WinRatioHead) GetDailyStocks() int32 {
+	if x != nil {
+		return x.DailyStocks
+	}
+	return 0
+}
+
+func (x *WinRatioHead) GetProfitDays() int32 {
+	if x != nil {
+		return x.ProfitDays
+	}
+	return 0
+}
+
+func (x *WinRatioHead) GetProfitDayRate() float64 {
+	if x != nil {
+		return x.ProfitDayRate
+	}
+	return 0
+}
+
+type WinRatioInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Day      string  `protobuf:"bytes,1,opt,name=day,proto3" json:"day,omitempty"`                             // 日期
+	WinRatio float64 `protobuf:"fixed64,2,opt,name=win_ratio,json=winRatio,proto3" json:"win_ratio,omitempty"` // 胜率 （百分比）
+	Odds     float64 `protobuf:"fixed64,3,opt,name=odds,proto3" json:"odds,omitempty"`                         // 赔率
+	Profit   float64 `protobuf:"fixed64,4,opt,name=profit,proto3" json:"profit,omitempty"`                     // 盈亏金额
+}
+
+func (x *WinRatioInfo) Reset() {
+	*x = WinRatioInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[55]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WinRatioInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WinRatioInfo) ProtoMessage() {}
+
+func (x *WinRatioInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[55]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WinRatioInfo.ProtoReflect.Descriptor instead.
+func (*WinRatioInfo) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{55}
+}
+
+func (x *WinRatioInfo) GetDay() string {
+	if x != nil {
+		return x.Day
+	}
+	return ""
+}
+
+func (x *WinRatioInfo) GetWinRatio() float64 {
+	if x != nil {
+		return x.WinRatio
+	}
+	return 0
+}
+
+func (x *WinRatioInfo) GetOdds() float64 {
+	if x != nil {
+		return x.Odds
+	}
+	return 0
+}
+
+func (x *WinRatioInfo) GetProfit() float64 {
+	if x != nil {
+		return x.Profit
+	}
+	return 0
+}
+
+type WinRatioReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AlgoId   int32  `protobuf:"varint,1,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`       //算法ID
+	StartDay int64  `protobuf:"varint,2,opt,name=start_day,json=startDay,proto3" json:"start_day,omitempty"` // 开始日期 20220503
+	EndDay   int64  `protobuf:"varint,3,opt,name=end_day,json=endDay,proto3" json:"end_day,omitempty"`       // 结束日期
+	UserId   string `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`        // 用户ID
+	UserType int32  `protobuf:"varint,5,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"` // 用户类型
+}
+
+func (x *WinRatioReq) Reset() {
+	*x = WinRatioReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[56]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WinRatioReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WinRatioReq) ProtoMessage() {}
+
+func (x *WinRatioReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[56]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WinRatioReq.ProtoReflect.Descriptor instead.
+func (*WinRatioReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{56}
+}
+
+func (x *WinRatioReq) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *WinRatioReq) GetStartDay() int64 {
+	if x != nil {
+		return x.StartDay
+	}
+	return 0
+}
+
+func (x *WinRatioReq) GetEndDay() int64 {
+	if x != nil {
+		return x.EndDay
+	}
+	return 0
+}
+
+func (x *WinRatioReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *WinRatioReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+type WinRatioRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code    int32           `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg     string          `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	WinHead *WinRatioHead   `protobuf:"bytes,3,opt,name=win_head,json=winHead,proto3" json:"win_head,omitempty"` // 表头
+	Info    []*WinRatioInfo `protobuf:"bytes,4,rep,name=info,proto3" json:"info,omitempty"`                      // 列表
+}
+
+func (x *WinRatioRsp) Reset() {
+	*x = WinRatioRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[57]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *WinRatioRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WinRatioRsp) ProtoMessage() {}
+
+func (x *WinRatioRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[57]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WinRatioRsp.ProtoReflect.Descriptor instead.
+func (*WinRatioRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{57}
+}
+
+func (x *WinRatioRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *WinRatioRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *WinRatioRsp) GetWinHead() *WinRatioHead {
+	if x != nil {
+		return x.WinHead
+	}
+	return nil
+}
+
+func (x *WinRatioRsp) GetInfo() []*WinRatioInfo {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
+type SignalReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AlgoId   int32  `protobuf:"varint,1,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`       //算法ID
+	StartDay int64  `protobuf:"varint,2,opt,name=start_day,json=startDay,proto3" json:"start_day,omitempty"` // 开始日期 20220503
+	EndDay   int64  `protobuf:"varint,3,opt,name=end_day,json=endDay,proto3" json:"end_day,omitempty"`       // 结束日期
+	UserId   string `protobuf:"bytes,4,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`        // 用户ID
+	UserType int32  `protobuf:"varint,5,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"` // 用户类型
+}
+
+func (x *SignalReq) Reset() {
+	*x = SignalReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[58]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SignalReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignalReq) ProtoMessage() {}
+
+func (x *SignalReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[58]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignalReq.ProtoReflect.Descriptor instead.
+func (*SignalReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{58}
+}
+
+func (x *SignalReq) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *SignalReq) GetStartDay() int64 {
+	if x != nil {
+		return x.StartDay
+	}
+	return 0
+}
+
+func (x *SignalReq) GetEndDay() int64 {
+	if x != nil {
+		return x.EndDay
+	}
+	return 0
+}
+
+func (x *SignalReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *SignalReq) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+type SignalInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Day      string  `protobuf:"bytes,1,opt,name=day,proto3" json:"day,omitempty"`                            // 日期
+	OrderNum int32   `protobuf:"varint,2,opt,name=order_num,json=orderNum,proto3" json:"order_num,omitempty"` // 下单量
+	Progress float64 `protobuf:"fixed64,3,opt,name=progress,proto3" json:"progress,omitempty"`                // 完成率
+}
+
+func (x *SignalInfo) Reset() {
+	*x = SignalInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[59]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SignalInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignalInfo) ProtoMessage() {}
+
+func (x *SignalInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[59]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignalInfo.ProtoReflect.Descriptor instead.
+func (*SignalInfo) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{59}
+}
+
+func (x *SignalInfo) GetDay() string {
+	if x != nil {
+		return x.Day
+	}
+	return ""
+}
+
+func (x *SignalInfo) GetOrderNum() int32 {
+	if x != nil {
+		return x.OrderNum
+	}
+	return 0
+}
+
+func (x *SignalInfo) GetProgress() float64 {
+	if x != nil {
+		return x.Progress
+	}
+	return 0
+}
+
+type SignalRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code int32         `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg  string        `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Info []*SignalInfo `protobuf:"bytes,3,rep,name=info,proto3" json:"info,omitempty"`
+}
+
+func (x *SignalRsp) Reset() {
+	*x = SignalRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[60]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SignalRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignalRsp) ProtoMessage() {}
+
+func (x *SignalRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[60]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignalRsp.ProtoReflect.Descriptor instead.
+func (*SignalRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *SignalRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *SignalRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *SignalRsp) GetInfo() []*SignalInfo {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
+// ----------------绩效修复------------------
+// 子单下发绩效平台接口
+type ChildOrderPerf struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id             uint32  `protobuf:"fixed32,1,opt,name=Id,proto3" json:"Id,omitempty"`                          // uint32  子单号
+	BusUserId      string  `protobuf:"bytes,2,opt,name=BusUserId,proto3" json:"BusUserId,omitempty"`              // 总线用户ID
+	BusUuserId     uint32  `protobuf:"fixed32,3,opt,name=BusUuserId,proto3" json:"BusUuserId,omitempty"`          // 总线用户整型ID
+	AlgoOrderId    uint32  `protobuf:"fixed32,4,opt,name=AlgoOrderId,proto3" json:"AlgoOrderId,omitempty"`        // uint32   母单号
+	AlgorithmType  uint32  `protobuf:"fixed32,5,opt,name=AlgorithmType,proto3" json:"AlgorithmType,omitempty"`    // -->uint16 算法类型
+	AlgorithmId    uint32  `protobuf:"fixed32,6,opt,name=AlgorithmId,proto3" json:"AlgorithmId,omitempty"`        // -->uint16 算法ID
+	USecurityId    uint32  `protobuf:"fixed32,7,opt,name=USecurityId,proto3" json:"USecurityId,omitempty"`        // uint32 证券ID
+	SecurityId     string  `protobuf:"bytes,8,opt,name=SecurityId,proto3" json:"SecurityId,omitempty"`            // -->char[8] 证券代码
+	Side           uint32  `protobuf:"fixed32,9,opt,name=Side,proto3" json:"Side,omitempty"`                      // 买卖方向  49-买   50-卖
+	OrderQty       uint64  `protobuf:"fixed64,10,opt,name=OrderQty,proto3" json:"OrderQty,omitempty"`             // uint64 委托数量
+	Price          uint64  `protobuf:"fixed64,11,opt,name=Price,proto3" json:"Price,omitempty"`                   // uint64 委托价格
+	OrderType      uint32  `protobuf:"fixed32,12,opt,name=OrderType,proto3" json:"OrderType,omitempty"`           // -->uint8 订单类型
+	CumQty         uint64  `protobuf:"fixed64,13,opt,name=CumQty,proto3" json:"CumQty,omitempty"`                 // uint64 总成交数量
+	LastPx         uint64  `protobuf:"fixed64,14,opt,name=LastPx,proto3" json:"LastPx,omitempty"`                 // uint64 成交金额
+	LastQty        uint64  `protobuf:"fixed64,15,opt,name=LastQty,proto3" json:"LastQty,omitempty"`               // uint64 成交数量
+	Charge         float64 `protobuf:"fixed64,16,opt,name=Charge,proto3" json:"Charge,omitempty"`                 // 手续费
+	ArrivedPrice   uint64  `protobuf:"fixed64,17,opt,name=ArrivedPrice,proto3" json:"ArrivedPrice,omitempty"`     // uint64 到达价格
+	ChildOrdStatus uint32  `protobuf:"fixed32,18,opt,name=ChildOrdStatus,proto3" json:"ChildOrdStatus,omitempty"` // -->uint8 子订单状态
+	TransactTime   uint64  `protobuf:"fixed64,19,opt,name=TransactTime,proto3" json:"TransactTime,omitempty"`     // uint64 交易时间
+	Version        uint32  `protobuf:"fixed32,20,opt,name=Version,proto3" json:"Version,omitempty"`               // 子单版本号
+	BatchNo        int64   `protobuf:"varint,21,opt,name=BatchNo,proto3" json:"BatchNo,omitempty"`                // 批次号
+	BatchName      string  `protobuf:"bytes,22,opt,name=BatchName,proto3" json:"BatchName,omitempty"`             // 批次号名称
+	SourceFrom     int32   `protobuf:"varint,23,opt,name=SourceFrom,proto3" json:"SourceFrom,omitempty"`          // 来源 0-总线 1-数据修复 2-数据导入
+}
+
+func (x *ChildOrderPerf) Reset() {
+	*x = ChildOrderPerf{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[61]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChildOrderPerf) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChildOrderPerf) ProtoMessage() {}
+
+func (x *ChildOrderPerf) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[61]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChildOrderPerf.ProtoReflect.Descriptor instead.
+func (*ChildOrderPerf) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{61}
+}
+
+func (x *ChildOrderPerf) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetBusUserId() string {
+	if x != nil {
+		return x.BusUserId
+	}
+	return ""
+}
+
+func (x *ChildOrderPerf) GetBusUuserId() uint32 {
+	if x != nil {
+		return x.BusUuserId
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetAlgoOrderId() uint32 {
+	if x != nil {
+		return x.AlgoOrderId
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetAlgorithmType() uint32 {
+	if x != nil {
+		return x.AlgorithmType
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetAlgorithmId() uint32 {
+	if x != nil {
+		return x.AlgorithmId
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetUSecurityId() uint32 {
+	if x != nil {
+		return x.USecurityId
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetSecurityId() string {
+	if x != nil {
+		return x.SecurityId
+	}
+	return ""
+}
+
+func (x *ChildOrderPerf) GetSide() uint32 {
+	if x != nil {
+		return x.Side
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetOrderQty() uint64 {
+	if x != nil {
+		return x.OrderQty
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetPrice() uint64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetOrderType() uint32 {
+	if x != nil {
+		return x.OrderType
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetCumQty() uint64 {
+	if x != nil {
+		return x.CumQty
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetLastPx() uint64 {
+	if x != nil {
+		return x.LastPx
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetLastQty() uint64 {
+	if x != nil {
+		return x.LastQty
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetCharge() float64 {
+	if x != nil {
+		return x.Charge
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetArrivedPrice() uint64 {
+	if x != nil {
+		return x.ArrivedPrice
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetChildOrdStatus() uint32 {
+	if x != nil {
+		return x.ChildOrdStatus
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetTransactTime() uint64 {
+	if x != nil {
+		return x.TransactTime
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetVersion() uint32 {
+	if x != nil {
+		return x.Version
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+func (x *ChildOrderPerf) GetBatchName() string {
+	if x != nil {
+		return x.BatchName
+	}
+	return ""
+}
+
+func (x *ChildOrderPerf) GetSourceFrom() int32 {
+	if x != nil {
+		return x.SourceFrom
+	}
+	return 0
+}
+
+// 母单下发绩效平台接口
+type AlgoOrderPerf struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id            uint32 `protobuf:"fixed32,1,opt,name=Id,proto3" json:"Id,omitempty"`                       // uint32
+	BasketId      uint32 `protobuf:"fixed32,2,opt,name=BasketId,proto3" json:"BasketId,omitempty"`           // 篮子ID
+	AlgorithmType uint32 `protobuf:"fixed32,3,opt,name=AlgorithmType,proto3" json:"AlgorithmType,omitempty"` // -->uint16
+	AlgorithmId   uint32 `protobuf:"fixed32,4,opt,name=AlgorithmId,proto3" json:"AlgorithmId,omitempty"`     // -->uint16
+	USecurityId   uint32 `protobuf:"fixed32,5,opt,name=USecurityId,proto3" json:"USecurityId,omitempty"`     // uint32
+	SecurityId    string `protobuf:"bytes,6,opt,name=SecurityId,proto3" json:"SecurityId,omitempty"`         // char[8]
+	AlgoOrderQty  uint64 `protobuf:"fixed64,7,opt,name=AlgoOrderQty,proto3" json:"AlgoOrderQty,omitempty"`   // uint64
+	TransactTime  uint64 `protobuf:"fixed64,8,opt,name=TransactTime,proto3" json:"TransactTime,omitempty"`   // uint64
+	StartTime     uint64 `protobuf:"fixed64,9,opt,name=StartTime,proto3" json:"StartTime,omitempty"`         // 母单开始时间
+	EndTime       uint64 `protobuf:"fixed64,10,opt,name=EndTime,proto3" json:"EndTime,omitempty"`            // 母单结束时间
+	BusUserId     string `protobuf:"bytes,11,opt,name=BusUserId,proto3" json:"BusUserId,omitempty"`          // 总线用户ID
+	BatchNo       int64  `protobuf:"varint,12,opt,name=BatchNo,proto3" json:"BatchNo,omitempty"`             // 批次号
+	BatchName     string `protobuf:"bytes,13,opt,name=BatchName,proto3" json:"BatchName,omitempty"`          // 批次号名称
+	SourceFrom    int32  `protobuf:"varint,14,opt,name=SourceFrom,proto3" json:"SourceFrom,omitempty"`       // 来源 0-总线 1-数据修复 2-数据导入
+}
+
+func (x *AlgoOrderPerf) Reset() {
+	*x = AlgoOrderPerf{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[62]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoOrderPerf) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoOrderPerf) ProtoMessage() {}
+
+func (x *AlgoOrderPerf) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[62]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoOrderPerf.ProtoReflect.Descriptor instead.
+func (*AlgoOrderPerf) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{62}
+}
+
+func (x *AlgoOrderPerf) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *AlgoOrderPerf) GetBasketId() uint32 {
+	if x != nil {
+		return x.BasketId
+	}
+	return 0
+}
+
+func (x *AlgoOrderPerf) GetAlgorithmType() uint32 {
+	if x != nil {
+		return x.AlgorithmType
+	}
+	return 0
+}
+
+func (x *AlgoOrderPerf) GetAlgorithmId() uint32 {
+	if x != nil {
+		return x.AlgorithmId
+	}
+	return 0
+}
+
+func (x *AlgoOrderPerf) GetUSecurityId() uint32 {
+	if x != nil {
+		return x.USecurityId
+	}
+	return 0
+}
+
+func (x *AlgoOrderPerf) GetSecurityId() string {
+	if x != nil {
+		return x.SecurityId
+	}
+	return ""
+}
+
+func (x *AlgoOrderPerf) GetAlgoOrderQty() uint64 {
+	if x != nil {
+		return x.AlgoOrderQty
+	}
+	return 0
+}
+
+func (x *AlgoOrderPerf) GetTransactTime() uint64 {
+	if x != nil {
+		return x.TransactTime
+	}
+	return 0
+}
+
+func (x *AlgoOrderPerf) GetStartTime() uint64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *AlgoOrderPerf) GetEndTime() uint64 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
+func (x *AlgoOrderPerf) GetBusUserId() string {
+	if x != nil {
+		return x.BusUserId
+	}
+	return ""
+}
+
+func (x *AlgoOrderPerf) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+func (x *AlgoOrderPerf) GetBatchName() string {
+	if x != nil {
+		return x.BatchName
+	}
+	return ""
+}
+
+func (x *AlgoOrderPerf) GetSourceFrom() int32 {
+	if x != nil {
+		return x.SourceFrom
+	}
+	return 0
+}
+
+// 母单绩效修复
+type AlgoOrderPerfs struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Parts []*AlgoOrderPerf `protobuf:"bytes,1,rep,name=parts,proto3" json:"parts,omitempty"`
+}
+
+func (x *AlgoOrderPerfs) Reset() {
+	*x = AlgoOrderPerfs{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[63]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoOrderPerfs) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoOrderPerfs) ProtoMessage() {}
+
+func (x *AlgoOrderPerfs) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[63]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoOrderPerfs.ProtoReflect.Descriptor instead.
+func (*AlgoOrderPerfs) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{63}
+}
+
+func (x *AlgoOrderPerfs) GetParts() []*AlgoOrderPerf {
+	if x != nil {
+		return x.Parts
+	}
+	return nil
+}
+
+// 子单绩效修复
+type ChildOrderPerfs struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Parts []*ChildOrderPerf `protobuf:"bytes,1,rep,name=parts,proto3" json:"parts,omitempty"`
+}
+
+func (x *ChildOrderPerfs) Reset() {
+	*x = ChildOrderPerfs{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[64]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChildOrderPerfs) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChildOrderPerfs) ProtoMessage() {}
+
+func (x *ChildOrderPerfs) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[64]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChildOrderPerfs.ProtoReflect.Descriptor instead.
+func (*ChildOrderPerfs) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{64}
+}
+
+func (x *ChildOrderPerfs) GetParts() []*ChildOrderPerf {
+	if x != nil {
+		return x.Parts
+	}
+	return nil
+}
+
+type PushDataRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code      int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg       string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	StartTime int64  `protobuf:"varint,3,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime   int64  `protobuf:"varint,4,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+}
+
+func (x *PushDataRsp) Reset() {
+	*x = PushDataRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[65]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PushDataRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PushDataRsp) ProtoMessage() {}
+
+func (x *PushDataRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[65]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PushDataRsp.ProtoReflect.Descriptor instead.
+func (*PushDataRsp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{65}
+}
+
+func (x *PushDataRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *PushDataRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *PushDataRsp) GetStartTime() int64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *PushDataRsp) GetEndTime() int64 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
+type ReqQueryAlgoOrder struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	AlgoId    int32  `protobuf:"varint,1,opt,name=algoId,proto3" json:"algoId,omitempty"` // 母单ID
+	SecId     string `protobuf:"bytes,2,opt,name=secId,proto3" json:"secId,omitempty"`
+	PageId    int32  `protobuf:"varint,3,opt,name=pageId,proto3" json:"pageId,omitempty"`
+	PageNum   int32  `protobuf:"varint,4,opt,name=pageNum,proto3" json:"pageNum,omitempty"`
+	AlgoName  string `protobuf:"bytes,5,opt,name=AlgoName,proto3" json:"AlgoName,omitempty"` // 算法名称
+	Scene     int32  `protobuf:"varint,6,opt,name=scene,proto3" json:"scene,omitempty"`      // 1:数据修复   2-订单导入
+	UserId    string `protobuf:"bytes,7,opt,name=userId,proto3" json:"userId,omitempty"`
+	UserType  int32  `protobuf:"varint,8,opt,name=userType,proto3" json:"userType,omitempty"`
+	StartTime int32  `protobuf:"varint,9,opt,name=startTime,proto3" json:"startTime,omitempty"` // 交易日期 20230503
+	EndTime   int32  `protobuf:"varint,10,opt,name=endTime,proto3" json:"endTime,omitempty"`
+}
+
+func (x *ReqQueryAlgoOrder) Reset() {
+	*x = ReqQueryAlgoOrder{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[66]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ReqQueryAlgoOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReqQueryAlgoOrder) ProtoMessage() {}
+
+func (x *ReqQueryAlgoOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[66]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReqQueryAlgoOrder.ProtoReflect.Descriptor instead.
+func (*ReqQueryAlgoOrder) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{66}
+}
+
+func (x *ReqQueryAlgoOrder) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *ReqQueryAlgoOrder) GetSecId() string {
+	if x != nil {
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *ReqQueryAlgoOrder) GetPageId() int32 {
+	if x != nil {
+		return x.PageId
+	}
+	return 0
+}
+
+func (x *ReqQueryAlgoOrder) GetPageNum() int32 {
+	if x != nil {
+		return x.PageNum
+	}
+	return 0
+}
+
+func (x *ReqQueryAlgoOrder) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *ReqQueryAlgoOrder) GetScene() int32 {
+	if x != nil {
+		return x.Scene
+	}
+	return 0
+}
+
+func (x *ReqQueryAlgoOrder) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *ReqQueryAlgoOrder) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+func (x *ReqQueryAlgoOrder) GetStartTime() int32 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *ReqQueryAlgoOrder) GetEndTime() int32 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
+type AlgoOrder struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id            int64  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	BasketId      int32  `protobuf:"varint,2,opt,name=basketId,proto3" json:"basketId,omitempty"`
+	AlgoId        int32  `protobuf:"varint,3,opt,name=algoId,proto3" json:"algoId,omitempty"`
+	AlgorithmId   int32  `protobuf:"varint,4,opt,name=algorithmId,proto3" json:"algorithmId,omitempty"`
+	UsecId        int32  `protobuf:"varint,5,opt,name=usecId,proto3" json:"usecId,omitempty"`
+	SecId         string `protobuf:"bytes,6,opt,name=secId,proto3" json:"secId,omitempty"`
+	AlgoOrderQty  int64  `protobuf:"varint,7,opt,name=algoOrderQty,proto3" json:"algoOrderQty,omitempty"`
+	TransTime     string `protobuf:"bytes,8,opt,name=transTime,proto3" json:"transTime,omitempty"`
+	StartTime     string `protobuf:"bytes,9,opt,name=startTime,proto3" json:"startTime,omitempty"`
+	EndTime       string `protobuf:"bytes,10,opt,name=endTime,proto3" json:"endTime,omitempty"`
+	CreateTime    string `protobuf:"bytes,11,opt,name=createTime,proto3" json:"createTime,omitempty"`
+	FixFlag       int32  `protobuf:"varint,12,opt,name=fixFlag,proto3" json:"fixFlag,omitempty"`             // 修复标识
+	AlgoName      string `protobuf:"bytes,13,opt,name=AlgoName,proto3" json:"AlgoName,omitempty"`            // 算法名称
+	BatchNo       int64  `protobuf:"varint,14,opt,name=batchNo,proto3" json:"batchNo,omitempty"`             // 批次号
+	BatchName     string `protobuf:"bytes,15,opt,name=batchName,proto3" json:"batchName,omitempty"`          // 批次号名称
+	UserId        string `protobuf:"bytes,16,opt,name=userId,proto3" json:"userId,omitempty"`                // 用户名称
+	UnixTime      int64  `protobuf:"varint,17,opt,name=unixTime,proto3" json:"unixTime,omitempty"`           // 母单原始时间戳
+	AlgorithmType int32  `protobuf:"varint,18,opt,name=algorithmType,proto3" json:"algorithmType,omitempty"` // 算法类型
+	Date          int32  `protobuf:"varint,19,opt,name=date,proto3" json:"date,omitempty"`                   // 日期
+}
+
+func (x *AlgoOrder) Reset() {
+	*x = AlgoOrder{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[67]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoOrder) ProtoMessage() {}
+
+func (x *AlgoOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[67]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoOrder.ProtoReflect.Descriptor instead.
+func (*AlgoOrder) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{67}
+}
+
+func (x *AlgoOrder) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *AlgoOrder) GetBasketId() int32 {
+	if x != nil {
+		return x.BasketId
+	}
+	return 0
+}
+
+func (x *AlgoOrder) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *AlgoOrder) GetAlgorithmId() int32 {
+	if x != nil {
+		return x.AlgorithmId
+	}
+	return 0
+}
+
+func (x *AlgoOrder) GetUsecId() int32 {
+	if x != nil {
+		return x.UsecId
+	}
+	return 0
+}
+
+func (x *AlgoOrder) GetSecId() string {
+	if x != nil {
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *AlgoOrder) GetAlgoOrderQty() int64 {
+	if x != nil {
+		return x.AlgoOrderQty
+	}
+	return 0
+}
+
+func (x *AlgoOrder) GetTransTime() string {
+	if x != nil {
+		return x.TransTime
+	}
+	return ""
+}
+
+func (x *AlgoOrder) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *AlgoOrder) GetEndTime() string {
+	if x != nil {
+		return x.EndTime
+	}
+	return ""
+}
+
+func (x *AlgoOrder) GetCreateTime() string {
+	if x != nil {
+		return x.CreateTime
+	}
+	return ""
+}
+
+func (x *AlgoOrder) GetFixFlag() int32 {
+	if x != nil {
+		return x.FixFlag
+	}
+	return 0
+}
+
+func (x *AlgoOrder) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *AlgoOrder) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+func (x *AlgoOrder) GetBatchName() string {
+	if x != nil {
+		return x.BatchName
+	}
+	return ""
+}
+
+func (x *AlgoOrder) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *AlgoOrder) GetUnixTime() int64 {
+	if x != nil {
+		return x.UnixTime
+	}
+	return 0
+}
+
+func (x *AlgoOrder) GetAlgorithmType() int32 {
+	if x != nil {
+		return x.AlgorithmType
+	}
+	return 0
+}
+
+func (x *AlgoOrder) GetDate() int32 {
+	if x != nil {
+		return x.Date
+	}
+	return 0
+}
+
+type RespQueryAlgoOrder struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32        `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string       `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64        `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Parts []*AlgoOrder `protobuf:"bytes,4,rep,name=parts,proto3" json:"parts,omitempty"`
+}
+
+func (x *RespQueryAlgoOrder) Reset() {
+	*x = RespQueryAlgoOrder{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[68]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RespQueryAlgoOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RespQueryAlgoOrder) ProtoMessage() {}
+
+func (x *RespQueryAlgoOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[68]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RespQueryAlgoOrder.ProtoReflect.Descriptor instead.
+func (*RespQueryAlgoOrder) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{68}
+}
+
+func (x *RespQueryAlgoOrder) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *RespQueryAlgoOrder) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *RespQueryAlgoOrder) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *RespQueryAlgoOrder) GetParts() []*AlgoOrder {
+	if x != nil {
+		return x.Parts
+	}
+	return nil
+}
+
+type ReqQueryChildOrder struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId       string `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	SecurityId   string `protobuf:"bytes,2,opt,name=securityId,proto3" json:"securityId,omitempty"`
+	ChildOrderId int64  `protobuf:"varint,3,opt,name=ChildOrderId,proto3" json:"ChildOrderId,omitempty"`
+	PageId       int32  `protobuf:"varint,4,opt,name=pageId,proto3" json:"pageId,omitempty"`
+	PageNum      int32  `protobuf:"varint,5,opt,name=pageNum,proto3" json:"pageNum,omitempty"`
+	AlgoName     string `protobuf:"bytes,6,opt,name=algoName,proto3" json:"algoName,omitempty"` //  算法名称
+	Scene        int32  `protobuf:"varint,7,opt,name=scene,proto3" json:"scene,omitempty"`      // 1-数据修复  2-订单导入
+	UserType     int32  `protobuf:"varint,8,opt,name=userType,proto3" json:"userType,omitempty"`
+	StartTime    int32  `protobuf:"varint,9,opt,name=startTime,proto3" json:"startTime,omitempty"` // 交易日期 20230503
+	EndTime      int32  `protobuf:"varint,10,opt,name=endTime,proto3" json:"endTime,omitempty"`
+	AlgoOrderId  int64  `protobuf:"varint,11,opt,name=algoOrderId,proto3" json:"algoOrderId,omitempty"` // 母单号
+}
+
+func (x *ReqQueryChildOrder) Reset() {
+	*x = ReqQueryChildOrder{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[69]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ReqQueryChildOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReqQueryChildOrder) ProtoMessage() {}
+
+func (x *ReqQueryChildOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[69]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReqQueryChildOrder.ProtoReflect.Descriptor instead.
+func (*ReqQueryChildOrder) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{69}
+}
+
+func (x *ReqQueryChildOrder) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *ReqQueryChildOrder) GetSecurityId() string {
+	if x != nil {
+		return x.SecurityId
+	}
+	return ""
+}
+
+func (x *ReqQueryChildOrder) GetChildOrderId() int64 {
+	if x != nil {
+		return x.ChildOrderId
+	}
+	return 0
+}
+
+func (x *ReqQueryChildOrder) GetPageId() int32 {
+	if x != nil {
+		return x.PageId
+	}
+	return 0
+}
+
+func (x *ReqQueryChildOrder) GetPageNum() int32 {
+	if x != nil {
+		return x.PageNum
+	}
+	return 0
+}
+
+func (x *ReqQueryChildOrder) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *ReqQueryChildOrder) GetScene() int32 {
+	if x != nil {
+		return x.Scene
+	}
+	return 0
+}
+
+func (x *ReqQueryChildOrder) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+func (x *ReqQueryChildOrder) GetStartTime() int32 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *ReqQueryChildOrder) GetEndTime() int32 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
+func (x *ReqQueryChildOrder) GetAlgoOrderId() int64 {
+	if x != nil {
+		return x.AlgoOrderId
+	}
+	return 0
+}
+
+type ChildOrder struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id            uint64  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	ChildOrderId  int64   `protobuf:"varint,2,opt,name=childOrderId,proto3" json:"childOrderId,omitempty"`
+	AlgoOrderId   uint32  `protobuf:"varint,3,opt,name=algoOrderId,proto3" json:"algoOrderId,omitempty"`
+	AlgorithmType uint32  `protobuf:"varint,4,opt,name=algorithmType,proto3" json:"algorithmType,omitempty"`
+	AlgorithmId   uint32  `protobuf:"varint,5,opt,name=algorithmId,proto3" json:"algorithmId,omitempty"`
+	UserId        string  `protobuf:"bytes,6,opt,name=userId,proto3" json:"userId,omitempty"`
+	UsecurityId   uint32  `protobuf:"varint,7,opt,name=usecurityId,proto3" json:"usecurityId,omitempty"`
+	SecurityId    string  `protobuf:"bytes,8,opt,name=securityId,proto3" json:"securityId,omitempty"`
+	TradeSide     int32   `protobuf:"varint,9,opt,name=tradeSide,proto3" json:"tradeSide,omitempty"`
+	OrderQty      int64   `protobuf:"varint,10,opt,name=orderQty,proto3" json:"orderQty,omitempty"`
+	Price         int64   `protobuf:"varint,11,opt,name=price,proto3" json:"price,omitempty"`
+	OrderType     int32   `protobuf:"varint,12,opt,name=orderType,proto3" json:"orderType,omitempty"`
+	LastPx        int64   `protobuf:"varint,13,opt,name=lastPx,proto3" json:"lastPx,omitempty"`
+	LastQty       int64   `protobuf:"varint,14,opt,name=lastQty,proto3" json:"lastQty,omitempty"`
+	ComQty        int64   `protobuf:"varint,15,opt,name=comQty,proto3" json:"comQty,omitempty"`
+	ArrivedPrice  int64   `protobuf:"varint,16,opt,name=arrivedPrice,proto3" json:"arrivedPrice,omitempty"`
+	TotalFee      float64 `protobuf:"fixed64,17,opt,name=totalFee,proto3" json:"totalFee,omitempty"`
+	OrdStatus     int32   `protobuf:"varint,18,opt,name=ordStatus,proto3" json:"ordStatus,omitempty"`
+	TransactTime  string  `protobuf:"bytes,19,opt,name=transactTime,proto3" json:"transactTime,omitempty"`
+	TransactAt    string  `protobuf:"bytes,20,opt,name=transactAt,proto3" json:"transactAt,omitempty"`
+	ProcStatus    int32   `protobuf:"varint,21,opt,name=procStatus,proto3" json:"procStatus,omitempty"`
+	CreateTime    string  `protobuf:"bytes,22,opt,name=createTime,proto3" json:"createTime,omitempty"`
+	FixFlag       int32   `protobuf:"varint,23,opt,name=fixFlag,proto3" json:"fixFlag,omitempty"`    // 修复标识
+	AlgoName      string  `protobuf:"bytes,24,opt,name=AlgoName,proto3" json:"AlgoName,omitempty"`   // 算法名称
+	BatchNo       int64   `protobuf:"varint,25,opt,name=batchNo,proto3" json:"batchNo,omitempty"`    // 批次号
+	BatchName     string  `protobuf:"bytes,26,opt,name=batchName,proto3" json:"batchName,omitempty"` // 批次号名称
+	Date          int32   `protobuf:"varint,27,opt,name=date,proto3" json:"date,omitempty"`          // 日期
+}
+
+func (x *ChildOrder) Reset() {
+	*x = ChildOrder{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[70]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ChildOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChildOrder) ProtoMessage() {}
+
+func (x *ChildOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[70]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChildOrder.ProtoReflect.Descriptor instead.
+func (*ChildOrder) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{70}
+}
+
+func (x *ChildOrder) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetChildOrderId() int64 {
+	if x != nil {
+		return x.ChildOrderId
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetAlgoOrderId() uint32 {
+	if x != nil {
+		return x.AlgoOrderId
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetAlgorithmType() uint32 {
+	if x != nil {
+		return x.AlgorithmType
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetAlgorithmId() uint32 {
+	if x != nil {
+		return x.AlgorithmId
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *ChildOrder) GetUsecurityId() uint32 {
+	if x != nil {
+		return x.UsecurityId
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetSecurityId() string {
+	if x != nil {
+		return x.SecurityId
+	}
+	return ""
+}
+
+func (x *ChildOrder) GetTradeSide() int32 {
+	if x != nil {
+		return x.TradeSide
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetOrderQty() int64 {
+	if x != nil {
+		return x.OrderQty
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetPrice() int64 {
+	if x != nil {
+		return x.Price
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetOrderType() int32 {
+	if x != nil {
+		return x.OrderType
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetLastPx() int64 {
+	if x != nil {
+		return x.LastPx
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetLastQty() int64 {
+	if x != nil {
+		return x.LastQty
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetComQty() int64 {
+	if x != nil {
+		return x.ComQty
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetArrivedPrice() int64 {
+	if x != nil {
+		return x.ArrivedPrice
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetTotalFee() float64 {
+	if x != nil {
+		return x.TotalFee
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetOrdStatus() int32 {
+	if x != nil {
+		return x.OrdStatus
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetTransactTime() string {
+	if x != nil {
+		return x.TransactTime
+	}
+	return ""
+}
+
+func (x *ChildOrder) GetTransactAt() string {
+	if x != nil {
+		return x.TransactAt
+	}
+	return ""
+}
+
+func (x *ChildOrder) GetProcStatus() int32 {
+	if x != nil {
+		return x.ProcStatus
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetCreateTime() string {
+	if x != nil {
+		return x.CreateTime
+	}
+	return ""
+}
+
+func (x *ChildOrder) GetFixFlag() int32 {
+	if x != nil {
+		return x.FixFlag
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetAlgoName() string {
+	if x != nil {
+		return x.AlgoName
+	}
+	return ""
+}
+
+func (x *ChildOrder) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+func (x *ChildOrder) GetBatchName() string {
+	if x != nil {
+		return x.BatchName
+	}
+	return ""
+}
+
+func (x *ChildOrder) GetDate() int32 {
+	if x != nil {
+		return x.Date
+	}
+	return 0
+}
+
+type RespQueryChildOrder struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32         `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string        `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64         `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Parts []*ChildOrder `protobuf:"bytes,4,rep,name=parts,proto3" json:"parts,omitempty"`
+}
+
+func (x *RespQueryChildOrder) Reset() {
+	*x = RespQueryChildOrder{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[71]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RespQueryChildOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RespQueryChildOrder) ProtoMessage() {}
+
+func (x *RespQueryChildOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[71]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RespQueryChildOrder.ProtoReflect.Descriptor instead.
+func (*RespQueryChildOrder) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{71}
+}
+
+func (x *RespQueryChildOrder) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *RespQueryChildOrder) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *RespQueryChildOrder) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *RespQueryChildOrder) GetParts() []*ChildOrder {
+	if x != nil {
+		return x.Parts
+	}
+	return nil
+}
+
+type QuoteLevel struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id            int64   `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                       //'自增ID'
+	SeculityId    string  `protobuf:"bytes,2,opt,name=seculityId,proto3" json:"seculityId,omitempty"`        // '证券ID'
+	OrgiTime      int64   `protobuf:"varint,3,opt,name=orgiTime,proto3" json:"orgiTime,omitempty"`           //'快照时间',
+	LastPrice     int64   `protobuf:"varint,4,opt,name=lastPrice,proto3" json:"lastPrice,omitempty"`         // '最新价',
+	AskPrice      string  `protobuf:"bytes,5,opt,name=askPrice,proto3" json:"askPrice,omitempty"`            // '申卖价',
+	AskVol        string  `protobuf:"bytes,6,opt,name=askVol,proto3" json:"askVol,omitempty"`                //'申卖量',
+	BidPrice      string  `protobuf:"bytes,7,opt,name=bidPrice,proto3" json:"bidPrice,omitempty"`            // '申买价',
+	BidVol        string  `protobuf:"bytes,8,opt,name=bidVol,proto3" json:"bidVol,omitempty"`                // '申买量',
+	TotalTradeVol int64   `protobuf:"varint,9,opt,name=totalTradeVol,proto3" json:"totalTradeVol,omitempty"` // '成交总量',
+	TotalAskVol   int64   `protobuf:"varint,10,opt,name=totalAskVol,proto3" json:"totalAskVol,omitempty"`
+	TotalBidVol   int64   `protobuf:"varint,11,opt,name=totalBidVol,proto3" json:"totalBidVol,omitempty"`
+	MkVwap        float32 `protobuf:"fixed32,12,opt,name=mkVwap,proto3" json:"mkVwap,omitempty"`
+	FixFlag       int32   `protobuf:"varint,13,opt,name=fixFlag,proto3" json:"fixFlag,omitempty"` // 修复标识
+}
+
+func (x *QuoteLevel) Reset() {
+	*x = QuoteLevel{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[72]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QuoteLevel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QuoteLevel) ProtoMessage() {}
+
+func (x *QuoteLevel) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[72]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QuoteLevel.ProtoReflect.Descriptor instead.
+func (*QuoteLevel) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{72}
+}
+
+func (x *QuoteLevel) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *QuoteLevel) GetSeculityId() string {
+	if x != nil {
+		return x.SeculityId
+	}
+	return ""
+}
+
+func (x *QuoteLevel) GetOrgiTime() int64 {
+	if x != nil {
+		return x.OrgiTime
+	}
+	return 0
+}
+
+func (x *QuoteLevel) GetLastPrice() int64 {
+	if x != nil {
+		return x.LastPrice
+	}
+	return 0
+}
+
+func (x *QuoteLevel) GetAskPrice() string {
+	if x != nil {
+		return x.AskPrice
+	}
+	return ""
+}
+
+func (x *QuoteLevel) GetAskVol() string {
+	if x != nil {
+		return x.AskVol
+	}
+	return ""
+}
+
+func (x *QuoteLevel) GetBidPrice() string {
+	if x != nil {
+		return x.BidPrice
+	}
+	return ""
+}
+
+func (x *QuoteLevel) GetBidVol() string {
+	if x != nil {
+		return x.BidVol
+	}
+	return ""
+}
+
+func (x *QuoteLevel) GetTotalTradeVol() int64 {
+	if x != nil {
+		return x.TotalTradeVol
+	}
+	return 0
+}
+
+func (x *QuoteLevel) GetTotalAskVol() int64 {
+	if x != nil {
+		return x.TotalAskVol
+	}
+	return 0
+}
+
+func (x *QuoteLevel) GetTotalBidVol() int64 {
+	if x != nil {
+		return x.TotalBidVol
+	}
+	return 0
+}
+
+func (x *QuoteLevel) GetMkVwap() float32 {
+	if x != nil {
+		return x.MkVwap
+	}
+	return 0
+}
+
+func (x *QuoteLevel) GetFixFlag() int32 {
+	if x != nil {
+		return x.FixFlag
+	}
+	return 0
+}
+
+type ReqQueryQuoteLevel struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SecurityId string `protobuf:"bytes,1,opt,name=securityId,proto3" json:"securityId,omitempty"`
+	PageId     int32  `protobuf:"varint,2,opt,name=pageId,proto3" json:"pageId,omitempty"`
+	PageNum    int32  `protobuf:"varint,3,opt,name=pageNum,proto3" json:"pageNum,omitempty"`
+	MaxId      int64  `protobuf:"varint,4,opt,name=max_id,json=maxId,proto3" json:"max_id,omitempty"` // 最大id,透传
+}
+
+func (x *ReqQueryQuoteLevel) Reset() {
+	*x = ReqQueryQuoteLevel{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[73]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ReqQueryQuoteLevel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReqQueryQuoteLevel) ProtoMessage() {}
+
+func (x *ReqQueryQuoteLevel) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[73]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReqQueryQuoteLevel.ProtoReflect.Descriptor instead.
+func (*ReqQueryQuoteLevel) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{73}
+}
+
+func (x *ReqQueryQuoteLevel) GetSecurityId() string {
+	if x != nil {
+		return x.SecurityId
+	}
+	return ""
+}
+
+func (x *ReqQueryQuoteLevel) GetPageId() int32 {
+	if x != nil {
+		return x.PageId
+	}
+	return 0
+}
+
+func (x *ReqQueryQuoteLevel) GetPageNum() int32 {
+	if x != nil {
+		return x.PageNum
+	}
+	return 0
+}
+
+func (x *ReqQueryQuoteLevel) GetMaxId() int64 {
+	if x != nil {
+		return x.MaxId
+	}
+	return 0
+}
+
+type RespQueryQuoteLevel struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32         `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string        `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64         `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Parts []*QuoteLevel `protobuf:"bytes,4,rep,name=parts,proto3" json:"parts,omitempty"`
+	MaxId int64         `protobuf:"varint,5,opt,name=max_id,json=maxId,proto3" json:"max_id,omitempty"` // 最大id,用作大分页查询
+}
+
+func (x *RespQueryQuoteLevel) Reset() {
+	*x = RespQueryQuoteLevel{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[74]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RespQueryQuoteLevel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RespQueryQuoteLevel) ProtoMessage() {}
+
+func (x *RespQueryQuoteLevel) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[74]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RespQueryQuoteLevel.ProtoReflect.Descriptor instead.
+func (*RespQueryQuoteLevel) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{74}
+}
+
+func (x *RespQueryQuoteLevel) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *RespQueryQuoteLevel) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *RespQueryQuoteLevel) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *RespQueryQuoteLevel) GetParts() []*QuoteLevel {
+	if x != nil {
+		return x.Parts
+	}
+	return nil
+}
+
+func (x *RespQueryQuoteLevel) GetMaxId() int64 {
+	if x != nil {
+		return x.MaxId
+	}
+	return 0
+}
+
+type ReqPushShLevel struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	//bytes fileBytes = 1;
+	Quote []*QuoteLevel `protobuf:"bytes,1,rep,name=quote,proto3" json:"quote,omitempty"` // 沪市（限制最大100笔）
+}
+
+func (x *ReqPushShLevel) Reset() {
+	*x = ReqPushShLevel{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[75]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ReqPushShLevel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReqPushShLevel) ProtoMessage() {}
+
+func (x *ReqPushShLevel) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[75]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReqPushShLevel.ProtoReflect.Descriptor instead.
+func (*ReqPushShLevel) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{75}
+}
+
+func (x *ReqPushShLevel) GetQuote() []*QuoteLevel {
+	if x != nil {
+		return x.Quote
+	}
+	return nil
+}
+
+type ReqPushSzLevel struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	//bytes fileBytes = 1;
+	Quote []*QuoteLevel `protobuf:"bytes,1,rep,name=quote,proto3" json:"quote,omitempty"` // 深市（限制最大100笔)
+}
+
+func (x *ReqPushSzLevel) Reset() {
+	*x = ReqPushSzLevel{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[76]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ReqPushSzLevel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReqPushSzLevel) ProtoMessage() {}
+
+func (x *ReqPushSzLevel) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[76]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReqPushSzLevel.ProtoReflect.Descriptor instead.
+func (*ReqPushSzLevel) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{76}
+}
+
+func (x *ReqPushSzLevel) GetQuote() []*QuoteLevel {
+	if x != nil {
+		return x.Quote
+	}
+	return nil
+}
+
+type OrigAlgo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	BatchNo  int64 `protobuf:"varint,1,opt,name=batch_no,json=batchNo,proto3" json:"batch_no,omitempty"`
+	BasketId int32 `protobuf:"varint,2,opt,name=basket_id,json=basketId,proto3" json:"basket_id,omitempty"`
+	AlgoId   int32 `protobuf:"varint,3,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`
+}
+
+func (x *OrigAlgo) Reset() {
+	*x = OrigAlgo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[77]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrigAlgo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrigAlgo) ProtoMessage() {}
+
+func (x *OrigAlgo) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[77]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrigAlgo.ProtoReflect.Descriptor instead.
+func (*OrigAlgo) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{77}
+}
+
+func (x *OrigAlgo) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+func (x *OrigAlgo) GetBasketId() int32 {
+	if x != nil {
+		return x.BasketId
+	}
+	return 0
+}
+
+func (x *OrigAlgo) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+type OrigChild struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	BatchNo int64 `protobuf:"varint,1,opt,name=batch_no,json=batchNo,proto3" json:"batch_no,omitempty"`
+	AlgoId  int32 `protobuf:"varint,2,opt,name=algo_id,json=algoId,proto3" json:"algo_id,omitempty"`
+	ChildId int32 `protobuf:"varint,3,opt,name=child_id,json=childId,proto3" json:"child_id,omitempty"`
+}
+
+func (x *OrigChild) Reset() {
+	*x = OrigChild{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[78]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrigChild) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrigChild) ProtoMessage() {}
+
+func (x *OrigChild) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[78]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrigChild.ProtoReflect.Descriptor instead.
+func (*OrigChild) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{78}
+}
+
+func (x *OrigChild) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+func (x *OrigChild) GetAlgoId() int32 {
+	if x != nil {
+		return x.AlgoId
+	}
+	return 0
+}
+
+func (x *OrigChild) GetChildId() int32 {
+	if x != nil {
+		return x.ChildId
+	}
+	return 0
+}
+
+type Analyse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Date int32 `protobuf:"varint,1,opt,name=date,proto3" json:"date,omitempty"` // 日期
+	Id   int32 `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`     // id号
+}
+
+func (x *Analyse) Reset() {
+	*x = Analyse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[79]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Analyse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Analyse) ProtoMessage() {}
+
+func (x *Analyse) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[79]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Analyse.ProtoReflect.Descriptor instead.
+func (*Analyse) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{79}
+}
+
+func (x *Analyse) GetDate() int32 {
+	if x != nil {
+		return x.Date
+	}
+	return 0
+}
+
+func (x *Analyse) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type OrigAnalyseReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OrderType int32      `protobuf:"varint,1,opt,name=orderType,proto3" json:"orderType,omitempty"` //1:ids为母单id，2：ids为子单id
+	Orders    []*Analyse `protobuf:"bytes,2,rep,name=orders,proto3" json:"orders,omitempty"`
+}
+
+func (x *OrigAnalyseReq) Reset() {
+	*x = OrigAnalyseReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[80]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrigAnalyseReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrigAnalyseReq) ProtoMessage() {}
+
+func (x *OrigAnalyseReq) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[80]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrigAnalyseReq.ProtoReflect.Descriptor instead.
+func (*OrigAnalyseReq) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{80}
+}
+
+func (x *OrigAnalyseReq) GetOrderType() int32 {
+	if x != nil {
+		return x.OrderType
+	}
+	return 0
+}
+
+func (x *OrigAnalyseReq) GetOrders() []*Analyse {
+	if x != nil {
+		return x.Orders
+	}
+	return nil
+}
+
+type OrigAnalyseResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code      int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg       string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	BatchNo   int64  `protobuf:"varint,3,opt,name=batchNo,proto3" json:"batchNo,omitempty"`
+	StartTime int64  `protobuf:"varint,4,opt,name=startTime,proto3" json:"startTime,omitempty"`
+	EndTime   int64  `protobuf:"varint,5,opt,name=endTime,proto3" json:"endTime,omitempty"`
+}
+
+func (x *OrigAnalyseResp) Reset() {
+	*x = OrigAnalyseResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_assess_proto_msgTypes[81]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrigAnalyseResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrigAnalyseResp) ProtoMessage() {}
+
+func (x *OrigAnalyseResp) ProtoReflect() protoreflect.Message {
+	mi := &file_assess_proto_msgTypes[81]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrigAnalyseResp.ProtoReflect.Descriptor instead.
+func (*OrigAnalyseResp) Descriptor() ([]byte, []int) {
+	return file_assess_proto_rawDescGZIP(), []int{81}
+}
+
+func (x *OrigAnalyseResp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *OrigAnalyseResp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *OrigAnalyseResp) GetBatchNo() int64 {
+	if x != nil {
+		return x.BatchNo
+	}
+	return 0
+}
+
+func (x *OrigAnalyseResp) GetStartTime() int64 {
+	if x != nil {
+		return x.StartTime
+	}
+	return 0
+}
+
+func (x *OrigAnalyseResp) GetEndTime() int64 {
+	if x != nil {
+		return x.EndTime
+	}
+	return 0
+}
+
 var File_assess_proto protoreflect.FileDescriptor
 
 var file_assess_proto_rawDesc = []byte{
@@ -350,7 +7503,7 @@ var file_assess_proto_rawDesc = []byte{
 	0x0c, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x64, 0x65, 0x61, 0x6c, 0x52, 0x61, 0x74, 0x65, 0x12,
 	0x23, 0x0a, 0x0d, 0x64, 0x65, 0x61, 0x6c, 0x5f, 0x70, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73,
 	0x18, 0x0d, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x64, 0x65, 0x61, 0x6c, 0x50, 0x72, 0x6f, 0x67,
-	0x72, 0x65, 0x73, 0x73, 0x22, 0xc9, 0x01, 0x0a, 0x0a, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c,
+	0x72, 0x65, 0x73, 0x73, 0x22, 0xe2, 0x01, 0x0a, 0x0a, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c,
 	0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12, 0x15, 0x0a, 0x06,
 	0x73, 0x65, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x65,
@@ -363,18 +7516,1149 @@ var file_assess_proto_rawDesc = []byte{
 	0x74, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x73, 0x74, 0x61, 0x72,
 	0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x65, 0x6e, 0x64, 0x5f, 0x74, 0x69, 0x6d,
 	0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65,
-	0x22, 0x5a, 0x0a, 0x0a, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x52, 0x73, 0x70, 0x12, 0x12,
+	0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x5a, 0x0a, 0x0a, 0x47, 0x65, 0x6e,
+	0x65, 0x72, 0x61, 0x6c, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d,
+	0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x26, 0x0a,
+	0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x61, 0x73,
+	0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x73, 0x73, 0x65, 0x73, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52,
+	0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0x44, 0x0a, 0x08, 0x41, 0x6c, 0x67, 0x6f, 0x49, 0x6e, 0x66,
+	0x6f, 0x12, 0x22, 0x0a, 0x0c, 0x41, 0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x4e, 0x61, 0x6d,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x41, 0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70,
+	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0xa2, 0x0a, 0x0a, 0x0b,
+	0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x1b, 0x0a, 0x09, 0x61,
+	0x63, 0x63, 0x6f, 0x75, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
+	0x61, 0x63, 0x63, 0x6f, 0x75, 0x74, 0x49, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x61, 0x63, 0x63, 0x6f,
+	0x75, 0x6e, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b,
+	0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x61,
+	0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c,
+	0x67, 0x6f, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x74, 0x79, 0x70,
+	0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70,
+	0x65, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x15,
+	0x0a, 0x06, 0x73, 0x65, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x73, 0x65, 0x63, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x74, 0x72, 0x61, 0x64, 0x65, 0x5f, 0x76,
+	0x6f, 0x6c, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x74, 0x72, 0x61, 0x64, 0x65, 0x56,
+	0x6f, 0x6c, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x18, 0x08, 0x20, 0x01,
+	0x28, 0x01, 0x52, 0x06, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x72,
+	0x6f, 0x66, 0x69, 0x74, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x0a, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x52, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x74,
+	0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x66, 0x65, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x46, 0x65, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x63, 0x72, 0x6f, 0x73,
+	0x73, 0x5f, 0x66, 0x65, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x63, 0x72, 0x6f,
+	0x73, 0x73, 0x46, 0x65, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x63, 0x61, 0x6e, 0x63, 0x65, 0x6c, 0x5f,
+	0x72, 0x61, 0x74, 0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x63, 0x61, 0x6e, 0x63,
+	0x65, 0x6c, 0x52, 0x61, 0x74, 0x65, 0x12, 0x26, 0x0a, 0x0f, 0x6d, 0x69, 0x6e, 0x5f, 0x73, 0x70,
+	0x6c, 0x69, 0x74, 0x5f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x0d, 0x6d, 0x69, 0x6e, 0x53, 0x70, 0x6c, 0x69, 0x74, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x1a,
+	0x0a, 0x08, 0x70, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x01,
+	0x52, 0x08, 0x70, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x12, 0x24, 0x0a, 0x0e, 0x6d, 0x69,
+	0x6e, 0x5f, 0x6a, 0x6f, 0x69, 0x6e, 0x74, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x0f, 0x20, 0x01,
+	0x28, 0x01, 0x52, 0x0c, 0x6d, 0x69, 0x6e, 0x4a, 0x6f, 0x69, 0x6e, 0x74, 0x52, 0x61, 0x74, 0x65,
+	0x12, 0x23, 0x0a, 0x0d, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x5f, 0x72, 0x61, 0x74,
+	0x65, 0x18, 0x10, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x77, 0x69, 0x74, 0x68, 0x64, 0x72, 0x61,
+	0x77, 0x52, 0x61, 0x74, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x76, 0x77, 0x61, 0x70, 0x5f, 0x64, 0x65,
+	0x76, 0x18, 0x11, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x76, 0x77, 0x61, 0x70, 0x44, 0x65, 0x76,
+	0x12, 0x20, 0x0a, 0x0c, 0x76, 0x77, 0x61, 0x70, 0x5f, 0x73, 0x74, 0x64, 0x5f, 0x64, 0x65, 0x76,
+	0x18, 0x12, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x76, 0x77, 0x61, 0x70, 0x53, 0x74, 0x64, 0x44,
+	0x65, 0x76, 0x12, 0x1f, 0x0a, 0x0b, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x5f, 0x74, 0x69, 0x6d,
+	0x65, 0x18, 0x13, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54,
+	0x69, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x18,
+	0x14, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x12,
+	0x25, 0x0a, 0x0f, 0x70, 0x66, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x5f, 0x73, 0x74, 0x64, 0x5f, 0x64,
+	0x65, 0x76, 0x18, 0x15, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x70, 0x66, 0x52, 0x61, 0x74, 0x65,
+	0x53, 0x74, 0x64, 0x44, 0x65, 0x76, 0x12, 0x19, 0x0a, 0x08, 0x62, 0x61, 0x74, 0x63, 0x68, 0x5f,
+	0x6e, 0x6f, 0x18, 0x16, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x62, 0x61, 0x74, 0x63, 0x68, 0x4e,
+	0x6f, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x65, 0x63, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x17, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x65, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x22, 0x0a, 0x0d,
+	0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x18, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x0b, 0x61, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64,
+	0x12, 0x1a, 0x0a, 0x08, 0x69, 0x6e, 0x64, 0x75, 0x73, 0x74, 0x72, 0x79, 0x18, 0x19, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x69, 0x6e, 0x64, 0x75, 0x73, 0x74, 0x72, 0x79, 0x12, 0x1b, 0x0a, 0x09,
+	0x66, 0x75, 0x6e, 0x64, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x1a, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x08, 0x66, 0x75, 0x6e, 0x64, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x6c, 0x69, 0x71,
+	0x75, 0x69, 0x64, 0x69, 0x74, 0x79, 0x18, 0x1b, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x6c, 0x69,
+	0x71, 0x75, 0x69, 0x64, 0x69, 0x74, 0x79, 0x12, 0x1b, 0x0a, 0x09, 0x64, 0x65, 0x61, 0x6c, 0x5f,
+	0x65, 0x66, 0x66, 0x69, 0x18, 0x1c, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x64, 0x65, 0x61, 0x6c,
+	0x45, 0x66, 0x66, 0x69, 0x12, 0x24, 0x0a, 0x0e, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6f, 0x72, 0x64,
+	0x65, 0x72, 0x5f, 0x66, 0x69, 0x74, 0x18, 0x1d, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x61, 0x6c,
+	0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x46, 0x69, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x70, 0x72,
+	0x69, 0x63, 0x65, 0x5f, 0x66, 0x69, 0x74, 0x18, 0x1e, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x70,
+	0x72, 0x69, 0x63, 0x65, 0x46, 0x69, 0x74, 0x12, 0x22, 0x0a, 0x0d, 0x74, 0x72, 0x61, 0x64, 0x65,
+	0x5f, 0x76, 0x6f, 0x6c, 0x5f, 0x66, 0x69, 0x74, 0x18, 0x1f, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0b,
+	0x74, 0x72, 0x61, 0x64, 0x65, 0x56, 0x6f, 0x6c, 0x46, 0x69, 0x74, 0x12, 0x30, 0x0a, 0x15, 0x74,
+	0x72, 0x61, 0x64, 0x65, 0x5f, 0x76, 0x6f, 0x6c, 0x5f, 0x66, 0x69, 0x74, 0x5f, 0x73, 0x74, 0x64,
+	0x5f, 0x64, 0x65, 0x76, 0x18, 0x20, 0x20, 0x01, 0x28, 0x01, 0x52, 0x11, 0x74, 0x72, 0x61, 0x64,
+	0x65, 0x56, 0x6f, 0x6c, 0x46, 0x69, 0x74, 0x53, 0x74, 0x64, 0x44, 0x65, 0x76, 0x12, 0x27, 0x0a,
+	0x10, 0x74, 0x69, 0x6d, 0x65, 0x5f, 0x66, 0x69, 0x74, 0x5f, 0x73, 0x74, 0x64, 0x5f, 0x64, 0x65,
+	0x76, 0x18, 0x21, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0d, 0x74, 0x69, 0x6d, 0x65, 0x46, 0x69, 0x74,
+	0x53, 0x74, 0x64, 0x44, 0x65, 0x76, 0x12, 0x2c, 0x0a, 0x12, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x5f, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x22, 0x20, 0x01,
+	0x28, 0x01, 0x52, 0x10, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x74,
+	0x52, 0x61, 0x74, 0x65, 0x12, 0x26, 0x0a, 0x0f, 0x61, 0x76, 0x67, 0x5f, 0x74, 0x72, 0x61, 0x64,
+	0x65, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x23, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0d, 0x61,
+	0x76, 0x67, 0x54, 0x72, 0x61, 0x64, 0x65, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x28, 0x0a, 0x10,
+	0x61, 0x76, 0x67, 0x5f, 0x61, 0x72, 0x72, 0x69, 0x76, 0x65, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65,
+	0x18, 0x24, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0e, 0x61, 0x76, 0x67, 0x41, 0x72, 0x72, 0x69, 0x76,
+	0x65, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x70, 0x77, 0x70, 0x18, 0x25, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x03, 0x70, 0x77, 0x70, 0x12, 0x23, 0x0a, 0x0d, 0x61, 0x6c, 0x67, 0x6f,
+	0x5f, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x26, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x0c, 0x61, 0x6c, 0x67, 0x6f, 0x44, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x12, 0x0a,
+	0x04, 0x74, 0x77, 0x61, 0x70, 0x18, 0x27, 0x20, 0x01, 0x28, 0x01, 0x52, 0x04, 0x74, 0x77, 0x61,
+	0x70, 0x12, 0x19, 0x0a, 0x08, 0x74, 0x77, 0x61, 0x70, 0x5f, 0x64, 0x65, 0x76, 0x18, 0x28, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x07, 0x74, 0x77, 0x61, 0x70, 0x44, 0x65, 0x76, 0x12, 0x12, 0x0a, 0x04,
+	0x76, 0x77, 0x61, 0x70, 0x18, 0x29, 0x20, 0x01, 0x28, 0x01, 0x52, 0x04, 0x76, 0x77, 0x61, 0x70,
+	0x22, 0x81, 0x03, 0x0a, 0x0e, 0x41, 0x6c, 0x67, 0x6f, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65,
+	0x52, 0x65, 0x71, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x12,
+	0x24, 0x0a, 0x0e, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x5f, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x61, 0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70,
+	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12, 0x1b,
+	0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69,
+	0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54,
+	0x69, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x65, 0x6e, 0x64, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18,
+	0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x12,
+	0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x61,
+	0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x09, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x72, 0x6f, 0x66,
+	0x69, 0x6c, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b,
+	0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08,
+	0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x73, 0x6f, 0x75, 0x72,
+	0x63, 0x65, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x73,
+	0x6f, 0x75, 0x72, 0x63, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x12, 0x19, 0x0a, 0x08, 0x62, 0x61, 0x74,
+	0x63, 0x68, 0x5f, 0x6e, 0x6f, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x62, 0x61, 0x74,
+	0x63, 0x68, 0x4e, 0x6f, 0x22, 0x75, 0x0a, 0x0e, 0x41, 0x6c, 0x67, 0x6f, 0x50, 0x72, 0x6f, 0x66,
+	0x69, 0x6c, 0x65, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73,
+	0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x14, 0x0a, 0x05,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74,
+	0x61, 0x6c, 0x12, 0x27, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x13, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c,
+	0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0xc8, 0x01, 0x0a, 0x08,
+	0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x15, 0x0a, 0x06, 0x73, 0x65, 0x63, 0x5f,
+	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x12,
+	0x19, 0x0a, 0x08, 0x73, 0x65, 0x63, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x73, 0x65, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c,
+	0x67, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x11, 0x52, 0x06, 0x61, 0x6c, 0x67,
+	0x6f, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65,
+	0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x49,
+	0x64, 0x12, 0x23, 0x0a, 0x0d, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x5f, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64,
+	0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x49, 0x0a, 0x0b, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69,
+	0x7a, 0x65, 0x52, 0x65, 0x71, 0x12, 0x1f, 0x0a, 0x0b, 0x73, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74,
+	0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0a, 0x73, 0x65, 0x63, 0x75,
+	0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69,
+	0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x05, 0x52, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64,
+	0x73, 0x22, 0x6f, 0x0a, 0x0b, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x52, 0x73, 0x70,
+	0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x24, 0x0a, 0x04,
+	0x6c, 0x69, 0x73, 0x74, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x61, 0x73, 0x73,
+	0x65, 0x73, 0x73, 0x2e, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x52, 0x04, 0x6c, 0x69,
+	0x73, 0x74, 0x22, 0xbe, 0x02, 0x0a, 0x12, 0x41, 0x64, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69,
+	0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x65, 0x71, 0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x72, 0x6f,
+	0x76, 0x69, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a,
+	0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x23, 0x0a, 0x0d, 0x70, 0x72,
+	0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0c, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x15, 0x0a, 0x06, 0x73, 0x65, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x65, 0x63, 0x5f, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x65, 0x63, 0x4e, 0x61, 0x6d,
+	0x65, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c,
+	0x67, 0x6f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x61,
+	0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f,
+	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x72, 0x61, 0x74,
+	0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x6e, 0x52, 0x61, 0x74,
+	0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x6e, 0x63, 0x6f, 0x6d, 0x65, 0x5f, 0x72, 0x61, 0x74, 0x65,
+	0x18, 0x09, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x69, 0x6e, 0x63, 0x6f, 0x6d, 0x65, 0x52, 0x61,
+	0x74, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x62, 0x61, 0x73, 0x69, 0x73, 0x5f, 0x70, 0x6f, 0x69, 0x6e,
+	0x74, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x62, 0x61, 0x73, 0x69, 0x73, 0x50, 0x6f,
+	0x69, 0x6e, 0x74, 0x22, 0x3a, 0x0a, 0x12, 0x41, 0x64, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69,
+	0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a,
+	0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x22,
+	0xd1, 0x02, 0x0a, 0x15, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69,
+	0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x65, 0x71, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x72, 0x6f,
+	0x76, 0x69, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a,
+	0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x23, 0x0a, 0x0d, 0x70, 0x72,
+	0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0c, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x15, 0x0a, 0x06, 0x73, 0x65, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x65, 0x63, 0x5f, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x65, 0x63, 0x4e, 0x61, 0x6d,
+	0x65, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c,
+	0x67, 0x6f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x61,
+	0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f,
+	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6f, 0x70, 0x65, 0x6e, 0x5f, 0x72, 0x61, 0x74,
+	0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x6e, 0x52, 0x61, 0x74,
+	0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x6e, 0x63, 0x6f, 0x6d, 0x65, 0x5f, 0x72, 0x61, 0x74, 0x65,
+	0x18, 0x0a, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x69, 0x6e, 0x63, 0x6f, 0x6d, 0x65, 0x52, 0x61,
+	0x74, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x62, 0x61, 0x73, 0x69, 0x73, 0x5f, 0x70, 0x6f, 0x69, 0x6e,
+	0x74, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x62, 0x61, 0x73, 0x69, 0x73, 0x50, 0x6f,
+	0x69, 0x6e, 0x74, 0x22, 0x3d, 0x0a, 0x15, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x74,
+	0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d,
+	0x73, 0x67, 0x22, 0x27, 0x0a, 0x15, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70, 0x74, 0x69,
+	0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x65, 0x71, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x22, 0x3d, 0x0a, 0x15, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73,
+	0x65, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x22, 0x92, 0x01, 0x0a, 0x15, 0x53,
+	0x65, 0x6c, 0x65, 0x63, 0x74, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73,
+	0x65, 0x52, 0x65, 0x71, 0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72,
+	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x76, 0x69,
+	0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12, 0x15,
+	0x0a, 0x06, 0x73, 0x65, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x73, 0x65, 0x63, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x69, 0x6d,
+	0x69, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x22,
+	0x8a, 0x03, 0x0a, 0x0c, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64,
+	0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x49,
+	0x64, 0x12, 0x23, 0x0a, 0x0d, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x5f, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64,
+	0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x15, 0x0a, 0x06, 0x73, 0x65, 0x63, 0x5f, 0x69, 0x64,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x12, 0x19, 0x0a,
+	0x08, 0x73, 0x65, 0x63, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x73, 0x65, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f,
+	0x5f, 0x69, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49,
+	0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x07,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1b,
+	0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6f,
+	0x70, 0x65, 0x6e, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08,
+	0x6f, 0x70, 0x65, 0x6e, 0x52, 0x61, 0x74, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x6e, 0x63, 0x6f,
+	0x6d, 0x65, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x69,
+	0x6e, 0x63, 0x6f, 0x6d, 0x65, 0x52, 0x61, 0x74, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x62, 0x61, 0x73,
+	0x69, 0x73, 0x5f, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a,
+	0x62, 0x61, 0x73, 0x69, 0x73, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x63, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x75,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0a, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x7d, 0x0a, 0x15,
+	0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61,
+	0x73, 0x65, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x14, 0x0a, 0x05, 0x74,
+	0x6f, 0x74, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61,
+	0x6c, 0x12, 0x28, 0x0a, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x14, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a,
+	0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x22, 0x19, 0x0a, 0x17, 0x44,
+	0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42,
+	0x61, 0x73, 0x65, 0x52, 0x65, 0x71, 0x22, 0x7f, 0x0a, 0x17, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f,
+	0x61, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x73,
+	0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x28, 0x0a,
+	0x04, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x61, 0x73,
+	0x73, 0x65, 0x73, 0x73, 0x2e, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73,
+	0x65, 0x52, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x22, 0x41, 0x0a, 0x15, 0x55, 0x70, 0x6c, 0x6f, 0x61,
+	0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x65, 0x71,
+	0x12, 0x28, 0x0a, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x14,
+	0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65,
+	0x42, 0x61, 0x73, 0x65, 0x52, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x22, 0x3d, 0x0a, 0x15, 0x55, 0x70,
+	0x6c, 0x6f, 0x61, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65,
+	0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x22, 0x7a, 0x0a, 0x0d, 0x41, 0x6c, 0x67,
+	0x6f, 0x44, 0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x72,
+	0x6f, 0x66, 0x69, 0x6c, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x0b, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x23, 0x0a,
+	0x0d, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x0c, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x53, 0x63, 0x6f,
+	0x72, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x5f, 0x64, 0x65,
+	0x73, 0x63, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c,
+	0x65, 0x44, 0x65, 0x73, 0x63, 0x22, 0xcd, 0x02, 0x0a, 0x0a, 0x44, 0x79, 0x6e, 0x61, 0x6d, 0x69,
+	0x63, 0x52, 0x65, 0x71, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72,
+	0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x12, 0x17, 0x0a,
+	0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06,
+	0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e,
+	0x61, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a,
+	0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x65,
+	0x6e, 0x64, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x65,
+	0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0e, 0x63, 0x72, 0x6f, 0x73, 0x73, 0x5f,
+	0x64, 0x61, 0x79, 0x5f, 0x66, 0x6c, 0x61, 0x67, 0x18, 0x08, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0c,
+	0x63, 0x72, 0x6f, 0x73, 0x73, 0x44, 0x61, 0x79, 0x46, 0x6c, 0x61, 0x67, 0x12, 0x1b, 0x0a, 0x09,
+	0x75, 0x73, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x73, 0x6f, 0x75,
+	0x72, 0x63, 0x65, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a,
+	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x12, 0x19, 0x0a, 0x08, 0x62, 0x61,
+	0x74, 0x63, 0x68, 0x5f, 0x6e, 0x6f, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x62, 0x61,
+	0x74, 0x63, 0x68, 0x4e, 0x6f, 0x22, 0xb9, 0x02, 0x0a, 0x0a, 0x44, 0x79, 0x6e, 0x61, 0x6d, 0x69,
+	0x63, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x33, 0x0a, 0x09, 0x64, 0x69,
+	0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e,
+	0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x44, 0x69, 0x6d, 0x65, 0x6e,
+	0x73, 0x69, 0x6f, 0x6e, 0x52, 0x09, 0x64, 0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x12,
+	0x1f, 0x0a, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x53, 0x63, 0x6f, 0x72, 0x65,
+	0x12, 0x18, 0x0a, 0x07, 0x72, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x07, 0x72, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x12, 0x1b, 0x0a, 0x09, 0x66, 0x75,
+	0x6e, 0x64, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x06, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x66,
+	0x75, 0x6e, 0x64, 0x52, 0x61, 0x74, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x74, 0x72, 0x61, 0x64, 0x65,
+	0x5f, 0x73, 0x69, 0x64, 0x65, 0x18, 0x07, 0x20, 0x03, 0x28, 0x09, 0x52, 0x09, 0x74, 0x72, 0x61,
+	0x64, 0x65, 0x53, 0x69, 0x64, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x5f,
+	0x74, 0x79, 0x70, 0x65, 0x18, 0x08, 0x20, 0x03, 0x28, 0x09, 0x52, 0x09, 0x73, 0x74, 0x6f, 0x63,
+	0x6b, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x74, 0x72, 0x61, 0x64, 0x65, 0x5f, 0x76,
+	0x6f, 0x6c, 0x18, 0x09, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x74, 0x72, 0x61, 0x64, 0x65, 0x56,
+	0x6f, 0x6c, 0x12, 0x1d, 0x0a, 0x0a, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x73,
+	0x18, 0x0a, 0x20, 0x03, 0x28, 0x09, 0x52, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65,
+	0x73, 0x22, 0x87, 0x01, 0x0a, 0x08, 0x54, 0x69, 0x6d, 0x65, 0x4c, 0x69, 0x6e, 0x65, 0x12, 0x1d,
+	0x0a, 0x0a, 0x74, 0x69, 0x6d, 0x65, 0x5f, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x12, 0x21, 0x0a,
+	0x0c, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x0b, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x53, 0x63, 0x6f, 0x72, 0x65,
+	0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x01, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x12, 0x1d, 0x0a, 0x0a,
+	0x72, 0x69, 0x73, 0x6b, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x09, 0x72, 0x69, 0x73, 0x6b, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x22, 0x95, 0x02, 0x0a, 0x0b,
+	0x54, 0x69, 0x6d, 0x65, 0x4c, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x71, 0x12, 0x1b, 0x0a, 0x09, 0x6c,
+	0x69, 0x6e, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08,
+	0x6c, 0x69, 0x6e, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x74, 0x61, 0x72,
+	0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x73, 0x74,
+	0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x65, 0x6e, 0x64, 0x5f, 0x74,
+	0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x65, 0x6e, 0x64, 0x54, 0x69,
+	0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x61,
+	0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c,
+	0x67, 0x6f, 0x49, 0x64, 0x12, 0x24, 0x0a, 0x0e, 0x63, 0x72, 0x6f, 0x73, 0x73, 0x5f, 0x64, 0x61,
+	0x79, 0x5f, 0x66, 0x6c, 0x61, 0x67, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0c, 0x63, 0x72,
+	0x6f, 0x73, 0x73, 0x44, 0x61, 0x79, 0x46, 0x6c, 0x61, 0x67, 0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73,
+	0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x75,
+	0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x73, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x73, 0x6f,
+	0x75, 0x72, 0x63, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x12, 0x19, 0x0a, 0x08, 0x62, 0x61, 0x74, 0x63,
+	0x68, 0x5f, 0x6e, 0x6f, 0x18, 0x09, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x62, 0x61, 0x74, 0x63,
+	0x68, 0x4e, 0x6f, 0x22, 0x59, 0x0a, 0x0b, 0x54, 0x69, 0x6d, 0x65, 0x4c, 0x69, 0x6e, 0x65, 0x52,
+	0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x24, 0x0a, 0x04, 0x6c, 0x69, 0x6e, 0x65,
+	0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e,
+	0x54, 0x69, 0x6d, 0x65, 0x4c, 0x69, 0x6e, 0x65, 0x52, 0x04, 0x6c, 0x69, 0x6e, 0x65, 0x22, 0x5b,
+	0x0a, 0x0f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x52, 0x65,
+	0x71, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x04, 0x64, 0x61, 0x74, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1b,
+	0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x22, 0x5e, 0x0a, 0x08, 0x46,
+	0x75, 0x6e, 0x64, 0x52, 0x61, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x48, 0x75, 0x67, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x04, 0x48, 0x75, 0x67, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x42,
+	0x69, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x03, 0x42, 0x69, 0x67, 0x12, 0x16, 0x0a,
+	0x06, 0x6d, 0x69, 0x64, 0x64, 0x6c, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x6d,
+	0x69, 0x64, 0x64, 0x6c, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x73, 0x6d, 0x61, 0x6c, 0x6c, 0x22, 0x8b, 0x04, 0x0a, 0x0f,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x52, 0x73, 0x70, 0x12,
+	0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x6e, 0x75,
+	0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x4e, 0x75, 0x6d,
+	0x12, 0x2c, 0x0a, 0x12, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x74, 0x72, 0x61, 0x64, 0x65, 0x5f,
+	0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x10, 0x74, 0x6f,
+	0x74, 0x61, 0x6c, 0x54, 0x72, 0x61, 0x64, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1b,
+	0x0a, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x4e, 0x75, 0x6d, 0x12, 0x19, 0x0a, 0x08, 0x62,
+	0x75, 0x79, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x62,
+	0x75, 0x79, 0x52, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x65, 0x6c, 0x6c, 0x5f, 0x72,
+	0x61, 0x74, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x73, 0x65, 0x6c, 0x6c, 0x52,
+	0x61, 0x74, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x5f,
+	0x6e, 0x75, 0x6d, 0x18, 0x08, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x70, 0x72, 0x6f, 0x76, 0x69,
+	0x64, 0x65, 0x72, 0x4e, 0x75, 0x6d, 0x12, 0x2d, 0x0a, 0x09, 0x66, 0x75, 0x6e, 0x64, 0x5f, 0x72,
+	0x61, 0x74, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x61, 0x73, 0x73, 0x65,
+	0x73, 0x73, 0x2e, 0x46, 0x75, 0x6e, 0x64, 0x52, 0x61, 0x74, 0x65, 0x52, 0x08, 0x66, 0x75, 0x6e,
+	0x64, 0x52, 0x61, 0x74, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73,
+	0x73, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x70, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73,
+	0x73, 0x12, 0x24, 0x0a, 0x0e, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x75, 0x73, 0x65, 0x72, 0x5f,
+	0x6e, 0x75, 0x6d, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x74, 0x6f, 0x74, 0x61, 0x6c,
+	0x55, 0x73, 0x65, 0x72, 0x4e, 0x75, 0x6d, 0x12, 0x1d, 0x0a, 0x0a, 0x61, 0x6c, 0x67, 0x6f, 0x5f,
+	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x61, 0x6c, 0x67,
+	0x6f, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x25, 0x0a, 0x0e, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64,
+	0x65, 0x72, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0d,
+	0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x28, 0x0a,
+	0x10, 0x74, 0x72, 0x61, 0x64, 0x65, 0x5f, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x63, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0e, 0x74, 0x72, 0x61, 0x64, 0x65, 0x41, 0x6c,
+	0x67, 0x6f, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x30, 0x0a, 0x14, 0x74, 0x72, 0x61, 0x64, 0x65,
+	0x5f, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18,
+	0x0f, 0x20, 0x01, 0x28, 0x05, 0x52, 0x12, 0x74, 0x72, 0x61, 0x64, 0x65, 0x50, 0x72, 0x6f, 0x76,
+	0x69, 0x64, 0x65, 0x72, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x9f, 0x01, 0x0a, 0x0c, 0x41, 0x6c,
+	0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61,
+	0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65, 0x12, 0x1b,
+	0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69,
+	0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x12, 0x1b,
+	0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x22, 0xea, 0x01, 0x0a, 0x0d,
+	0x41, 0x6c, 0x67, 0x6f, 0x54, 0x72, 0x61, 0x64, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x1a, 0x0a,
+	0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65,
+	0x72, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x75, 0x73, 0x65,
+	0x72, 0x4e, 0x75, 0x6d, 0x12, 0x2c, 0x0a, 0x12, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x74, 0x72,
+	0x61, 0x64, 0x65, 0x5f, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x10, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x54, 0x72, 0x61, 0x64, 0x65, 0x41, 0x6d, 0x6f, 0x75,
+	0x6e, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x5f, 0x72, 0x61, 0x74,
+	0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x52,
+	0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x6e, 0x75, 0x6d,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x4e, 0x75, 0x6d,
+	0x12, 0x19, 0x0a, 0x08, 0x62, 0x75, 0x79, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x01, 0x52, 0x07, 0x62, 0x75, 0x79, 0x52, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x73,
+	0x65, 0x6c, 0x6c, 0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08,
+	0x73, 0x65, 0x6c, 0x6c, 0x52, 0x61, 0x74, 0x65, 0x22, 0x75, 0x0a, 0x0c, 0x41, 0x6c, 0x67, 0x6f,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03,
+	0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x14,
+	0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74,
+	0x6f, 0x74, 0x61, 0x6c, 0x12, 0x29, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x04, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x15, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f,
+	0x54, 0x72, 0x61, 0x64, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22,
+	0xce, 0x02, 0x0a, 0x0d, 0x41, 0x73, 0x73, 0x65, 0x73, 0x73, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72,
+	0x79, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x23,
+	0x0a, 0x0d, 0x65, 0x63, 0x6f, 0x6e, 0x6f, 0x6d, 0x79, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0c, 0x65, 0x63, 0x6f, 0x6e, 0x6f, 0x6d, 0x79, 0x53, 0x63,
+	0x6f, 0x72, 0x65, 0x12, 0x25, 0x0a, 0x0e, 0x70, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x5f,
+	0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0d, 0x70, 0x72, 0x6f,
+	0x67, 0x72, 0x65, 0x73, 0x73, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x69,
+	0x73, 0x6b, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09,
+	0x72, 0x69, 0x73, 0x6b, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x61, 0x73, 0x73,
+	0x65, 0x73, 0x73, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x0b, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x21, 0x0a, 0x0c,
+	0x73, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x0b, 0x73, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x12,
+	0x1f, 0x0a, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x07,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x53, 0x63, 0x6f, 0x72, 0x65,
+	0x12, 0x18, 0x0a, 0x07, 0x72, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x18, 0x08, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x07, 0x72, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x65,
+	0x73, 0x63, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x64, 0x65, 0x73, 0x63, 0x12, 0x20,
+	0x0a, 0x02, 0x74, 0x6c, 0x18, 0x0a, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x61, 0x73, 0x73,
+	0x65, 0x73, 0x73, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x4c, 0x69, 0x6e, 0x65, 0x52, 0x02, 0x74, 0x6c,
+	0x22, 0xb1, 0x01, 0x0a, 0x0c, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x41, 0x6c, 0x67, 0x6f, 0x52, 0x65,
+	0x71, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x04, 0x64, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x74, 0x79,
+	0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x54, 0x79,
+	0x70, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x63, 0x65, 0x6e, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x73, 0x63, 0x65, 0x6e, 0x65, 0x54, 0x79, 0x70,
+	0x65, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c,
+	0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x61,
+	0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f,
+	0x74, 0x79, 0x70, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72,
+	0x54, 0x79, 0x70, 0x65, 0x22, 0x65, 0x0a, 0x0c, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x41, 0x6c, 0x67,
+	0x6f, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x2f, 0x0a, 0x07, 0x73, 0x75,
+	0x6d, 0x6d, 0x61, 0x72, 0x79, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x61, 0x73,
+	0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x73, 0x73, 0x65, 0x73, 0x73, 0x53, 0x75, 0x6d, 0x6d, 0x61,
+	0x72, 0x79, 0x52, 0x07, 0x73, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x22, 0xa3, 0x01, 0x0a, 0x0d,
+	0x43, 0x68, 0x6f, 0x6f, 0x73, 0x65, 0x41, 0x6c, 0x67, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x1f, 0x0a,
+	0x0b, 0x63, 0x68, 0x6f, 0x6f, 0x73, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x0a, 0x63, 0x68, 0x6f, 0x6f, 0x73, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1a,
+	0x0a, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x12, 0x24, 0x0a, 0x0e, 0x61, 0x6c,
+	0x67, 0x6f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0c, 0x61, 0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x4e, 0x61, 0x6d, 0x65,
+	0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a,
+	0x04, 0x64, 0x61, 0x74, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x64, 0x61, 0x74,
+	0x65, 0x22, 0xca, 0x01, 0x0a, 0x0d, 0x43, 0x68, 0x6f, 0x6f, 0x73, 0x65, 0x41, 0x6c, 0x67, 0x6f,
+	0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72, 0x6f,
+	0x76, 0x69, 0x64, 0x65, 0x72, 0x18, 0x03, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x70, 0x72, 0x6f,
+	0x76, 0x69, 0x64, 0x65, 0x72, 0x12, 0x24, 0x0a, 0x0e, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x74, 0x79,
+	0x70, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0c, 0x61,
+	0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x61,
+	0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08,
+	0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f,
+	0x5f, 0x69, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49,
+	0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x07,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x22, 0xc1,
+	0x01, 0x0a, 0x10, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x72, 0x65, 0x41, 0x6c, 0x67, 0x6f, 0x53, 0x63,
+	0x6f, 0x72, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65,
+	0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x53, 0x63, 0x6f, 0x72,
+	0x65, 0x12, 0x18, 0x0a, 0x07, 0x72, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x07, 0x72, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x12, 0x33, 0x0a, 0x09, 0x64,
+	0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15,
+	0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x44, 0x69, 0x6d, 0x65,
+	0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x52, 0x09, 0x64, 0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e,
+	0x12, 0x20, 0x0a, 0x02, 0x74, 0x6c, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x61,
+	0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x4c, 0x69, 0x6e, 0x65, 0x52, 0x02,
+	0x74, 0x6c, 0x22, 0xbf, 0x01, 0x0a, 0x0a, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x72, 0x65, 0x52, 0x65,
+	0x71, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65,
+	0x12, 0x19, 0x0a, 0x08, 0x65, 0x6e, 0x64, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x07, 0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x04, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d,
+	0x65, 0x12, 0x24, 0x0a, 0x0e, 0x63, 0x72, 0x6f, 0x73, 0x73, 0x5f, 0x64, 0x61, 0x79, 0x5f, 0x66,
+	0x6c, 0x61, 0x67, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0c, 0x63, 0x72, 0x6f, 0x73, 0x73,
+	0x44, 0x61, 0x79, 0x46, 0x6c, 0x61, 0x67, 0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f,
+	0x74, 0x79, 0x70, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72,
+	0x54, 0x79, 0x70, 0x65, 0x22, 0x6b, 0x0a, 0x0a, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x72, 0x65, 0x52,
+	0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x37, 0x0a, 0x0a, 0x61, 0x6c, 0x67, 0x6f,
+	0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x61,
+	0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x72, 0x65, 0x41, 0x6c, 0x67,
+	0x6f, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x53, 0x63, 0x6f, 0x72,
+	0x65, 0x22, 0xbc, 0x01, 0x0a, 0x0b, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x44, 0x61, 0x79, 0x52, 0x65,
+	0x71, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65,
+	0x12, 0x19, 0x0a, 0x08, 0x65, 0x6e, 0x64, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x07, 0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0e, 0x63,
+	0x72, 0x6f, 0x73, 0x73, 0x5f, 0x64, 0x61, 0x79, 0x5f, 0x66, 0x6c, 0x61, 0x67, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x08, 0x52, 0x0c, 0x63, 0x72, 0x6f, 0x73, 0x73, 0x44, 0x61, 0x79, 0x46, 0x6c, 0x61,
+	0x67, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c,
+	0x67, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67,
+	0x6f, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65,
+	0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65,
+	0x22, 0x55, 0x0a, 0x0b, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x44, 0x61, 0x79, 0x52, 0x73, 0x70, 0x12,
+	0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x20, 0x0a, 0x02, 0x74, 0x6c, 0x18, 0x03, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x10, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x4c,
+	0x69, 0x6e, 0x65, 0x52, 0x02, 0x74, 0x6c, 0x22, 0x82, 0x01, 0x0a, 0x0c, 0x53, 0x63, 0x6f, 0x72,
+	0x65, 0x52, 0x61, 0x6e, 0x6b, 0x52, 0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09,
+	0x72, 0x61, 0x6e, 0x6b, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x08, 0x72, 0x61, 0x6e, 0x6b, 0x54, 0x79, 0x70, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65,
+	0x72, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72,
+	0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x22, 0xc4, 0x01, 0x0a,
+	0x0d, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x61, 0x6e, 0x6b, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x18,
+	0x0a, 0x07, 0x72, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x07, 0x72, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f,
+	0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67,
+	0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x15, 0x0a, 0x06, 0x73,
+	0x65, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x65, 0x63,
+	0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x65, 0x63, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x65, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x17, 0x0a,
+	0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x4e,
+	0x61, 0x6d, 0x65, 0x22, 0x75, 0x0a, 0x0c, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x61, 0x6e, 0x6b,
+	0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74,
+	0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12,
+	0x29, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e,
+	0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x61, 0x6e, 0x6b,
+	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0x45, 0x0a, 0x08, 0x4c, 0x6f,
+	0x67, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x12, 0x1d, 0x0a, 0x0a, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x5f,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6c, 0x6f, 0x67, 0x69,
+	0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72,
+	0x64, 0x22, 0x5a, 0x0a, 0x08, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a,
+	0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64,
+	0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
+	0x6d, 0x73, 0x67, 0x12, 0x14, 0x0a, 0x05, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x05, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x12, 0x12, 0x0a, 0x04, 0x72, 0x6f, 0x6c,
+	0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x72, 0x6f, 0x6c, 0x65, 0x22, 0xad, 0x01,
+	0x0a, 0x0a, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x52, 0x65, 0x71, 0x12, 0x14, 0x0a, 0x05,
+	0x73, 0x63, 0x65, 0x6e, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x73, 0x63, 0x65,
+	0x6e, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x73,
+	0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x65, 0x6e,
+	0x64, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x65, 0x6e,
+	0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x74, 0x79,
+	0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79,
+	0x70, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x62, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x6e, 0x6f, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x62, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x22, 0xaa, 0x01,
+	0x0a, 0x0a, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d,
+	0x73, 0x67, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61,
+	0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
+	0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0e, 0x61, 0x6c, 0x67, 0x6f,
+	0x5f, 0x74, 0x79, 0x70, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0c, 0x61, 0x6c, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1a,
+	0x0a, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x22, 0xce, 0x01, 0x0a, 0x0e, 0x55,
+	0x73, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x12, 0x1a, 0x0a,
+	0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67,
+	0x6f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x61, 0x6c,
+	0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69,
+	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12,
+	0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07,
+	0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75,
+	0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x63, 0x75, 0x72, 0x5f, 0x64, 0x61, 0x79,
+	0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x63, 0x75, 0x72, 0x44, 0x61, 0x79, 0x12, 0x1b,
+	0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x22, 0xb9, 0x02, 0x0a, 0x0e,
+	0x55, 0x73, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x73, 0x70, 0x12, 0x12,
 	0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f,
 	0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x03, 0x6d, 0x73, 0x67, 0x12, 0x26, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x03, 0x20, 0x03,
-	0x28, 0x0b, 0x32, 0x12, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x73, 0x73, 0x65,
-	0x73, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x32, 0x45, 0x0a, 0x0d,
-	0x41, 0x73, 0x73, 0x65, 0x73, 0x73, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x34, 0x0a,
-	0x0a, 0x47, 0x65, 0x74, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x12, 0x12, 0x2e, 0x61, 0x73,
-	0x73, 0x65, 0x73, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x52, 0x65, 0x71, 0x1a,
-	0x12, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c,
-	0x52, 0x73, 0x70, 0x42, 0x07, 0x5a, 0x05, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x03, 0x6d, 0x73, 0x67, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x12, 0x1b, 0x0a, 0x09,
+	0x74, 0x72, 0x61, 0x64, 0x65, 0x5f, 0x63, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x08, 0x74, 0x72, 0x61, 0x64, 0x65, 0x43, 0x6e, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x72, 0x61,
+	0x64, 0x65, 0x5f, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x0b, 0x74, 0x72, 0x61, 0x64, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1d, 0x0a, 0x0a,
+	0x75, 0x73, 0x65, 0x72, 0x5f, 0x67, 0x72, 0x61, 0x64, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x75, 0x73, 0x65, 0x72, 0x47, 0x72, 0x61, 0x64, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x70,
+	0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x18, 0x07, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x70,
+	0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x12, 0x33, 0x0a, 0x09, 0x64, 0x69, 0x6d, 0x65, 0x6e,
+	0x73, 0x69, 0x6f, 0x6e, 0x18, 0x08, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x61, 0x73, 0x73,
+	0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x44, 0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f,
+	0x6e, 0x52, 0x09, 0x64, 0x69, 0x6d, 0x65, 0x6e, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x1f, 0x0a, 0x0b,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x0a, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x12, 0x18, 0x0a,
+	0x07, 0x72, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07,
+	0x72, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x22, 0xb0, 0x03, 0x0a, 0x0c, 0x57, 0x69, 0x6e, 0x52,
+	0x61, 0x74, 0x69, 0x6f, 0x48, 0x65, 0x61, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x61, 0x6c, 0x67, 0x6f,
+	0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67,
+	0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x64,
+	0x61, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73, 0x74, 0x61, 0x72, 0x74, 0x44,
+	0x61, 0x79, 0x12, 0x17, 0x0a, 0x07, 0x65, 0x6e, 0x64, 0x5f, 0x64, 0x61, 0x79, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x06, 0x65, 0x6e, 0x64, 0x44, 0x61, 0x79, 0x12, 0x1d, 0x0a, 0x0a, 0x74,
+	0x72, 0x61, 0x64, 0x65, 0x5f, 0x64, 0x61, 0x79, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x09, 0x74, 0x72, 0x61, 0x64, 0x65, 0x44, 0x61, 0x79, 0x73, 0x12, 0x28, 0x0a, 0x10, 0x61, 0x76,
+	0x67, 0x5f, 0x64, 0x61, 0x69, 0x6c, 0x79, 0x5f, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x0e, 0x61, 0x76, 0x67, 0x44, 0x61, 0x69, 0x6c, 0x79, 0x50, 0x72,
+	0x6f, 0x66, 0x69, 0x74, 0x12, 0x2b, 0x0a, 0x11, 0x61, 0x6e, 0x6e, 0x75, 0x61, 0x6c, 0x69, 0x7a,
+	0x65, 0x64, 0x5f, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x10, 0x61, 0x6e, 0x6e, 0x75, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x64, 0x50, 0x72, 0x6f, 0x66, 0x69,
+	0x74, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x70, 0x72, 0x6f, 0x66, 0x69,
+	0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x50, 0x72,
+	0x6f, 0x66, 0x69, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x6d, 0x61, 0x78, 0x5f, 0x77, 0x69, 0x74, 0x68,
+	0x64, 0x72, 0x61, 0x77, 0x18, 0x08, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0b, 0x6d, 0x61, 0x78, 0x57,
+	0x69, 0x74, 0x68, 0x64, 0x72, 0x61, 0x77, 0x12, 0x25, 0x0a, 0x0e, 0x64, 0x61, 0x69, 0x6c, 0x79,
+	0x5f, 0x70, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x18, 0x09, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x0d, 0x64, 0x61, 0x69, 0x6c, 0x79, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x12, 0x21,
+	0x0a, 0x0c, 0x64, 0x61, 0x69, 0x6c, 0x79, 0x5f, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x73, 0x18, 0x0a,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x64, 0x61, 0x69, 0x6c, 0x79, 0x53, 0x74, 0x6f, 0x63, 0x6b,
+	0x73, 0x12, 0x1f, 0x0a, 0x0b, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x5f, 0x64, 0x61, 0x79, 0x73,
+	0x18, 0x0b, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x44, 0x61,
+	0x79, 0x73, 0x12, 0x26, 0x0a, 0x0f, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x5f, 0x64, 0x61, 0x79,
+	0x5f, 0x72, 0x61, 0x74, 0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0d, 0x70, 0x72, 0x6f,
+	0x66, 0x69, 0x74, 0x44, 0x61, 0x79, 0x52, 0x61, 0x74, 0x65, 0x22, 0x69, 0x0a, 0x0c, 0x57, 0x69,
+	0x6e, 0x52, 0x61, 0x74, 0x69, 0x6f, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x10, 0x0a, 0x03, 0x64, 0x61,
+	0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x64, 0x61, 0x79, 0x12, 0x1b, 0x0a, 0x09,
+	0x77, 0x69, 0x6e, 0x5f, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x08, 0x77, 0x69, 0x6e, 0x52, 0x61, 0x74, 0x69, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x6f, 0x64, 0x64,
+	0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x04, 0x6f, 0x64, 0x64, 0x73, 0x12, 0x16, 0x0a,
+	0x06, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x70,
+	0x72, 0x6f, 0x66, 0x69, 0x74, 0x22, 0x92, 0x01, 0x0a, 0x0b, 0x57, 0x69, 0x6e, 0x52, 0x61, 0x74,
+	0x69, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12, 0x1b,
+	0x0a, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x64, 0x61, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x08, 0x73, 0x74, 0x61, 0x72, 0x74, 0x44, 0x61, 0x79, 0x12, 0x17, 0x0a, 0x07, 0x65,
+	0x6e, 0x64, 0x5f, 0x64, 0x61, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x65, 0x6e,
+	0x64, 0x44, 0x61, 0x79, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1b, 0x0a,
+	0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x22, 0x8e, 0x01, 0x0a, 0x0b, 0x57,
+	0x69, 0x6e, 0x52, 0x61, 0x74, 0x69, 0x6f, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f,
+	0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10,
+	0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67,
+	0x12, 0x2f, 0x0a, 0x08, 0x77, 0x69, 0x6e, 0x5f, 0x68, 0x65, 0x61, 0x64, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x14, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x57, 0x69, 0x6e, 0x52,
+	0x61, 0x74, 0x69, 0x6f, 0x48, 0x65, 0x61, 0x64, 0x52, 0x07, 0x77, 0x69, 0x6e, 0x48, 0x65, 0x61,
+	0x64, 0x12, 0x28, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x14, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x57, 0x69, 0x6e, 0x52, 0x61, 0x74, 0x69,
+	0x6f, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0x90, 0x01, 0x0a, 0x09,
+	0x53, 0x69, 0x67, 0x6e, 0x61, 0x6c, 0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67,
+	0x6f, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f,
+	0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x64, 0x61, 0x79, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x73, 0x74, 0x61, 0x72, 0x74, 0x44, 0x61, 0x79, 0x12,
+	0x17, 0x0a, 0x07, 0x65, 0x6e, 0x64, 0x5f, 0x64, 0x61, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x06, 0x65, 0x6e, 0x64, 0x44, 0x61, 0x79, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72,
+	0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49,
+	0x64, 0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x22, 0x57,
+	0x0a, 0x0a, 0x53, 0x69, 0x67, 0x6e, 0x61, 0x6c, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x10, 0x0a, 0x03,
+	0x64, 0x61, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x64, 0x61, 0x79, 0x12, 0x1b,
+	0x0a, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x4e, 0x75, 0x6d, 0x12, 0x1a, 0x0a, 0x08, 0x70,
+	0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x70,
+	0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x22, 0x59, 0x0a, 0x09, 0x53, 0x69, 0x67, 0x6e, 0x61,
+	0x6c, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x26, 0x0a, 0x04, 0x69, 0x6e,
+	0x66, 0x6f, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73,
+	0x73, 0x2e, 0x53, 0x69, 0x67, 0x6e, 0x61, 0x6c, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e,
+	0x66, 0x6f, 0x22, 0xb2, 0x05, 0x0a, 0x0e, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65,
+	0x72, 0x50, 0x65, 0x72, 0x66, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x07, 0x52, 0x02, 0x49, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x42, 0x75, 0x73, 0x55, 0x73, 0x65, 0x72,
+	0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x42, 0x75, 0x73, 0x55, 0x73, 0x65,
+	0x72, 0x49, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x42, 0x75, 0x73, 0x55, 0x75, 0x73, 0x65, 0x72, 0x49,
+	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x07, 0x52, 0x0a, 0x42, 0x75, 0x73, 0x55, 0x75, 0x73, 0x65,
+	0x72, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72,
+	0x49, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x07, 0x52, 0x0b, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72,
+	0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x24, 0x0a, 0x0d, 0x41, 0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74,
+	0x68, 0x6d, 0x54, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x07, 0x52, 0x0d, 0x41, 0x6c,
+	0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x54, 0x79, 0x70, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x41,
+	0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x49, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x07,
+	0x52, 0x0b, 0x41, 0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x49, 0x64, 0x12, 0x20, 0x0a,
+	0x0b, 0x55, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x18, 0x07, 0x20, 0x01,
+	0x28, 0x07, 0x52, 0x0b, 0x55, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12,
+	0x1e, 0x0a, 0x0a, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x18, 0x08, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0a, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12,
+	0x12, 0x0a, 0x04, 0x53, 0x69, 0x64, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x07, 0x52, 0x04, 0x53,
+	0x69, 0x64, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x51, 0x74, 0x79, 0x18,
+	0x0a, 0x20, 0x01, 0x28, 0x06, 0x52, 0x08, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x51, 0x74, 0x79, 0x12,
+	0x14, 0x0a, 0x05, 0x50, 0x72, 0x69, 0x63, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x06, 0x52, 0x05,
+	0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x54, 0x79,
+	0x70, 0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x07, 0x52, 0x09, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x54,
+	0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x43, 0x75, 0x6d, 0x51, 0x74, 0x79, 0x18, 0x0d, 0x20,
+	0x01, 0x28, 0x06, 0x52, 0x06, 0x43, 0x75, 0x6d, 0x51, 0x74, 0x79, 0x12, 0x16, 0x0a, 0x06, 0x4c,
+	0x61, 0x73, 0x74, 0x50, 0x78, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x06, 0x52, 0x06, 0x4c, 0x61, 0x73,
+	0x74, 0x50, 0x78, 0x12, 0x18, 0x0a, 0x07, 0x4c, 0x61, 0x73, 0x74, 0x51, 0x74, 0x79, 0x18, 0x0f,
+	0x20, 0x01, 0x28, 0x06, 0x52, 0x07, 0x4c, 0x61, 0x73, 0x74, 0x51, 0x74, 0x79, 0x12, 0x16, 0x0a,
+	0x06, 0x43, 0x68, 0x61, 0x72, 0x67, 0x65, 0x18, 0x10, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x43,
+	0x68, 0x61, 0x72, 0x67, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x41, 0x72, 0x72, 0x69, 0x76, 0x65, 0x64,
+	0x50, 0x72, 0x69, 0x63, 0x65, 0x18, 0x11, 0x20, 0x01, 0x28, 0x06, 0x52, 0x0c, 0x41, 0x72, 0x72,
+	0x69, 0x76, 0x65, 0x64, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x26, 0x0a, 0x0e, 0x43, 0x68, 0x69,
+	0x6c, 0x64, 0x4f, 0x72, 0x64, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x12, 0x20, 0x01, 0x28,
+	0x07, 0x52, 0x0e, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x53, 0x74, 0x61, 0x74, 0x75,
+	0x73, 0x12, 0x22, 0x0a, 0x0c, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x54, 0x69, 0x6d,
+	0x65, 0x18, 0x13, 0x20, 0x01, 0x28, 0x06, 0x52, 0x0c, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e,
+	0x18, 0x14, 0x20, 0x01, 0x28, 0x07, 0x52, 0x07, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12,
+	0x18, 0x0a, 0x07, 0x42, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x18, 0x15, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x07, 0x42, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x12, 0x1c, 0x0a, 0x09, 0x42, 0x61, 0x74,
+	0x63, 0x68, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x16, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x42, 0x61,
+	0x74, 0x63, 0x68, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x53, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x46, 0x72, 0x6f, 0x6d, 0x18, 0x17, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x53, 0x6f, 0x75,
+	0x72, 0x63, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x22, 0xbb, 0x03, 0x0a, 0x0d, 0x41, 0x6c, 0x67, 0x6f,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x50, 0x65, 0x72, 0x66, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x07, 0x52, 0x02, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x42, 0x61, 0x73,
+	0x6b, 0x65, 0x74, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x07, 0x52, 0x08, 0x42, 0x61, 0x73,
+	0x6b, 0x65, 0x74, 0x49, 0x64, 0x12, 0x24, 0x0a, 0x0d, 0x41, 0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74,
+	0x68, 0x6d, 0x54, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x07, 0x52, 0x0d, 0x41, 0x6c,
+	0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x54, 0x79, 0x70, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x41,
+	0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x49, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x07,
+	0x52, 0x0b, 0x41, 0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x49, 0x64, 0x12, 0x20, 0x0a,
+	0x0b, 0x55, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x07, 0x52, 0x0b, 0x55, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12,
+	0x1e, 0x0a, 0x0a, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x18, 0x06, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0a, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12,
+	0x22, 0x0a, 0x0c, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x51, 0x74, 0x79, 0x18,
+	0x07, 0x20, 0x01, 0x28, 0x06, 0x52, 0x0c, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72,
+	0x51, 0x74, 0x79, 0x12, 0x22, 0x0a, 0x0c, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x54,
+	0x69, 0x6d, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x06, 0x52, 0x0c, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x61, 0x63, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74,
+	0x54, 0x69, 0x6d, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x06, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65,
+	0x18, 0x0a, 0x20, 0x01, 0x28, 0x06, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12,
+	0x1c, 0x0a, 0x09, 0x42, 0x75, 0x73, 0x55, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x0b, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x42, 0x75, 0x73, 0x55, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x18, 0x0a,
+	0x07, 0x42, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07,
+	0x42, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x12, 0x1c, 0x0a, 0x09, 0x42, 0x61, 0x74, 0x63, 0x68,
+	0x4e, 0x61, 0x6d, 0x65, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x42, 0x61, 0x74, 0x63,
+	0x68, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x46,
+	0x72, 0x6f, 0x6d, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x53, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x46, 0x72, 0x6f, 0x6d, 0x22, 0x3d, 0x0a, 0x0e, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x50, 0x65, 0x72, 0x66, 0x73, 0x12, 0x2b, 0x0a, 0x05, 0x70, 0x61, 0x72, 0x74, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e,
+	0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x50, 0x65, 0x72, 0x66, 0x52, 0x05, 0x70,
+	0x61, 0x72, 0x74, 0x73, 0x22, 0x3f, 0x0a, 0x0f, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x50, 0x65, 0x72, 0x66, 0x73, 0x12, 0x2c, 0x0a, 0x05, 0x70, 0x61, 0x72, 0x74, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e,
+	0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x50, 0x65, 0x72, 0x66, 0x52, 0x05,
+	0x70, 0x61, 0x72, 0x74, 0x73, 0x22, 0x6d, 0x0a, 0x0b, 0x50, 0x75, 0x73, 0x68, 0x44, 0x61, 0x74,
+	0x61, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x74,
+	0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09,
+	0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x65, 0x6e, 0x64,
+	0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x65, 0x6e, 0x64,
+	0x54, 0x69, 0x6d, 0x65, 0x22, 0x91, 0x02, 0x0a, 0x11, 0x52, 0x65, 0x71, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6c,
+	0x67, 0x6f, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f,
+	0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x70, 0x61, 0x67, 0x65,
+	0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x70, 0x61, 0x67, 0x65, 0x49, 0x64,
+	0x12, 0x18, 0x0a, 0x07, 0x70, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x07, 0x70, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x12, 0x1a, 0x0a, 0x08, 0x41, 0x6c,
+	0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x41, 0x6c,
+	0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x63, 0x65, 0x6e, 0x65, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x73, 0x63, 0x65, 0x6e, 0x65, 0x12, 0x16, 0x0a, 0x06,
+	0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65,
+	0x18, 0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65,
+	0x12, 0x1c, 0x0a, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x09, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18,
+	0x0a, 0x07, 0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x07, 0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x95, 0x04, 0x0a, 0x09, 0x41, 0x6c, 0x67,
+	0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x62, 0x61, 0x73, 0x6b, 0x65, 0x74,
+	0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x62, 0x61, 0x73, 0x6b, 0x65, 0x74,
+	0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0b, 0x61, 0x6c,
+	0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x49, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x0b, 0x61, 0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06,
+	0x75, 0x73, 0x65, 0x63, 0x49, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x75, 0x73,
+	0x65, 0x63, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x18, 0x06, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x12, 0x22, 0x0a, 0x0c, 0x61, 0x6c,
+	0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x51, 0x74, 0x79, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0c, 0x61, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x51, 0x74, 0x79, 0x12, 0x1c,
+	0x0a, 0x09, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x09, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1c, 0x0a, 0x09,
+	0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x65, 0x6e,
+	0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x65, 0x6e, 0x64,
+	0x54, 0x69, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x69,
+	0x6d, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x66, 0x69, 0x78, 0x46, 0x6c, 0x61, 0x67, 0x18,
+	0x0c, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x66, 0x69, 0x78, 0x46, 0x6c, 0x61, 0x67, 0x12, 0x1a,
+	0x0a, 0x08, 0x41, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x41, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x62, 0x61,
+	0x74, 0x63, 0x68, 0x4e, 0x6f, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x62, 0x61, 0x74,
+	0x63, 0x68, 0x4e, 0x6f, 0x12, 0x1c, 0x0a, 0x09, 0x62, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x61, 0x6d,
+	0x65, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x62, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x61,
+	0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x10, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x75, 0x6e,
+	0x69, 0x78, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x11, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x75, 0x6e,
+	0x69, 0x78, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x61, 0x6c, 0x67, 0x6f, 0x72, 0x69,
+	0x74, 0x68, 0x6d, 0x54, 0x79, 0x70, 0x65, 0x18, 0x12, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0d, 0x61,
+	0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x54, 0x79, 0x70, 0x65, 0x12, 0x12, 0x0a, 0x04,
+	0x64, 0x61, 0x74, 0x65, 0x18, 0x13, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65,
+	0x22, 0x79, 0x0a, 0x12, 0x52, 0x65, 0x73, 0x70, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x67,
+	0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73,
+	0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x14, 0x0a, 0x05,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74,
+	0x61, 0x6c, 0x12, 0x27, 0x0a, 0x05, 0x70, 0x61, 0x72, 0x74, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x11, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x52, 0x05, 0x70, 0x61, 0x72, 0x74, 0x73, 0x22, 0xca, 0x02, 0x0a, 0x12,
+	0x52, 0x65, 0x71, 0x51, 0x75, 0x65, 0x72, 0x79, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x73, 0x65,
+	0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a,
+	0x73, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12, 0x22, 0x0a, 0x0c, 0x43, 0x68,
+	0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0c, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x16,
+	0x0a, 0x06, 0x70, 0x61, 0x67, 0x65, 0x49, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06,
+	0x70, 0x61, 0x67, 0x65, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x70, 0x61, 0x67, 0x65, 0x4e, 0x75,
+	0x6d, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x70, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d,
+	0x12, 0x1a, 0x0a, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x61, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05,
+	0x73, 0x63, 0x65, 0x6e, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x73, 0x63, 0x65,
+	0x6e, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x18, 0x08,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1c,
+	0x0a, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07,
+	0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x65,
+	0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x61, 0x6c, 0x67, 0x6f, 0x4f, 0x72,
+	0x64, 0x65, 0x72, 0x49, 0x64, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x61, 0x6c, 0x67,
+	0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x22, 0xa0, 0x06, 0x0a, 0x0a, 0x43, 0x68, 0x69,
+	0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x12, 0x22, 0x0a, 0x0c, 0x63, 0x68, 0x69, 0x6c, 0x64,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x63,
+	0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0b, 0x61,
+	0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0d,
+	0x52, 0x0b, 0x61, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x12, 0x24, 0x0a,
+	0x0d, 0x61, 0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x0d, 0x52, 0x0d, 0x61, 0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d, 0x54,
+	0x79, 0x70, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x61, 0x6c, 0x67, 0x6f, 0x72, 0x69, 0x74, 0x68, 0x6d,
+	0x49, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0b, 0x61, 0x6c, 0x67, 0x6f, 0x72, 0x69,
+	0x74, 0x68, 0x6d, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x20, 0x0a,
+	0x0b, 0x75, 0x73, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x18, 0x07, 0x20, 0x01,
+	0x28, 0x0d, 0x52, 0x0b, 0x75, 0x73, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12,
+	0x1e, 0x0a, 0x0a, 0x73, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x18, 0x08, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0a, 0x73, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12,
+	0x1c, 0x0a, 0x09, 0x74, 0x72, 0x61, 0x64, 0x65, 0x53, 0x69, 0x64, 0x65, 0x18, 0x09, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x09, 0x74, 0x72, 0x61, 0x64, 0x65, 0x53, 0x69, 0x64, 0x65, 0x12, 0x1a, 0x0a,
+	0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x51, 0x74, 0x79, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x08, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x51, 0x74, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x72, 0x69,
+	0x63, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x70, 0x72, 0x69, 0x63, 0x65, 0x12,
+	0x1c, 0x0a, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x18, 0x0c, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x09, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a,
+	0x06, 0x6c, 0x61, 0x73, 0x74, 0x50, 0x78, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x6c,
+	0x61, 0x73, 0x74, 0x50, 0x78, 0x12, 0x18, 0x0a, 0x07, 0x6c, 0x61, 0x73, 0x74, 0x51, 0x74, 0x79,
+	0x18, 0x0e, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x6c, 0x61, 0x73, 0x74, 0x51, 0x74, 0x79, 0x12,
+	0x16, 0x0a, 0x06, 0x63, 0x6f, 0x6d, 0x51, 0x74, 0x79, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x06, 0x63, 0x6f, 0x6d, 0x51, 0x74, 0x79, 0x12, 0x22, 0x0a, 0x0c, 0x61, 0x72, 0x72, 0x69, 0x76,
+	0x65, 0x64, 0x50, 0x72, 0x69, 0x63, 0x65, 0x18, 0x10, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x61,
+	0x72, 0x72, 0x69, 0x76, 0x65, 0x64, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x74,
+	0x6f, 0x74, 0x61, 0x6c, 0x46, 0x65, 0x65, 0x18, 0x11, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x74,
+	0x6f, 0x74, 0x61, 0x6c, 0x46, 0x65, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x6f, 0x72, 0x64, 0x53, 0x74,
+	0x61, 0x74, 0x75, 0x73, 0x18, 0x12, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x6f, 0x72, 0x64, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x22, 0x0a, 0x0c, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x13, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x74, 0x72, 0x61,
+	0x6e, 0x73, 0x61, 0x63, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x74, 0x72, 0x61,
+	0x6e, 0x73, 0x61, 0x63, 0x74, 0x41, 0x74, 0x18, 0x14, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x74,
+	0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x41, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x70, 0x72, 0x6f,
+	0x63, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x15, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x70,
+	0x72, 0x6f, 0x63, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x1e, 0x0a, 0x0a, 0x63, 0x72, 0x65,
+	0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x16, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x63,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x66, 0x69, 0x78,
+	0x46, 0x6c, 0x61, 0x67, 0x18, 0x17, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x66, 0x69, 0x78, 0x46,
+	0x6c, 0x61, 0x67, 0x12, 0x1a, 0x0a, 0x08, 0x41, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x18,
+	0x18, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x41, 0x6c, 0x67, 0x6f, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x62, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x18, 0x19, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x07, 0x62, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x12, 0x1c, 0x0a, 0x09, 0x62, 0x61, 0x74,
+	0x63, 0x68, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x1a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x62, 0x61,
+	0x74, 0x63, 0x68, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x65, 0x18,
+	0x1b, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65, 0x22, 0x7b, 0x0a, 0x13, 0x52,
+	0x65, 0x73, 0x70, 0x51, 0x75, 0x65, 0x72, 0x79, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61,
+	0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x28,
+	0x0a, 0x05, 0x70, 0x61, 0x72, 0x74, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e,
+	0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65,
+	0x72, 0x52, 0x05, 0x70, 0x61, 0x72, 0x74, 0x73, 0x22, 0xfa, 0x02, 0x0a, 0x0a, 0x51, 0x75, 0x6f,
+	0x74, 0x65, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x73, 0x65, 0x63, 0x75, 0x6c,
+	0x69, 0x74, 0x79, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x73, 0x65, 0x63,
+	0x75, 0x6c, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x6f, 0x72, 0x67, 0x69, 0x54,
+	0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x6f, 0x72, 0x67, 0x69, 0x54,
+	0x69, 0x6d, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x50, 0x72, 0x69, 0x63, 0x65,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x50, 0x72, 0x69, 0x63,
+	0x65, 0x12, 0x1a, 0x0a, 0x08, 0x61, 0x73, 0x6b, 0x50, 0x72, 0x69, 0x63, 0x65, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x61, 0x73, 0x6b, 0x50, 0x72, 0x69, 0x63, 0x65, 0x12, 0x16, 0x0a,
+	0x06, 0x61, 0x73, 0x6b, 0x56, 0x6f, 0x6c, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x61,
+	0x73, 0x6b, 0x56, 0x6f, 0x6c, 0x12, 0x1a, 0x0a, 0x08, 0x62, 0x69, 0x64, 0x50, 0x72, 0x69, 0x63,
+	0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x62, 0x69, 0x64, 0x50, 0x72, 0x69, 0x63,
+	0x65, 0x12, 0x16, 0x0a, 0x06, 0x62, 0x69, 0x64, 0x56, 0x6f, 0x6c, 0x18, 0x08, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x62, 0x69, 0x64, 0x56, 0x6f, 0x6c, 0x12, 0x24, 0x0a, 0x0d, 0x74, 0x6f, 0x74,
+	0x61, 0x6c, 0x54, 0x72, 0x61, 0x64, 0x65, 0x56, 0x6f, 0x6c, 0x18, 0x09, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0d, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x54, 0x72, 0x61, 0x64, 0x65, 0x56, 0x6f, 0x6c, 0x12,
+	0x20, 0x0a, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x73, 0x6b, 0x56, 0x6f, 0x6c, 0x18, 0x0a,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x41, 0x73, 0x6b, 0x56, 0x6f,
+	0x6c, 0x12, 0x20, 0x0a, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x42, 0x69, 0x64, 0x56, 0x6f, 0x6c,
+	0x18, 0x0b, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x42, 0x69, 0x64,
+	0x56, 0x6f, 0x6c, 0x12, 0x16, 0x0a, 0x06, 0x6d, 0x6b, 0x56, 0x77, 0x61, 0x70, 0x18, 0x0c, 0x20,
+	0x01, 0x28, 0x02, 0x52, 0x06, 0x6d, 0x6b, 0x56, 0x77, 0x61, 0x70, 0x12, 0x18, 0x0a, 0x07, 0x66,
+	0x69, 0x78, 0x46, 0x6c, 0x61, 0x67, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x66, 0x69,
+	0x78, 0x46, 0x6c, 0x61, 0x67, 0x22, 0x7d, 0x0a, 0x12, 0x52, 0x65, 0x71, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x51, 0x75, 0x6f, 0x74, 0x65, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12, 0x1e, 0x0a, 0x0a, 0x73,
+	0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x73, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12, 0x16, 0x0a, 0x06, 0x70,
+	0x61, 0x67, 0x65, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x70, 0x61, 0x67,
+	0x65, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x70, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x70, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x12, 0x15, 0x0a,
+	0x06, 0x6d, 0x61, 0x78, 0x5f, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x6d,
+	0x61, 0x78, 0x49, 0x64, 0x22, 0x92, 0x01, 0x0a, 0x13, 0x52, 0x65, 0x73, 0x70, 0x51, 0x75, 0x65,
+	0x72, 0x79, 0x51, 0x75, 0x6f, 0x74, 0x65, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d,
+	0x73, 0x67, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x28, 0x0a, 0x05, 0x70, 0x61, 0x72, 0x74,
+	0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x51, 0x75, 0x6f, 0x74, 0x65, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x52, 0x05, 0x70, 0x61, 0x72,
+	0x74, 0x73, 0x12, 0x15, 0x0a, 0x06, 0x6d, 0x61, 0x78, 0x5f, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x05, 0x6d, 0x61, 0x78, 0x49, 0x64, 0x22, 0x3a, 0x0a, 0x0e, 0x52, 0x65, 0x71,
+	0x50, 0x75, 0x73, 0x68, 0x53, 0x68, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12, 0x28, 0x0a, 0x05, 0x71,
+	0x75, 0x6f, 0x74, 0x65, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x61, 0x73, 0x73,
+	0x65, 0x73, 0x73, 0x2e, 0x51, 0x75, 0x6f, 0x74, 0x65, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x52, 0x05,
+	0x71, 0x75, 0x6f, 0x74, 0x65, 0x22, 0x3a, 0x0a, 0x0e, 0x52, 0x65, 0x71, 0x50, 0x75, 0x73, 0x68,
+	0x53, 0x7a, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12, 0x28, 0x0a, 0x05, 0x71, 0x75, 0x6f, 0x74, 0x65,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e,
+	0x51, 0x75, 0x6f, 0x74, 0x65, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x52, 0x05, 0x71, 0x75, 0x6f, 0x74,
+	0x65, 0x22, 0x5b, 0x0a, 0x08, 0x4f, 0x72, 0x69, 0x67, 0x41, 0x6c, 0x67, 0x6f, 0x12, 0x19, 0x0a,
+	0x08, 0x62, 0x61, 0x74, 0x63, 0x68, 0x5f, 0x6e, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x07, 0x62, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x12, 0x1b, 0x0a, 0x09, 0x62, 0x61, 0x73, 0x6b,
+	0x65, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x62, 0x61, 0x73,
+	0x6b, 0x65, 0x74, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69, 0x64,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x22, 0x5a,
+	0x0a, 0x09, 0x4f, 0x72, 0x69, 0x67, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x62,
+	0x61, 0x74, 0x63, 0x68, 0x5f, 0x6e, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x62,
+	0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f, 0x69,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64, 0x12,
+	0x19, 0x0a, 0x08, 0x63, 0x68, 0x69, 0x6c, 0x64, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x07, 0x63, 0x68, 0x69, 0x6c, 0x64, 0x49, 0x64, 0x22, 0x2d, 0x0a, 0x07, 0x41, 0x6e,
+	0x61, 0x6c, 0x79, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x69, 0x64, 0x22, 0x57, 0x0a, 0x0e, 0x4f, 0x72, 0x69,
+	0x67, 0x41, 0x6e, 0x61, 0x6c, 0x79, 0x73, 0x65, 0x52, 0x65, 0x71, 0x12, 0x1c, 0x0a, 0x09, 0x6f,
+	0x72, 0x64, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09,
+	0x6f, 0x72, 0x64, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x27, 0x0a, 0x06, 0x6f, 0x72, 0x64,
+	0x65, 0x72, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x61, 0x73, 0x73, 0x65,
+	0x73, 0x73, 0x2e, 0x41, 0x6e, 0x61, 0x6c, 0x79, 0x73, 0x65, 0x52, 0x06, 0x6f, 0x72, 0x64, 0x65,
+	0x72, 0x73, 0x22, 0x89, 0x01, 0x0a, 0x0f, 0x4f, 0x72, 0x69, 0x67, 0x41, 0x6e, 0x61, 0x6c, 0x79,
+	0x73, 0x65, 0x52, 0x65, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73,
+	0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x18, 0x0a, 0x07,
+	0x62, 0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x62,
+	0x61, 0x74, 0x63, 0x68, 0x4e, 0x6f, 0x12, 0x1c, 0x0a, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54,
+	0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74,
+	0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x32, 0xd3,
+	0x11, 0x0a, 0x0d, 0x41, 0x73, 0x73, 0x65, 0x73, 0x73, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+	0x12, 0x34, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x12, 0x12,
+	0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x52,
+	0x65, 0x71, 0x1a, 0x12, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65,
+	0x72, 0x61, 0x6c, 0x52, 0x73, 0x70, 0x12, 0x40, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x67,
+	0x6f, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x12, 0x16, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73,
+	0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x71,
+	0x1a, 0x16, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x50, 0x72,
+	0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x73, 0x70, 0x12, 0x37, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x4f,
+	0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x12, 0x13, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x13, 0x2e, 0x61,
+	0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x52, 0x73,
+	0x70, 0x12, 0x49, 0x0a, 0x0f, 0x41, 0x64, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65,
+	0x42, 0x61, 0x73, 0x65, 0x12, 0x1a, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x64,
+	0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x65, 0x71,
+	0x1a, 0x1a, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x64, 0x64, 0x4f, 0x70, 0x74,
+	0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x73, 0x70, 0x12, 0x52, 0x0a, 0x12,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61,
+	0x73, 0x65, 0x12, 0x1d, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x65,
+	0x71, 0x1a, 0x1d, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x73, 0x70,
+	0x12, 0x52, 0x0a, 0x12, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69,
+	0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x12, 0x1d, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61,
+	0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x1d, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73,
+	0x65, 0x52, 0x73, 0x70, 0x12, 0x52, 0x0a, 0x12, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x4f, 0x70,
+	0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x12, 0x1d, 0x2e, 0x61, 0x73, 0x73,
+	0x65, 0x73, 0x73, 0x2e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69,
+	0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x1d, 0x2e, 0x61, 0x73, 0x73, 0x65,
+	0x73, 0x73, 0x2e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a,
+	0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x73, 0x70, 0x12, 0x58, 0x0a, 0x14, 0x44, 0x6f, 0x77, 0x6e,
+	0x6c, 0x6f, 0x61, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65,
+	0x12, 0x1f, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f,
+	0x61, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52, 0x65,
+	0x71, 0x1a, 0x1f, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x6f, 0x77, 0x6e, 0x6c,
+	0x6f, 0x61, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x52,
+	0x73, 0x70, 0x12, 0x52, 0x0a, 0x12, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x4f, 0x70, 0x74, 0x69,
+	0x6d, 0x69, 0x7a, 0x65, 0x42, 0x61, 0x73, 0x65, 0x12, 0x1d, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73,
+	0x73, 0x2e, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65,
+	0x42, 0x61, 0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x1d, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x4f, 0x70, 0x74, 0x69, 0x6d, 0x69, 0x7a, 0x65, 0x42,
+	0x61, 0x73, 0x65, 0x52, 0x73, 0x70, 0x12, 0x38, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x67,
+	0x6f, 0x44, 0x79, 0x6e, 0x61, 0x6d, 0x69, 0x63, 0x12, 0x12, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73,
+	0x73, 0x2e, 0x44, 0x79, 0x6e, 0x61, 0x6d, 0x69, 0x63, 0x52, 0x65, 0x71, 0x1a, 0x12, 0x2e, 0x61,
+	0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x79, 0x6e, 0x61, 0x6d, 0x69, 0x63, 0x52, 0x73, 0x70,
+	0x12, 0x3b, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x67, 0x6f, 0x54, 0x69, 0x6d, 0x65, 0x4c,
+	0x69, 0x6e, 0x65, 0x12, 0x13, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x54, 0x69, 0x6d,
+	0x65, 0x4c, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x13, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73,
+	0x73, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x4c, 0x69, 0x6e, 0x65, 0x52, 0x73, 0x70, 0x12, 0x47, 0x0a,
+	0x13, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x75, 0x6d,
+	0x6d, 0x61, 0x72, 0x79, 0x12, 0x17, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4f, 0x72,
+	0x64, 0x65, 0x72, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e,
+	0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x75, 0x6d, 0x6d,
+	0x61, 0x72, 0x79, 0x52, 0x73, 0x70, 0x12, 0x41, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x67,
+	0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x12, 0x14, 0x2e,
+	0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72,
+	0x52, 0x65, 0x71, 0x1a, 0x14, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67,
+	0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x73, 0x70, 0x12, 0x40, 0x0a, 0x12, 0x47, 0x65, 0x74,
+	0x4d, 0x75, 0x6c, 0x74, 0x69, 0x41, 0x6c, 0x67, 0x6f, 0x41, 0x73, 0x73, 0x65, 0x73, 0x73, 0x12,
+	0x14, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x41, 0x6c,
+	0x67, 0x6f, 0x52, 0x65, 0x71, 0x1a, 0x14, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4d,
+	0x75, 0x6c, 0x74, 0x69, 0x41, 0x6c, 0x67, 0x6f, 0x52, 0x73, 0x70, 0x12, 0x3e, 0x0a, 0x0e, 0x43,
+	0x68, 0x6f, 0x6f, 0x73, 0x65, 0x41, 0x6c, 0x67, 0x6f, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x15, 0x2e,
+	0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x43, 0x68, 0x6f, 0x6f, 0x73, 0x65, 0x41, 0x6c, 0x67,
+	0x6f, 0x52, 0x65, 0x71, 0x1a, 0x15, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x43, 0x68,
+	0x6f, 0x6f, 0x73, 0x65, 0x41, 0x6c, 0x67, 0x6f, 0x52, 0x73, 0x70, 0x12, 0x3a, 0x0a, 0x10, 0x43,
+	0x6f, 0x6d, 0x70, 0x61, 0x72, 0x65, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x41, 0x6c, 0x67, 0x6f, 0x12,
+	0x12, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x43, 0x6f, 0x6d, 0x70, 0x61, 0x72, 0x65,
+	0x52, 0x65, 0x71, 0x1a, 0x12, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x43, 0x6f, 0x6d,
+	0x70, 0x61, 0x72, 0x65, 0x52, 0x73, 0x70, 0x12, 0x3b, 0x0a, 0x0f, 0x4d, 0x75, 0x6c, 0x74, 0x69,
+	0x44, 0x61, 0x79, 0x41, 0x6e, 0x61, 0x6c, 0x79, 0x73, 0x65, 0x12, 0x13, 0x2e, 0x61, 0x73, 0x73,
+	0x65, 0x73, 0x73, 0x2e, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x44, 0x61, 0x79, 0x52, 0x65, 0x71, 0x1a,
+	0x13, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4d, 0x75, 0x6c, 0x74, 0x69, 0x44, 0x61,
+	0x79, 0x52, 0x73, 0x70, 0x12, 0x3f, 0x0a, 0x11, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x53, 0x63, 0x6f,
+	0x72, 0x65, 0x52, 0x61, 0x6e, 0x6b, 0x69, 0x6e, 0x67, 0x12, 0x14, 0x2e, 0x61, 0x73, 0x73, 0x65,
+	0x73, 0x73, 0x2e, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x61, 0x6e, 0x6b, 0x52, 0x65, 0x71, 0x1a,
+	0x14, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x52, 0x61,
+	0x6e, 0x6b, 0x52, 0x73, 0x70, 0x12, 0x38, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x44, 0x65, 0x66, 0x61,
+	0x75, 0x6c, 0x74, 0x41, 0x6c, 0x67, 0x6f, 0x12, 0x12, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x12, 0x2e, 0x61, 0x73,
+	0x73, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x52, 0x73, 0x70, 0x12,
+	0x40, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c,
+	0x65, 0x12, 0x16, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x50,
+	0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x16, 0x2e, 0x61, 0x73, 0x73, 0x65,
+	0x73, 0x73, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x73,
+	0x70, 0x12, 0x37, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x57, 0x69, 0x6e, 0x52, 0x61, 0x74, 0x69, 0x6f,
+	0x12, 0x13, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x57, 0x69, 0x6e, 0x52, 0x61, 0x74,
+	0x69, 0x6f, 0x52, 0x65, 0x71, 0x1a, 0x13, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x57,
+	0x69, 0x6e, 0x52, 0x61, 0x74, 0x69, 0x6f, 0x52, 0x73, 0x70, 0x12, 0x31, 0x0a, 0x09, 0x47, 0x65,
+	0x74, 0x53, 0x69, 0x67, 0x6e, 0x61, 0x6c, 0x12, 0x11, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x53, 0x69, 0x67, 0x6e, 0x61, 0x6c, 0x52, 0x65, 0x71, 0x1a, 0x11, 0x2e, 0x61, 0x73, 0x73,
+	0x65, 0x73, 0x73, 0x2e, 0x53, 0x69, 0x67, 0x6e, 0x61, 0x6c, 0x52, 0x73, 0x70, 0x12, 0x3d, 0x0a,
+	0x0e, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x72, 0x12,
+	0x16, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x50, 0x65, 0x72, 0x66, 0x73, 0x1a, 0x13, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x50, 0x75, 0x73, 0x68, 0x44, 0x61, 0x74, 0x61, 0x52, 0x73, 0x70, 0x12, 0x40, 0x0a, 0x10,
+	0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72,
+	0x12, 0x17, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x50, 0x65, 0x72, 0x66, 0x73, 0x1a, 0x13, 0x2e, 0x61, 0x73, 0x73, 0x65,
+	0x73, 0x73, 0x2e, 0x50, 0x75, 0x73, 0x68, 0x44, 0x61, 0x74, 0x61, 0x52, 0x73, 0x70, 0x12, 0x3c,
+	0x0a, 0x0d, 0x50, 0x75, 0x73, 0x68, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12,
+	0x16, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64,
+	0x65, 0x72, 0x50, 0x65, 0x72, 0x66, 0x73, 0x1a, 0x13, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x50, 0x75, 0x73, 0x68, 0x44, 0x61, 0x74, 0x61, 0x52, 0x73, 0x70, 0x12, 0x47, 0x0a, 0x0e,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x19,
+	0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x52, 0x65, 0x71, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x1a, 0x1a, 0x2e, 0x61, 0x73, 0x73, 0x65,
+	0x73, 0x73, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x67, 0x6f,
+	0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x3e, 0x0a, 0x0e, 0x50, 0x75, 0x73, 0x68, 0x43, 0x68, 0x69,
+	0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x17, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x50, 0x65, 0x72, 0x66, 0x73,
+	0x1a, 0x13, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x50, 0x75, 0x73, 0x68, 0x44, 0x61,
+	0x74, 0x61, 0x52, 0x73, 0x70, 0x12, 0x4a, 0x0a, 0x0f, 0x51, 0x75, 0x65, 0x72, 0x79, 0x43, 0x68,
+	0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x1a, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73,
+	0x73, 0x2e, 0x52, 0x65, 0x71, 0x51, 0x75, 0x65, 0x72, 0x79, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f,
+	0x72, 0x64, 0x65, 0x72, 0x1a, 0x1b, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x52, 0x65,
+	0x73, 0x70, 0x51, 0x75, 0x65, 0x72, 0x79, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65,
+	0x72, 0x12, 0x3f, 0x0a, 0x10, 0x50, 0x75, 0x73, 0x68, 0x53, 0x7a, 0x51, 0x75, 0x6f, 0x74, 0x65,
+	0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12, 0x16, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x52,
+	0x65, 0x71, 0x50, 0x75, 0x73, 0x68, 0x53, 0x7a, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x1a, 0x13, 0x2e,
+	0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x50, 0x75, 0x73, 0x68, 0x44, 0x61, 0x74, 0x61, 0x52,
+	0x73, 0x70, 0x12, 0x4c, 0x0a, 0x11, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x7a, 0x51, 0x75, 0x6f,
+	0x74, 0x65, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12, 0x1a, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x52, 0x65, 0x71, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x6f, 0x74, 0x65, 0x4c, 0x65,
+	0x76, 0x65, 0x6c, 0x1a, 0x1b, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x52, 0x65, 0x73,
+	0x70, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x6f, 0x74, 0x65, 0x4c, 0x65, 0x76, 0x65, 0x6c,
+	0x12, 0x3f, 0x0a, 0x10, 0x50, 0x75, 0x73, 0x68, 0x53, 0x68, 0x51, 0x75, 0x6f, 0x74, 0x65, 0x4c,
+	0x65, 0x76, 0x65, 0x6c, 0x12, 0x16, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x52, 0x65,
+	0x71, 0x50, 0x75, 0x73, 0x68, 0x53, 0x68, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x1a, 0x13, 0x2e, 0x61,
+	0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x50, 0x75, 0x73, 0x68, 0x44, 0x61, 0x74, 0x61, 0x52, 0x73,
+	0x70, 0x12, 0x4c, 0x0a, 0x11, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x68, 0x51, 0x75, 0x6f, 0x74,
+	0x65, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12, 0x1a, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e,
+	0x52, 0x65, 0x71, 0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x6f, 0x74, 0x65, 0x4c, 0x65, 0x76,
+	0x65, 0x6c, 0x1a, 0x1b, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x52, 0x65, 0x73, 0x70,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x51, 0x75, 0x6f, 0x74, 0x65, 0x4c, 0x65, 0x76, 0x65, 0x6c, 0x12,
+	0x43, 0x0a, 0x10, 0x4f, 0x72, 0x69, 0x67, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x41, 0x6e, 0x61, 0x6c,
+	0x79, 0x73, 0x65, 0x12, 0x16, 0x2e, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4f, 0x72, 0x69,
+	0x67, 0x41, 0x6e, 0x61, 0x6c, 0x79, 0x73, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e, 0x61, 0x73,
+	0x73, 0x65, 0x73, 0x73, 0x2e, 0x4f, 0x72, 0x69, 0x67, 0x41, 0x6e, 0x61, 0x6c, 0x79, 0x73, 0x65,
+	0x52, 0x65, 0x73, 0x70, 0x42, 0x07, 0x5a, 0x05, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -389,21 +8673,192 @@ func file_assess_proto_rawDescGZIP() []byte {
 	return file_assess_proto_rawDescData
 }
 
-var file_assess_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_assess_proto_msgTypes = make([]protoimpl.MessageInfo, 82)
 var file_assess_proto_goTypes = []interface{}{
-	(*AssessInfo)(nil), // 0: assess.AssessInfo
-	(*GeneralReq)(nil), // 1: assess.GeneralReq
-	(*GeneralRsp)(nil), // 2: assess.GeneralRsp
+	(*AssessInfo)(nil),              // 0: assess.AssessInfo
+	(*GeneralReq)(nil),              // 1: assess.GeneralReq
+	(*GeneralRsp)(nil),              // 2: assess.GeneralRsp
+	(*AlgoInfo)(nil),                // 3: assess.AlgoInfo
+	(*ProfileInfo)(nil),             // 4: assess.ProfileInfo
+	(*AlgoProfileReq)(nil),          // 5: assess.AlgoProfileReq
+	(*AlgoProfileRsp)(nil),          // 6: assess.AlgoProfileRsp
+	(*Optimize)(nil),                // 7: assess.Optimize
+	(*OptimizeReq)(nil),             // 8: assess.OptimizeReq
+	(*OptimizeRsp)(nil),             // 9: assess.OptimizeRsp
+	(*AddOptimizeBaseReq)(nil),      // 10: assess.AddOptimizeBaseReq
+	(*AddOptimizeBaseRsp)(nil),      // 11: assess.AddOptimizeBaseRsp
+	(*UpdateOptimizeBaseReq)(nil),   // 12: assess.UpdateOptimizeBaseReq
+	(*UpdateOptimizeBaseRsp)(nil),   // 13: assess.UpdateOptimizeBaseRsp
+	(*DeleteOptimizeBaseReq)(nil),   // 14: assess.DeleteOptimizeBaseReq
+	(*DeleteOptimizeBaseRsp)(nil),   // 15: assess.DeleteOptimizeBaseRsp
+	(*SelectOptimizeBaseReq)(nil),   // 16: assess.SelectOptimizeBaseReq
+	(*OptimizeBase)(nil),            // 17: assess.OptimizeBase
+	(*SelectOptimizeBaseRsp)(nil),   // 18: assess.SelectOptimizeBaseRsp
+	(*DownloadOptimizeBaseReq)(nil), // 19: assess.DownloadOptimizeBaseReq
+	(*DownloadOptimizeBaseRsp)(nil), // 20: assess.DownloadOptimizeBaseRsp
+	(*UploadOptimizeBaseReq)(nil),   // 21: assess.UploadOptimizeBaseReq
+	(*UploadOptimizeBaseRsp)(nil),   // 22: assess.UploadOptimizeBaseRsp
+	(*AlgoDimension)(nil),           // 23: assess.AlgoDimension
+	(*DynamicReq)(nil),              // 24: assess.DynamicReq
+	(*DynamicRsp)(nil),              // 25: assess.DynamicRsp
+	(*TimeLine)(nil),                // 26: assess.TimeLine
+	(*TimeLineReq)(nil),             // 27: assess.TimeLineReq
+	(*TimeLineRsp)(nil),             // 28: assess.TimeLineRsp
+	(*OrderSummaryReq)(nil),         // 29: assess.OrderSummaryReq
+	(*FundRate)(nil),                // 30: assess.FundRate
+	(*OrderSummaryRsp)(nil),         // 31: assess.OrderSummaryRsp
+	(*AlgoOrderReq)(nil),            // 32: assess.AlgoOrderReq
+	(*AlgoTradeInfo)(nil),           // 33: assess.AlgoTradeInfo
+	(*AlgoOrderRsp)(nil),            // 34: assess.AlgoOrderRsp
+	(*AssessSummary)(nil),           // 35: assess.AssessSummary
+	(*MultiAlgoReq)(nil),            // 36: assess.MultiAlgoReq
+	(*MultiAlgoRsp)(nil),            // 37: assess.MultiAlgoRsp
+	(*ChooseAlgoReq)(nil),           // 38: assess.ChooseAlgoReq
+	(*ChooseAlgoRsp)(nil),           // 39: assess.ChooseAlgoRsp
+	(*CompareAlgoScore)(nil),        // 40: assess.CompareAlgoScore
+	(*CompareReq)(nil),              // 41: assess.CompareReq
+	(*CompareRsp)(nil),              // 42: assess.CompareRsp
+	(*MultiDayReq)(nil),             // 43: assess.MultiDayReq
+	(*MultiDayRsp)(nil),             // 44: assess.MultiDayRsp
+	(*ScoreRankReq)(nil),            // 45: assess.ScoreRankReq
+	(*ScoreRankInfo)(nil),           // 46: assess.ScoreRankInfo
+	(*ScoreRankRsp)(nil),            // 47: assess.ScoreRankRsp
+	(*LoginReq)(nil),                // 48: assess.LoginReq
+	(*LoginRsp)(nil),                // 49: assess.LoginRsp
+	(*DefaultReq)(nil),              // 50: assess.DefaultReq
+	(*DefaultRsp)(nil),              // 51: assess.DefaultRsp
+	(*UserProfileReq)(nil),          // 52: assess.UserProfileReq
+	(*UserProfileRsp)(nil),          // 53: assess.UserProfileRsp
+	(*WinRatioHead)(nil),            // 54: assess.WinRatioHead
+	(*WinRatioInfo)(nil),            // 55: assess.WinRatioInfo
+	(*WinRatioReq)(nil),             // 56: assess.WinRatioReq
+	(*WinRatioRsp)(nil),             // 57: assess.WinRatioRsp
+	(*SignalReq)(nil),               // 58: assess.SignalReq
+	(*SignalInfo)(nil),              // 59: assess.SignalInfo
+	(*SignalRsp)(nil),               // 60: assess.SignalRsp
+	(*ChildOrderPerf)(nil),          // 61: assess.ChildOrderPerf
+	(*AlgoOrderPerf)(nil),           // 62: assess.AlgoOrderPerf
+	(*AlgoOrderPerfs)(nil),          // 63: assess.AlgoOrderPerfs
+	(*ChildOrderPerfs)(nil),         // 64: assess.ChildOrderPerfs
+	(*PushDataRsp)(nil),             // 65: assess.PushDataRsp
+	(*ReqQueryAlgoOrder)(nil),       // 66: assess.ReqQueryAlgoOrder
+	(*AlgoOrder)(nil),               // 67: assess.AlgoOrder
+	(*RespQueryAlgoOrder)(nil),      // 68: assess.RespQueryAlgoOrder
+	(*ReqQueryChildOrder)(nil),      // 69: assess.ReqQueryChildOrder
+	(*ChildOrder)(nil),              // 70: assess.ChildOrder
+	(*RespQueryChildOrder)(nil),     // 71: assess.RespQueryChildOrder
+	(*QuoteLevel)(nil),              // 72: assess.QuoteLevel
+	(*ReqQueryQuoteLevel)(nil),      // 73: assess.ReqQueryQuoteLevel
+	(*RespQueryQuoteLevel)(nil),     // 74: assess.RespQueryQuoteLevel
+	(*ReqPushShLevel)(nil),          // 75: assess.ReqPushShLevel
+	(*ReqPushSzLevel)(nil),          // 76: assess.ReqPushSzLevel
+	(*OrigAlgo)(nil),                // 77: assess.OrigAlgo
+	(*OrigChild)(nil),               // 78: assess.OrigChild
+	(*Analyse)(nil),                 // 79: assess.Analyse
+	(*OrigAnalyseReq)(nil),          // 80: assess.OrigAnalyseReq
+	(*OrigAnalyseResp)(nil),         // 81: assess.OrigAnalyseResp
 }
 var file_assess_proto_depIdxs = []int32{
-	0, // 0: assess.GeneralRsp.info:type_name -> assess.AssessInfo
-	1, // 1: assess.AssessService.GetGeneral:input_type -> assess.GeneralReq
-	2, // 2: assess.AssessService.GetGeneral:output_type -> assess.GeneralRsp
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0,  // 0: assess.GeneralRsp.info:type_name -> assess.AssessInfo
+	4,  // 1: assess.AlgoProfileRsp.info:type_name -> assess.ProfileInfo
+	7,  // 2: assess.OptimizeRsp.list:type_name -> assess.Optimize
+	17, // 3: assess.SelectOptimizeBaseRsp.list:type_name -> assess.OptimizeBase
+	17, // 4: assess.DownloadOptimizeBaseRsp.list:type_name -> assess.OptimizeBase
+	17, // 5: assess.UploadOptimizeBaseReq.list:type_name -> assess.OptimizeBase
+	23, // 6: assess.DynamicRsp.dimension:type_name -> assess.AlgoDimension
+	26, // 7: assess.TimeLineRsp.line:type_name -> assess.TimeLine
+	30, // 8: assess.OrderSummaryRsp.fund_rate:type_name -> assess.FundRate
+	33, // 9: assess.AlgoOrderRsp.info:type_name -> assess.AlgoTradeInfo
+	26, // 10: assess.AssessSummary.tl:type_name -> assess.TimeLine
+	35, // 11: assess.MultiAlgoRsp.summary:type_name -> assess.AssessSummary
+	23, // 12: assess.CompareAlgoScore.dimension:type_name -> assess.AlgoDimension
+	26, // 13: assess.CompareAlgoScore.tl:type_name -> assess.TimeLine
+	40, // 14: assess.CompareRsp.algo_score:type_name -> assess.CompareAlgoScore
+	26, // 15: assess.MultiDayRsp.tl:type_name -> assess.TimeLine
+	46, // 16: assess.ScoreRankRsp.info:type_name -> assess.ScoreRankInfo
+	23, // 17: assess.UserProfileRsp.dimension:type_name -> assess.AlgoDimension
+	54, // 18: assess.WinRatioRsp.win_head:type_name -> assess.WinRatioHead
+	55, // 19: assess.WinRatioRsp.info:type_name -> assess.WinRatioInfo
+	59, // 20: assess.SignalRsp.info:type_name -> assess.SignalInfo
+	62, // 21: assess.AlgoOrderPerfs.parts:type_name -> assess.AlgoOrderPerf
+	61, // 22: assess.ChildOrderPerfs.parts:type_name -> assess.ChildOrderPerf
+	67, // 23: assess.RespQueryAlgoOrder.parts:type_name -> assess.AlgoOrder
+	70, // 24: assess.RespQueryChildOrder.parts:type_name -> assess.ChildOrder
+	72, // 25: assess.RespQueryQuoteLevel.parts:type_name -> assess.QuoteLevel
+	72, // 26: assess.ReqPushShLevel.quote:type_name -> assess.QuoteLevel
+	72, // 27: assess.ReqPushSzLevel.quote:type_name -> assess.QuoteLevel
+	79, // 28: assess.OrigAnalyseReq.orders:type_name -> assess.Analyse
+	1,  // 29: assess.AssessService.GetGeneral:input_type -> assess.GeneralReq
+	5,  // 30: assess.AssessService.GetAlgoProfile:input_type -> assess.AlgoProfileReq
+	8,  // 31: assess.AssessService.GetOptimize:input_type -> assess.OptimizeReq
+	10, // 32: assess.AssessService.AddOptimizeBase:input_type -> assess.AddOptimizeBaseReq
+	12, // 33: assess.AssessService.UpdateOptimizeBase:input_type -> assess.UpdateOptimizeBaseReq
+	14, // 34: assess.AssessService.DeleteOptimizeBase:input_type -> assess.DeleteOptimizeBaseReq
+	16, // 35: assess.AssessService.SelectOptimizeBase:input_type -> assess.SelectOptimizeBaseReq
+	19, // 36: assess.AssessService.DownloadOptimizeBase:input_type -> assess.DownloadOptimizeBaseReq
+	21, // 37: assess.AssessService.UploadOptimizeBase:input_type -> assess.UploadOptimizeBaseReq
+	24, // 38: assess.AssessService.GetAlgoDynamic:input_type -> assess.DynamicReq
+	27, // 39: assess.AssessService.GetAlgoTimeLine:input_type -> assess.TimeLineReq
+	29, // 40: assess.AssessService.GetUserOrderSummary:input_type -> assess.OrderSummaryReq
+	32, // 41: assess.AssessService.GetAlgoOrderSummary:input_type -> assess.AlgoOrderReq
+	36, // 42: assess.AssessService.GetMultiAlgoAssess:input_type -> assess.MultiAlgoReq
+	38, // 43: assess.AssessService.ChooseAlgoInfo:input_type -> assess.ChooseAlgoReq
+	41, // 44: assess.AssessService.CompareMultiAlgo:input_type -> assess.CompareReq
+	43, // 45: assess.AssessService.MultiDayAnalyse:input_type -> assess.MultiDayReq
+	45, // 46: assess.AssessService.TotalScoreRanking:input_type -> assess.ScoreRankReq
+	50, // 47: assess.AssessService.GetDefaultAlgo:input_type -> assess.DefaultReq
+	52, // 48: assess.AssessService.GetUserProfile:input_type -> assess.UserProfileReq
+	56, // 49: assess.AssessService.GetWinRatio:input_type -> assess.WinRatioReq
+	58, // 50: assess.AssessService.GetSignal:input_type -> assess.SignalReq
+	63, // 51: assess.AssessService.ImportAlgoOrdr:input_type -> assess.AlgoOrderPerfs
+	64, // 52: assess.AssessService.ImportChildOrder:input_type -> assess.ChildOrderPerfs
+	63, // 53: assess.AssessService.PushAlgoOrder:input_type -> assess.AlgoOrderPerfs
+	66, // 54: assess.AssessService.QueryAlgoOrder:input_type -> assess.ReqQueryAlgoOrder
+	64, // 55: assess.AssessService.PushChildOrder:input_type -> assess.ChildOrderPerfs
+	69, // 56: assess.AssessService.QueryChildOrder:input_type -> assess.ReqQueryChildOrder
+	76, // 57: assess.AssessService.PushSzQuoteLevel:input_type -> assess.ReqPushSzLevel
+	73, // 58: assess.AssessService.QuerySzQuoteLevel:input_type -> assess.ReqQueryQuoteLevel
+	75, // 59: assess.AssessService.PushShQuoteLevel:input_type -> assess.ReqPushShLevel
+	73, // 60: assess.AssessService.QueryShQuoteLevel:input_type -> assess.ReqQueryQuoteLevel
+	80, // 61: assess.AssessService.OrigOrderAnalyse:input_type -> assess.OrigAnalyseReq
+	2,  // 62: assess.AssessService.GetGeneral:output_type -> assess.GeneralRsp
+	6,  // 63: assess.AssessService.GetAlgoProfile:output_type -> assess.AlgoProfileRsp
+	9,  // 64: assess.AssessService.GetOptimize:output_type -> assess.OptimizeRsp
+	11, // 65: assess.AssessService.AddOptimizeBase:output_type -> assess.AddOptimizeBaseRsp
+	13, // 66: assess.AssessService.UpdateOptimizeBase:output_type -> assess.UpdateOptimizeBaseRsp
+	15, // 67: assess.AssessService.DeleteOptimizeBase:output_type -> assess.DeleteOptimizeBaseRsp
+	18, // 68: assess.AssessService.SelectOptimizeBase:output_type -> assess.SelectOptimizeBaseRsp
+	20, // 69: assess.AssessService.DownloadOptimizeBase:output_type -> assess.DownloadOptimizeBaseRsp
+	22, // 70: assess.AssessService.UploadOptimizeBase:output_type -> assess.UploadOptimizeBaseRsp
+	25, // 71: assess.AssessService.GetAlgoDynamic:output_type -> assess.DynamicRsp
+	28, // 72: assess.AssessService.GetAlgoTimeLine:output_type -> assess.TimeLineRsp
+	31, // 73: assess.AssessService.GetUserOrderSummary:output_type -> assess.OrderSummaryRsp
+	34, // 74: assess.AssessService.GetAlgoOrderSummary:output_type -> assess.AlgoOrderRsp
+	37, // 75: assess.AssessService.GetMultiAlgoAssess:output_type -> assess.MultiAlgoRsp
+	39, // 76: assess.AssessService.ChooseAlgoInfo:output_type -> assess.ChooseAlgoRsp
+	42, // 77: assess.AssessService.CompareMultiAlgo:output_type -> assess.CompareRsp
+	44, // 78: assess.AssessService.MultiDayAnalyse:output_type -> assess.MultiDayRsp
+	47, // 79: assess.AssessService.TotalScoreRanking:output_type -> assess.ScoreRankRsp
+	51, // 80: assess.AssessService.GetDefaultAlgo:output_type -> assess.DefaultRsp
+	53, // 81: assess.AssessService.GetUserProfile:output_type -> assess.UserProfileRsp
+	57, // 82: assess.AssessService.GetWinRatio:output_type -> assess.WinRatioRsp
+	60, // 83: assess.AssessService.GetSignal:output_type -> assess.SignalRsp
+	65, // 84: assess.AssessService.ImportAlgoOrdr:output_type -> assess.PushDataRsp
+	65, // 85: assess.AssessService.ImportChildOrder:output_type -> assess.PushDataRsp
+	65, // 86: assess.AssessService.PushAlgoOrder:output_type -> assess.PushDataRsp
+	68, // 87: assess.AssessService.QueryAlgoOrder:output_type -> assess.RespQueryAlgoOrder
+	65, // 88: assess.AssessService.PushChildOrder:output_type -> assess.PushDataRsp
+	71, // 89: assess.AssessService.QueryChildOrder:output_type -> assess.RespQueryChildOrder
+	65, // 90: assess.AssessService.PushSzQuoteLevel:output_type -> assess.PushDataRsp
+	74, // 91: assess.AssessService.QuerySzQuoteLevel:output_type -> assess.RespQueryQuoteLevel
+	65, // 92: assess.AssessService.PushShQuoteLevel:output_type -> assess.PushDataRsp
+	74, // 93: assess.AssessService.QueryShQuoteLevel:output_type -> assess.RespQueryQuoteLevel
+	81, // 94: assess.AssessService.OrigOrderAnalyse:output_type -> assess.OrigAnalyseResp
+	62, // [62:95] is the sub-list for method output_type
+	29, // [29:62] is the sub-list for method input_type
+	29, // [29:29] is the sub-list for extension type_name
+	29, // [29:29] is the sub-list for extension extendee
+	0,  // [0:29] is the sub-list for field type_name
 }
 
 func init() { file_assess_proto_init() }
@@ -448,6 +8903,954 @@ func file_assess_proto_init() {
 				return nil
 			}
 		}
+		file_assess_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ProfileInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoProfileReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoProfileRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Optimize); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OptimizeReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OptimizeRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AddOptimizeBaseReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AddOptimizeBaseRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateOptimizeBaseReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateOptimizeBaseRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteOptimizeBaseReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteOptimizeBaseRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SelectOptimizeBaseReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OptimizeBase); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SelectOptimizeBaseRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DownloadOptimizeBaseReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DownloadOptimizeBaseRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UploadOptimizeBaseReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UploadOptimizeBaseRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoDimension); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DynamicReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DynamicRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TimeLine); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TimeLineReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TimeLineRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrderSummaryReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FundRate); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrderSummaryRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoOrderReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoTradeInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoOrderRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AssessSummary); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MultiAlgoReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MultiAlgoRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ChooseAlgoReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ChooseAlgoRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CompareAlgoScore); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CompareReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CompareRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MultiDayReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MultiDayRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ScoreRankReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ScoreRankInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ScoreRankRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LoginReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LoginRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DefaultReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DefaultRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UserProfileReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UserProfileRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WinRatioHead); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WinRatioInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WinRatioReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*WinRatioRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SignalReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SignalInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SignalRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ChildOrderPerf); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoOrderPerf); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoOrderPerfs); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ChildOrderPerfs); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PushDataRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ReqQueryAlgoOrder); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoOrder); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RespQueryAlgoOrder); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ReqQueryChildOrder); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ChildOrder); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RespQueryChildOrder); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QuoteLevel); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ReqQueryQuoteLevel); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RespQueryQuoteLevel); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ReqPushShLevel); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ReqPushSzLevel); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrigAlgo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[78].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrigChild); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[79].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Analyse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[80].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrigAnalyseReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_assess_proto_msgTypes[81].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrigAnalyseResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -455,7 +9858,7 @@ func file_assess_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_assess_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   82,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -483,6 +9886,71 @@ const _ = grpc.SupportPackageIsVersion6
 type AssessServiceClient interface {
 	// 获取绩效概况
 	GetGeneral(ctx context.Context, in *GeneralReq, opts ...grpc.CallOption) (*GeneralRsp, error)
+	// 获取算法画像信息
+	GetAlgoProfile(ctx context.Context, in *AlgoProfileReq, opts ...grpc.CallOption) (*AlgoProfileRsp, error)
+	// 一键优选
+	GetOptimize(ctx context.Context, in *OptimizeReq, opts ...grpc.CallOption) (*OptimizeRsp, error)
+	//新增一键优选基础数据
+	AddOptimizeBase(ctx context.Context, in *AddOptimizeBaseReq, opts ...grpc.CallOption) (*AddOptimizeBaseRsp, error)
+	//修改一键优选基础数据
+	UpdateOptimizeBase(ctx context.Context, in *UpdateOptimizeBaseReq, opts ...grpc.CallOption) (*UpdateOptimizeBaseRsp, error)
+	//删除一键优选基础数据
+	DeleteOptimizeBase(ctx context.Context, in *DeleteOptimizeBaseReq, opts ...grpc.CallOption) (*DeleteOptimizeBaseRsp, error)
+	//查询一键优选基础数据
+	SelectOptimizeBase(ctx context.Context, in *SelectOptimizeBaseReq, opts ...grpc.CallOption) (*SelectOptimizeBaseRsp, error)
+	//下载一键优选基础数据
+	DownloadOptimizeBase(ctx context.Context, in *DownloadOptimizeBaseReq, opts ...grpc.CallOption) (*DownloadOptimizeBaseRsp, error)
+	//导入一键优选基础数据
+	UploadOptimizeBase(ctx context.Context, in *UploadOptimizeBaseReq, opts ...grpc.CallOption) (*UploadOptimizeBaseRsp, error)
+	// 算法动态
+	GetAlgoDynamic(ctx context.Context, in *DynamicReq, opts ...grpc.CallOption) (*DynamicRsp, error)
+	// 时间线图
+	GetAlgoTimeLine(ctx context.Context, in *TimeLineReq, opts ...grpc.CallOption) (*TimeLineRsp, error)
+	// 取用户订单汇总信息(dashboard 用户数量， 交易量，买卖占比，厂商个数，资金占比,完成度--查汇总表）
+	GetUserOrderSummary(ctx context.Context, in *OrderSummaryReq, opts ...grpc.CallOption) (*OrderSummaryRsp, error)
+	// 根据算法类型取订单汇总信息 （dashboard 算法列表）
+	GetAlgoOrderSummary(ctx context.Context, in *AlgoOrderReq, opts ...grpc.CallOption) (*AlgoOrderRsp, error)
+	// 取多个算法绩效时间线  (dashboard top 4）
+	GetMultiAlgoAssess(ctx context.Context, in *MultiAlgoReq, opts ...grpc.CallOption) (*MultiAlgoRsp, error)
+	// 算法条件筛选
+	ChooseAlgoInfo(ctx context.Context, in *ChooseAlgoReq, opts ...grpc.CallOption) (*ChooseAlgoRsp, error)
+	// 多算法对比
+	CompareMultiAlgo(ctx context.Context, in *CompareReq, opts ...grpc.CallOption) (*CompareRsp, error)
+	// 多日分析
+	MultiDayAnalyse(ctx context.Context, in *MultiDayReq, opts ...grpc.CallOption) (*MultiDayRsp, error)
+	// 综合评分排名列表
+	TotalScoreRanking(ctx context.Context, in *ScoreRankReq, opts ...grpc.CallOption) (*ScoreRankRsp, error)
+	// 取默认数据，用于需选择算法的场景下默认无数据的页面
+	GetDefaultAlgo(ctx context.Context, in *DefaultReq, opts ...grpc.CallOption) (*DefaultRsp, error)
+	// 高阶分析：取用户画像绩效信息
+	GetUserProfile(ctx context.Context, in *UserProfileReq, opts ...grpc.CallOption) (*UserProfileRsp, error)
+	// 高阶分析：胜率分析
+	GetWinRatio(ctx context.Context, in *WinRatioReq, opts ...grpc.CallOption) (*WinRatioRsp, error)
+	// 高阶分析：信号分析
+	GetSignal(ctx context.Context, in *SignalReq, opts ...grpc.CallOption) (*SignalRsp, error)
+	// 订单导入:母单信息导入
+	ImportAlgoOrdr(ctx context.Context, in *AlgoOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error)
+	// 订单导入：子单信息导入
+	ImportChildOrder(ctx context.Context, in *ChildOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error)
+	// -------绩效数据修复
+	// 母单绩效修复
+	PushAlgoOrder(ctx context.Context, in *AlgoOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error)
+	// 母单信息
+	QueryAlgoOrder(ctx context.Context, in *ReqQueryAlgoOrder, opts ...grpc.CallOption) (*RespQueryAlgoOrder, error)
+	// 子单绩效修复
+	PushChildOrder(ctx context.Context, in *ChildOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error)
+	// 子单信息
+	QueryChildOrder(ctx context.Context, in *ReqQueryChildOrder, opts ...grpc.CallOption) (*RespQueryChildOrder, error)
+	// 深市行情信息
+	PushSzQuoteLevel(ctx context.Context, in *ReqPushSzLevel, opts ...grpc.CallOption) (*PushDataRsp, error)
+	// 深市行情信息推送
+	QuerySzQuoteLevel(ctx context.Context, in *ReqQueryQuoteLevel, opts ...grpc.CallOption) (*RespQueryQuoteLevel, error)
+	// 沪市行情信息推送
+	PushShQuoteLevel(ctx context.Context, in *ReqPushShLevel, opts ...grpc.CallOption) (*PushDataRsp, error)
+	// 沪市行情信息
+	QueryShQuoteLevel(ctx context.Context, in *ReqQueryQuoteLevel, opts ...grpc.CallOption) (*RespQueryQuoteLevel, error)
+	// 原始订单分析
+	OrigOrderAnalyse(ctx context.Context, in *OrigAnalyseReq, opts ...grpc.CallOption) (*OrigAnalyseResp, error)
 }
 
 type assessServiceClient struct {
@@ -502,10 +9970,363 @@ func (c *assessServiceClient) GetGeneral(ctx context.Context, in *GeneralReq, op
 	return out, nil
 }
 
+func (c *assessServiceClient) GetAlgoProfile(ctx context.Context, in *AlgoProfileReq, opts ...grpc.CallOption) (*AlgoProfileRsp, error) {
+	out := new(AlgoProfileRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetAlgoProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) GetOptimize(ctx context.Context, in *OptimizeReq, opts ...grpc.CallOption) (*OptimizeRsp, error) {
+	out := new(OptimizeRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetOptimize", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) AddOptimizeBase(ctx context.Context, in *AddOptimizeBaseReq, opts ...grpc.CallOption) (*AddOptimizeBaseRsp, error) {
+	out := new(AddOptimizeBaseRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/AddOptimizeBase", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) UpdateOptimizeBase(ctx context.Context, in *UpdateOptimizeBaseReq, opts ...grpc.CallOption) (*UpdateOptimizeBaseRsp, error) {
+	out := new(UpdateOptimizeBaseRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/UpdateOptimizeBase", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) DeleteOptimizeBase(ctx context.Context, in *DeleteOptimizeBaseReq, opts ...grpc.CallOption) (*DeleteOptimizeBaseRsp, error) {
+	out := new(DeleteOptimizeBaseRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/DeleteOptimizeBase", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) SelectOptimizeBase(ctx context.Context, in *SelectOptimizeBaseReq, opts ...grpc.CallOption) (*SelectOptimizeBaseRsp, error) {
+	out := new(SelectOptimizeBaseRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/SelectOptimizeBase", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) DownloadOptimizeBase(ctx context.Context, in *DownloadOptimizeBaseReq, opts ...grpc.CallOption) (*DownloadOptimizeBaseRsp, error) {
+	out := new(DownloadOptimizeBaseRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/DownloadOptimizeBase", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) UploadOptimizeBase(ctx context.Context, in *UploadOptimizeBaseReq, opts ...grpc.CallOption) (*UploadOptimizeBaseRsp, error) {
+	out := new(UploadOptimizeBaseRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/UploadOptimizeBase", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) GetAlgoDynamic(ctx context.Context, in *DynamicReq, opts ...grpc.CallOption) (*DynamicRsp, error) {
+	out := new(DynamicRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetAlgoDynamic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) GetAlgoTimeLine(ctx context.Context, in *TimeLineReq, opts ...grpc.CallOption) (*TimeLineRsp, error) {
+	out := new(TimeLineRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetAlgoTimeLine", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) GetUserOrderSummary(ctx context.Context, in *OrderSummaryReq, opts ...grpc.CallOption) (*OrderSummaryRsp, error) {
+	out := new(OrderSummaryRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetUserOrderSummary", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) GetAlgoOrderSummary(ctx context.Context, in *AlgoOrderReq, opts ...grpc.CallOption) (*AlgoOrderRsp, error) {
+	out := new(AlgoOrderRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetAlgoOrderSummary", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) GetMultiAlgoAssess(ctx context.Context, in *MultiAlgoReq, opts ...grpc.CallOption) (*MultiAlgoRsp, error) {
+	out := new(MultiAlgoRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetMultiAlgoAssess", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) ChooseAlgoInfo(ctx context.Context, in *ChooseAlgoReq, opts ...grpc.CallOption) (*ChooseAlgoRsp, error) {
+	out := new(ChooseAlgoRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/ChooseAlgoInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) CompareMultiAlgo(ctx context.Context, in *CompareReq, opts ...grpc.CallOption) (*CompareRsp, error) {
+	out := new(CompareRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/CompareMultiAlgo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) MultiDayAnalyse(ctx context.Context, in *MultiDayReq, opts ...grpc.CallOption) (*MultiDayRsp, error) {
+	out := new(MultiDayRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/MultiDayAnalyse", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) TotalScoreRanking(ctx context.Context, in *ScoreRankReq, opts ...grpc.CallOption) (*ScoreRankRsp, error) {
+	out := new(ScoreRankRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/TotalScoreRanking", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) GetDefaultAlgo(ctx context.Context, in *DefaultReq, opts ...grpc.CallOption) (*DefaultRsp, error) {
+	out := new(DefaultRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetDefaultAlgo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) GetUserProfile(ctx context.Context, in *UserProfileReq, opts ...grpc.CallOption) (*UserProfileRsp, error) {
+	out := new(UserProfileRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetUserProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) GetWinRatio(ctx context.Context, in *WinRatioReq, opts ...grpc.CallOption) (*WinRatioRsp, error) {
+	out := new(WinRatioRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetWinRatio", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) GetSignal(ctx context.Context, in *SignalReq, opts ...grpc.CallOption) (*SignalRsp, error) {
+	out := new(SignalRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/GetSignal", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) ImportAlgoOrdr(ctx context.Context, in *AlgoOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	out := new(PushDataRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/ImportAlgoOrdr", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) ImportChildOrder(ctx context.Context, in *ChildOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	out := new(PushDataRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/ImportChildOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) PushAlgoOrder(ctx context.Context, in *AlgoOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	out := new(PushDataRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/PushAlgoOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) QueryAlgoOrder(ctx context.Context, in *ReqQueryAlgoOrder, opts ...grpc.CallOption) (*RespQueryAlgoOrder, error) {
+	out := new(RespQueryAlgoOrder)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/QueryAlgoOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) PushChildOrder(ctx context.Context, in *ChildOrderPerfs, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	out := new(PushDataRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/PushChildOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) QueryChildOrder(ctx context.Context, in *ReqQueryChildOrder, opts ...grpc.CallOption) (*RespQueryChildOrder, error) {
+	out := new(RespQueryChildOrder)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/QueryChildOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) PushSzQuoteLevel(ctx context.Context, in *ReqPushSzLevel, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	out := new(PushDataRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/PushSzQuoteLevel", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) QuerySzQuoteLevel(ctx context.Context, in *ReqQueryQuoteLevel, opts ...grpc.CallOption) (*RespQueryQuoteLevel, error) {
+	out := new(RespQueryQuoteLevel)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/QuerySzQuoteLevel", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) PushShQuoteLevel(ctx context.Context, in *ReqPushShLevel, opts ...grpc.CallOption) (*PushDataRsp, error) {
+	out := new(PushDataRsp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/PushShQuoteLevel", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) QueryShQuoteLevel(ctx context.Context, in *ReqQueryQuoteLevel, opts ...grpc.CallOption) (*RespQueryQuoteLevel, error) {
+	out := new(RespQueryQuoteLevel)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/QueryShQuoteLevel", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessServiceClient) OrigOrderAnalyse(ctx context.Context, in *OrigAnalyseReq, opts ...grpc.CallOption) (*OrigAnalyseResp, error) {
+	out := new(OrigAnalyseResp)
+	err := c.cc.Invoke(ctx, "/assess.AssessService/OrigOrderAnalyse", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AssessServiceServer is the server API for AssessService service.
 type AssessServiceServer interface {
 	// 获取绩效概况
 	GetGeneral(context.Context, *GeneralReq) (*GeneralRsp, error)
+	// 获取算法画像信息
+	GetAlgoProfile(context.Context, *AlgoProfileReq) (*AlgoProfileRsp, error)
+	// 一键优选
+	GetOptimize(context.Context, *OptimizeReq) (*OptimizeRsp, error)
+	//新增一键优选基础数据
+	AddOptimizeBase(context.Context, *AddOptimizeBaseReq) (*AddOptimizeBaseRsp, error)
+	//修改一键优选基础数据
+	UpdateOptimizeBase(context.Context, *UpdateOptimizeBaseReq) (*UpdateOptimizeBaseRsp, error)
+	//删除一键优选基础数据
+	DeleteOptimizeBase(context.Context, *DeleteOptimizeBaseReq) (*DeleteOptimizeBaseRsp, error)
+	//查询一键优选基础数据
+	SelectOptimizeBase(context.Context, *SelectOptimizeBaseReq) (*SelectOptimizeBaseRsp, error)
+	//下载一键优选基础数据
+	DownloadOptimizeBase(context.Context, *DownloadOptimizeBaseReq) (*DownloadOptimizeBaseRsp, error)
+	//导入一键优选基础数据
+	UploadOptimizeBase(context.Context, *UploadOptimizeBaseReq) (*UploadOptimizeBaseRsp, error)
+	// 算法动态
+	GetAlgoDynamic(context.Context, *DynamicReq) (*DynamicRsp, error)
+	// 时间线图
+	GetAlgoTimeLine(context.Context, *TimeLineReq) (*TimeLineRsp, error)
+	// 取用户订单汇总信息(dashboard 用户数量， 交易量，买卖占比，厂商个数，资金占比,完成度--查汇总表）
+	GetUserOrderSummary(context.Context, *OrderSummaryReq) (*OrderSummaryRsp, error)
+	// 根据算法类型取订单汇总信息 （dashboard 算法列表）
+	GetAlgoOrderSummary(context.Context, *AlgoOrderReq) (*AlgoOrderRsp, error)
+	// 取多个算法绩效时间线  (dashboard top 4）
+	GetMultiAlgoAssess(context.Context, *MultiAlgoReq) (*MultiAlgoRsp, error)
+	// 算法条件筛选
+	ChooseAlgoInfo(context.Context, *ChooseAlgoReq) (*ChooseAlgoRsp, error)
+	// 多算法对比
+	CompareMultiAlgo(context.Context, *CompareReq) (*CompareRsp, error)
+	// 多日分析
+	MultiDayAnalyse(context.Context, *MultiDayReq) (*MultiDayRsp, error)
+	// 综合评分排名列表
+	TotalScoreRanking(context.Context, *ScoreRankReq) (*ScoreRankRsp, error)
+	// 取默认数据，用于需选择算法的场景下默认无数据的页面
+	GetDefaultAlgo(context.Context, *DefaultReq) (*DefaultRsp, error)
+	// 高阶分析：取用户画像绩效信息
+	GetUserProfile(context.Context, *UserProfileReq) (*UserProfileRsp, error)
+	// 高阶分析：胜率分析
+	GetWinRatio(context.Context, *WinRatioReq) (*WinRatioRsp, error)
+	// 高阶分析：信号分析
+	GetSignal(context.Context, *SignalReq) (*SignalRsp, error)
+	// 订单导入:母单信息导入
+	ImportAlgoOrdr(context.Context, *AlgoOrderPerfs) (*PushDataRsp, error)
+	// 订单导入：子单信息导入
+	ImportChildOrder(context.Context, *ChildOrderPerfs) (*PushDataRsp, error)
+	// -------绩效数据修复
+	// 母单绩效修复
+	PushAlgoOrder(context.Context, *AlgoOrderPerfs) (*PushDataRsp, error)
+	// 母单信息
+	QueryAlgoOrder(context.Context, *ReqQueryAlgoOrder) (*RespQueryAlgoOrder, error)
+	// 子单绩效修复
+	PushChildOrder(context.Context, *ChildOrderPerfs) (*PushDataRsp, error)
+	// 子单信息
+	QueryChildOrder(context.Context, *ReqQueryChildOrder) (*RespQueryChildOrder, error)
+	// 深市行情信息
+	PushSzQuoteLevel(context.Context, *ReqPushSzLevel) (*PushDataRsp, error)
+	// 深市行情信息推送
+	QuerySzQuoteLevel(context.Context, *ReqQueryQuoteLevel) (*RespQueryQuoteLevel, error)
+	// 沪市行情信息推送
+	PushShQuoteLevel(context.Context, *ReqPushShLevel) (*PushDataRsp, error)
+	// 沪市行情信息
+	QueryShQuoteLevel(context.Context, *ReqQueryQuoteLevel) (*RespQueryQuoteLevel, error)
+	// 原始订单分析
+	OrigOrderAnalyse(context.Context, *OrigAnalyseReq) (*OrigAnalyseResp, error)
 }
 
 // UnimplementedAssessServiceServer can be embedded to have forward compatible implementations.
@@ -514,6 +10335,102 @@ type UnimplementedAssessServiceServer struct {
 
 func (*UnimplementedAssessServiceServer) GetGeneral(context.Context, *GeneralReq) (*GeneralRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGeneral not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetAlgoProfile(context.Context, *AlgoProfileReq) (*AlgoProfileRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAlgoProfile not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetOptimize(context.Context, *OptimizeReq) (*OptimizeRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOptimize not implemented")
+}
+func (*UnimplementedAssessServiceServer) AddOptimizeBase(context.Context, *AddOptimizeBaseReq) (*AddOptimizeBaseRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddOptimizeBase not implemented")
+}
+func (*UnimplementedAssessServiceServer) UpdateOptimizeBase(context.Context, *UpdateOptimizeBaseReq) (*UpdateOptimizeBaseRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateOptimizeBase not implemented")
+}
+func (*UnimplementedAssessServiceServer) DeleteOptimizeBase(context.Context, *DeleteOptimizeBaseReq) (*DeleteOptimizeBaseRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteOptimizeBase not implemented")
+}
+func (*UnimplementedAssessServiceServer) SelectOptimizeBase(context.Context, *SelectOptimizeBaseReq) (*SelectOptimizeBaseRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SelectOptimizeBase not implemented")
+}
+func (*UnimplementedAssessServiceServer) DownloadOptimizeBase(context.Context, *DownloadOptimizeBaseReq) (*DownloadOptimizeBaseRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DownloadOptimizeBase not implemented")
+}
+func (*UnimplementedAssessServiceServer) UploadOptimizeBase(context.Context, *UploadOptimizeBaseReq) (*UploadOptimizeBaseRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadOptimizeBase not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetAlgoDynamic(context.Context, *DynamicReq) (*DynamicRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAlgoDynamic not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetAlgoTimeLine(context.Context, *TimeLineReq) (*TimeLineRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAlgoTimeLine not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetUserOrderSummary(context.Context, *OrderSummaryReq) (*OrderSummaryRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserOrderSummary not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetAlgoOrderSummary(context.Context, *AlgoOrderReq) (*AlgoOrderRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAlgoOrderSummary not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetMultiAlgoAssess(context.Context, *MultiAlgoReq) (*MultiAlgoRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMultiAlgoAssess not implemented")
+}
+func (*UnimplementedAssessServiceServer) ChooseAlgoInfo(context.Context, *ChooseAlgoReq) (*ChooseAlgoRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChooseAlgoInfo not implemented")
+}
+func (*UnimplementedAssessServiceServer) CompareMultiAlgo(context.Context, *CompareReq) (*CompareRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompareMultiAlgo not implemented")
+}
+func (*UnimplementedAssessServiceServer) MultiDayAnalyse(context.Context, *MultiDayReq) (*MultiDayRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MultiDayAnalyse not implemented")
+}
+func (*UnimplementedAssessServiceServer) TotalScoreRanking(context.Context, *ScoreRankReq) (*ScoreRankRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TotalScoreRanking not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetDefaultAlgo(context.Context, *DefaultReq) (*DefaultRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultAlgo not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetUserProfile(context.Context, *UserProfileReq) (*UserProfileRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserProfile not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetWinRatio(context.Context, *WinRatioReq) (*WinRatioRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWinRatio not implemented")
+}
+func (*UnimplementedAssessServiceServer) GetSignal(context.Context, *SignalReq) (*SignalRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSignal not implemented")
+}
+func (*UnimplementedAssessServiceServer) ImportAlgoOrdr(context.Context, *AlgoOrderPerfs) (*PushDataRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportAlgoOrdr not implemented")
+}
+func (*UnimplementedAssessServiceServer) ImportChildOrder(context.Context, *ChildOrderPerfs) (*PushDataRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportChildOrder not implemented")
+}
+func (*UnimplementedAssessServiceServer) PushAlgoOrder(context.Context, *AlgoOrderPerfs) (*PushDataRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PushAlgoOrder not implemented")
+}
+func (*UnimplementedAssessServiceServer) QueryAlgoOrder(context.Context, *ReqQueryAlgoOrder) (*RespQueryAlgoOrder, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryAlgoOrder not implemented")
+}
+func (*UnimplementedAssessServiceServer) PushChildOrder(context.Context, *ChildOrderPerfs) (*PushDataRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PushChildOrder not implemented")
+}
+func (*UnimplementedAssessServiceServer) QueryChildOrder(context.Context, *ReqQueryChildOrder) (*RespQueryChildOrder, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryChildOrder not implemented")
+}
+func (*UnimplementedAssessServiceServer) PushSzQuoteLevel(context.Context, *ReqPushSzLevel) (*PushDataRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PushSzQuoteLevel not implemented")
+}
+func (*UnimplementedAssessServiceServer) QuerySzQuoteLevel(context.Context, *ReqQueryQuoteLevel) (*RespQueryQuoteLevel, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QuerySzQuoteLevel not implemented")
+}
+func (*UnimplementedAssessServiceServer) PushShQuoteLevel(context.Context, *ReqPushShLevel) (*PushDataRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PushShQuoteLevel not implemented")
+}
+func (*UnimplementedAssessServiceServer) QueryShQuoteLevel(context.Context, *ReqQueryQuoteLevel) (*RespQueryQuoteLevel, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryShQuoteLevel not implemented")
+}
+func (*UnimplementedAssessServiceServer) OrigOrderAnalyse(context.Context, *OrigAnalyseReq) (*OrigAnalyseResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OrigOrderAnalyse not implemented")
 }
 
 func RegisterAssessServiceServer(s *grpc.Server, srv AssessServiceServer) {
@@ -538,6 +10455,582 @@ func _AssessService_GetGeneral_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AssessService_GetAlgoProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AlgoProfileReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetAlgoProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetAlgoProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetAlgoProfile(ctx, req.(*AlgoProfileReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_GetOptimize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OptimizeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetOptimize(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetOptimize",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetOptimize(ctx, req.(*OptimizeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_AddOptimizeBase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddOptimizeBaseReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).AddOptimizeBase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/AddOptimizeBase",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).AddOptimizeBase(ctx, req.(*AddOptimizeBaseReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_UpdateOptimizeBase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateOptimizeBaseReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).UpdateOptimizeBase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/UpdateOptimizeBase",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).UpdateOptimizeBase(ctx, req.(*UpdateOptimizeBaseReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_DeleteOptimizeBase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteOptimizeBaseReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).DeleteOptimizeBase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/DeleteOptimizeBase",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).DeleteOptimizeBase(ctx, req.(*DeleteOptimizeBaseReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_SelectOptimizeBase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SelectOptimizeBaseReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).SelectOptimizeBase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/SelectOptimizeBase",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).SelectOptimizeBase(ctx, req.(*SelectOptimizeBaseReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_DownloadOptimizeBase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadOptimizeBaseReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).DownloadOptimizeBase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/DownloadOptimizeBase",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).DownloadOptimizeBase(ctx, req.(*DownloadOptimizeBaseReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_UploadOptimizeBase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadOptimizeBaseReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).UploadOptimizeBase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/UploadOptimizeBase",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).UploadOptimizeBase(ctx, req.(*UploadOptimizeBaseReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_GetAlgoDynamic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DynamicReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetAlgoDynamic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetAlgoDynamic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetAlgoDynamic(ctx, req.(*DynamicReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_GetAlgoTimeLine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TimeLineReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetAlgoTimeLine(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetAlgoTimeLine",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetAlgoTimeLine(ctx, req.(*TimeLineReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_GetUserOrderSummary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrderSummaryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetUserOrderSummary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetUserOrderSummary",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetUserOrderSummary(ctx, req.(*OrderSummaryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_GetAlgoOrderSummary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AlgoOrderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetAlgoOrderSummary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetAlgoOrderSummary",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetAlgoOrderSummary(ctx, req.(*AlgoOrderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_GetMultiAlgoAssess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiAlgoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetMultiAlgoAssess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetMultiAlgoAssess",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetMultiAlgoAssess(ctx, req.(*MultiAlgoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_ChooseAlgoInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChooseAlgoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).ChooseAlgoInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/ChooseAlgoInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).ChooseAlgoInfo(ctx, req.(*ChooseAlgoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_CompareMultiAlgo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompareReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).CompareMultiAlgo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/CompareMultiAlgo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).CompareMultiAlgo(ctx, req.(*CompareReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_MultiDayAnalyse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiDayReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).MultiDayAnalyse(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/MultiDayAnalyse",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).MultiDayAnalyse(ctx, req.(*MultiDayReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_TotalScoreRanking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ScoreRankReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).TotalScoreRanking(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/TotalScoreRanking",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).TotalScoreRanking(ctx, req.(*ScoreRankReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_GetDefaultAlgo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DefaultReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetDefaultAlgo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetDefaultAlgo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetDefaultAlgo(ctx, req.(*DefaultReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_GetUserProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserProfileReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetUserProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetUserProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetUserProfile(ctx, req.(*UserProfileReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_GetWinRatio_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WinRatioReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetWinRatio(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetWinRatio",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetWinRatio(ctx, req.(*WinRatioReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_GetSignal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignalReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).GetSignal(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/GetSignal",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).GetSignal(ctx, req.(*SignalReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_ImportAlgoOrdr_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AlgoOrderPerfs)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).ImportAlgoOrdr(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/ImportAlgoOrdr",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).ImportAlgoOrdr(ctx, req.(*AlgoOrderPerfs))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_ImportChildOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChildOrderPerfs)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).ImportChildOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/ImportChildOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).ImportChildOrder(ctx, req.(*ChildOrderPerfs))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_PushAlgoOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AlgoOrderPerfs)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).PushAlgoOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/PushAlgoOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).PushAlgoOrder(ctx, req.(*AlgoOrderPerfs))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_QueryAlgoOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReqQueryAlgoOrder)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).QueryAlgoOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/QueryAlgoOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).QueryAlgoOrder(ctx, req.(*ReqQueryAlgoOrder))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_PushChildOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChildOrderPerfs)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).PushChildOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/PushChildOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).PushChildOrder(ctx, req.(*ChildOrderPerfs))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_QueryChildOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReqQueryChildOrder)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).QueryChildOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/QueryChildOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).QueryChildOrder(ctx, req.(*ReqQueryChildOrder))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_PushSzQuoteLevel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReqPushSzLevel)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).PushSzQuoteLevel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/PushSzQuoteLevel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).PushSzQuoteLevel(ctx, req.(*ReqPushSzLevel))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_QuerySzQuoteLevel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReqQueryQuoteLevel)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).QuerySzQuoteLevel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/QuerySzQuoteLevel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).QuerySzQuoteLevel(ctx, req.(*ReqQueryQuoteLevel))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_PushShQuoteLevel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReqPushShLevel)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).PushShQuoteLevel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/PushShQuoteLevel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).PushShQuoteLevel(ctx, req.(*ReqPushShLevel))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_QueryShQuoteLevel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReqQueryQuoteLevel)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).QueryShQuoteLevel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/QueryShQuoteLevel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).QueryShQuoteLevel(ctx, req.(*ReqQueryQuoteLevel))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessService_OrigOrderAnalyse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrigAnalyseReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessServiceServer).OrigOrderAnalyse(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/assess.AssessService/OrigOrderAnalyse",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessServiceServer).OrigOrderAnalyse(ctx, req.(*OrigAnalyseReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _AssessService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "assess.AssessService",
 	HandlerType: (*AssessServiceServer)(nil),
@@ -545,6 +11038,134 @@ var _AssessService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGeneral",
 			Handler:    _AssessService_GetGeneral_Handler,
+		},
+		{
+			MethodName: "GetAlgoProfile",
+			Handler:    _AssessService_GetAlgoProfile_Handler,
+		},
+		{
+			MethodName: "GetOptimize",
+			Handler:    _AssessService_GetOptimize_Handler,
+		},
+		{
+			MethodName: "AddOptimizeBase",
+			Handler:    _AssessService_AddOptimizeBase_Handler,
+		},
+		{
+			MethodName: "UpdateOptimizeBase",
+			Handler:    _AssessService_UpdateOptimizeBase_Handler,
+		},
+		{
+			MethodName: "DeleteOptimizeBase",
+			Handler:    _AssessService_DeleteOptimizeBase_Handler,
+		},
+		{
+			MethodName: "SelectOptimizeBase",
+			Handler:    _AssessService_SelectOptimizeBase_Handler,
+		},
+		{
+			MethodName: "DownloadOptimizeBase",
+			Handler:    _AssessService_DownloadOptimizeBase_Handler,
+		},
+		{
+			MethodName: "UploadOptimizeBase",
+			Handler:    _AssessService_UploadOptimizeBase_Handler,
+		},
+		{
+			MethodName: "GetAlgoDynamic",
+			Handler:    _AssessService_GetAlgoDynamic_Handler,
+		},
+		{
+			MethodName: "GetAlgoTimeLine",
+			Handler:    _AssessService_GetAlgoTimeLine_Handler,
+		},
+		{
+			MethodName: "GetUserOrderSummary",
+			Handler:    _AssessService_GetUserOrderSummary_Handler,
+		},
+		{
+			MethodName: "GetAlgoOrderSummary",
+			Handler:    _AssessService_GetAlgoOrderSummary_Handler,
+		},
+		{
+			MethodName: "GetMultiAlgoAssess",
+			Handler:    _AssessService_GetMultiAlgoAssess_Handler,
+		},
+		{
+			MethodName: "ChooseAlgoInfo",
+			Handler:    _AssessService_ChooseAlgoInfo_Handler,
+		},
+		{
+			MethodName: "CompareMultiAlgo",
+			Handler:    _AssessService_CompareMultiAlgo_Handler,
+		},
+		{
+			MethodName: "MultiDayAnalyse",
+			Handler:    _AssessService_MultiDayAnalyse_Handler,
+		},
+		{
+			MethodName: "TotalScoreRanking",
+			Handler:    _AssessService_TotalScoreRanking_Handler,
+		},
+		{
+			MethodName: "GetDefaultAlgo",
+			Handler:    _AssessService_GetDefaultAlgo_Handler,
+		},
+		{
+			MethodName: "GetUserProfile",
+			Handler:    _AssessService_GetUserProfile_Handler,
+		},
+		{
+			MethodName: "GetWinRatio",
+			Handler:    _AssessService_GetWinRatio_Handler,
+		},
+		{
+			MethodName: "GetSignal",
+			Handler:    _AssessService_GetSignal_Handler,
+		},
+		{
+			MethodName: "ImportAlgoOrdr",
+			Handler:    _AssessService_ImportAlgoOrdr_Handler,
+		},
+		{
+			MethodName: "ImportChildOrder",
+			Handler:    _AssessService_ImportChildOrder_Handler,
+		},
+		{
+			MethodName: "PushAlgoOrder",
+			Handler:    _AssessService_PushAlgoOrder_Handler,
+		},
+		{
+			MethodName: "QueryAlgoOrder",
+			Handler:    _AssessService_QueryAlgoOrder_Handler,
+		},
+		{
+			MethodName: "PushChildOrder",
+			Handler:    _AssessService_PushChildOrder_Handler,
+		},
+		{
+			MethodName: "QueryChildOrder",
+			Handler:    _AssessService_QueryChildOrder_Handler,
+		},
+		{
+			MethodName: "PushSzQuoteLevel",
+			Handler:    _AssessService_PushSzQuoteLevel_Handler,
+		},
+		{
+			MethodName: "QuerySzQuoteLevel",
+			Handler:    _AssessService_QuerySzQuoteLevel_Handler,
+		},
+		{
+			MethodName: "PushShQuoteLevel",
+			Handler:    _AssessService_PushShQuoteLevel_Handler,
+		},
+		{
+			MethodName: "QueryShQuoteLevel",
+			Handler:    _AssessService_QueryShQuoteLevel_Handler,
+		},
+		{
+			MethodName: "OrigOrderAnalyse",
+			Handler:    _AssessService_OrigOrderAnalyse_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -1,0 +1,106 @@
+syntax = "v1"
+
+info (
+    title: "算法动态基本结构体定义"
+    desc: "二期绩效结构体"
+    author: "hawrk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+    // ---------------public start 该部分为公共结构体定义，但goctl不允许嵌套，只能这样写 ----------//
+    // 资金占比， 市值占比
+    DNMarketRateInfo {
+        MkName string     `json:"mk_name"`
+        Rate   float64    `json:"rate"`
+    }
+
+        // 买卖方向
+    DNTradeSide {
+        BuyRate  float64  `json:"buy_rate"`    // 买入占比
+        SellRate  float64  `json:"sell_rate"`  // 卖出占比
+    }
+
+        // 股价类型
+    StockPriceType {
+        TypeName string    `json:"type_name"`
+        Rate     float64   `json:"rate"`
+    }
+
+        // 交易量 占比
+    TradeVol  {
+        VolName     string     `json:"vol_name"`
+        Rate      float64       `json:"rate"`          // 占比
+    }
+
+    TimeLine {
+        TimePoint string    `json:"time_point"`   // 时间点
+        Score     int32     `json:"score"`        // 分数
+    }
+
+    DemensionLine {
+        ProfileType int32  `json:"profile_type"`  //1-经济性，2-完成度，3-风险度，4-算法绩效 5-稳定性
+        Point  []TimeLine    `json:"point"`         // 时间曲线
+    }
+    // ---------------public end  ----------//
+
+    DimensionInfo {
+        ProfileType  int32    `json:"profile_type"`   // 类型  1-经济性，2-完成度，3-风险度，4-算法绩效 5-稳定性
+        Score      int32    `json:"score"`            // 各维度评分
+        Desc       string    `json:"desc"`           // 评价描述
+    }
+
+    DynamicReq {
+        AlgoName   string   `json:"algo_name,optional"`
+        UserId     string   `json:"user_id"`
+        UserType    int     `json:"user_type, optional"`
+        StartTime  int64   `json:"start_time"`
+        EndTime    int64   `json:"end_time"`
+        SourceFrom int32   `json:"source_from,default=1"`    // 来源：1-总线  2-订单导入
+        BatchNo    int64    `json:"batch_no,optional"`    // 为订单导入时，批次号
+    }
+
+    DynamicRsp {
+        Code int                        `json:"code"`
+        Msg  string                     `json:"msg"`
+        CrossDay bool                   `json:"cross_day"`      // 跨天标识
+        Provider string                 `json:"provider"`
+        AlgoTypeName string             `json:"algo_type_name"`
+        AlgoName     string             `json:"algo_name"`
+        Dimension []DimensionInfo      `json:"dimension"`       // 五个维度
+        CompositeScore int32           `json:"composite_score"`       // 总体评分
+        Ranking        int32           `json:"ranking"`                // 排名
+        MarketRate     []DNMarketRateInfo  `json:"market_rate"`       // 市场占比
+        Side           DNTradeSide       `json:"side"`                 // 买卖方向
+        PriceType      []StockPriceType  `json:"price_type"`        //  股价类型
+        VolType        []TradeVol        `json:"vol_type"`          // 交易量占比
+        AssessLine     DemensionLine   `json:"assess_line"`       // 实时绩效
+        ProgressLine   DemensionLine   `json:"progress_line"`     // 实时完成度
+        AlgoNameList   []string        `json:"algo_name_list"`   // 绩效分析中多算法分析时，需返回其算法名称列表
+    }
+
+    OrigChild{
+        BatchNo int64 `json:"batch_no"`
+        AlgoId int `json:"algo_id"`
+        ChildId int `json:"child_id"`
+    }
+
+    AnalyseInfo {
+        Date  int32    `json:"date"`    // 日期
+        Id    int32   `json:"id"`       // ID号
+    }
+
+    OrigAnalyseReq{
+        Orders []AnalyseInfo `json:"orders"`
+        OrderType int32 `json:"orderType"`  //1：母单，2：子单
+    }
+
+    OrigAnalyseResp{
+        Code int                        `json:"code"`
+        Msg  string                     `json:"msg"`
+        BatchNo int64                   `json:"batch_no"`    // 批次号
+        StartTime  int64                `json:"start_time"`  // 开始时间
+        EndTime    int64                `json:"end_time"`    // 结束时间
+    }
+
+)

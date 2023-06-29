@@ -1,0 +1,23 @@
+Name: auth-api
+Host: 192.168.2.82
+Port: 8888
+
+#账户权限表的DB,用来查询权限和菜单, 如果要访问总线的DB, 直接RPC调用mornano的接口
+Mysql:
+  DataSource: root:Root_123@tcp(192.168.1.85:3306)/auth?charset=utf8mb4&parseTime=true&loc=Local
+  IdleConn : 10
+
+  MaxOpenConn : 100
+  EnablePrintSQL : 1       #是否允许打印Sql语句，1打印， 0 不打印
+
+#HRedis:
+  #Host: 192.168.1.80:6888
+  #DB: 5
+
+#日志
+Log:
+  ServiceName: auth-api
+  Mode: console  # console 终端打印      file 落地日志文件
+  Level: info
+  Encoding: json   #options=[json,plain]
+  KeepDays: 7

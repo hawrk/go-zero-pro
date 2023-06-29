@@ -5,6 +5,7 @@ import (
 	"algo_assess/assess-rpc-server/assessservice"
 	"algo_assess/global"
 	mkservice "algo_assess/market-mq-server/marketservice"
+	"algo_assess/pkg/tools"
 	"context"
 	"github.com/spf13/cast"
 	"time"
@@ -30,7 +31,8 @@ func NewGeneralLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GeneralLo
 }
 
 func (l *GeneralLogic) General(req *types.GeneralReq) (resp *types.GeneralRsp, err error) {
-	//l.Logger.Info("into General,req:", req)
+	// 可以打印指针类型的结构体，但输出信息比较多
+	//l.Logger.Info("spew out:", spew.Sdump(req))
 
 	gRspCh := make(chan *assessservice.GeneralRsp)
 	mRspCh := make(chan *mqservice.GeneralRsp)
@@ -39,11 +41,18 @@ func (l *GeneralLogic) General(req *types.GeneralReq) (resp *types.GeneralRsp, e
 	// 后面所有服务都是根据这个时间格式来计算
 	start := cast.ToInt64(time.Unix(req.StartTime, 0).Format(global.TimeFormatMinInt))
 	end := cast.ToInt64(time.Unix(req.EndTime, 0).Format(global.TimeFormatMinInt))
+	var userId string
+	if req.UserId == "" {
+		userId = "0"
+	} else {
+		userId = req.UserId
+	}
 
 	go func() {
 		gReq := &assessservice.GeneralReq{
 			AlgoId:          req.AlgoId,
 			SecId:           req.SecId,
+			UserId:          userId,
 			TimeDemension:   req.TimeDemension,
 			OrderStatusType: req.OrderStatusType,
 			StartTime:       start,
@@ -62,6 +71,7 @@ func (l *GeneralLogic) General(req *types.GeneralReq) (resp *types.GeneralRsp, e
 		mReq := &mqservice.GeneralReq{
 			AlgoId:          req.AlgoId,
 			SecId:           req.SecId,
+			UserId:          userId,
 			TimeDemension:   req.TimeDemension,
 			OrderStatusType: req.OrderStatusType,
 			StartTime:       start,
@@ -110,8 +120,8 @@ func (l *GeneralLogic) BuildGeneralRsp(startTime, endTime int64,
 	m := make(map[string]types.GeneralData) // key -> 10:00   val -> rsp
 	var tmpProgress float64                 // 用于处理成交进度， 当前时间点无交易，需要取上一个有交易的点填充
 	//TODO: 并发拼接
-	MakeAssessMqRsp(m, mrsp, qRsp)
-	MakeAssessRPCRsp(m, grsp, qRsp)
+	MakeAssessMqRsp(m, mrsp, qRsp)  // 拼还在计算中的缓存数据
+	MakeAssessRPCRsp(m, grsp, qRsp) // 拼已落地DB的数据
 	// 填充无交易数据的时间点
 	end := cast.ToInt64(time.Unix(endTime, 0).Format(global.TimeFormatMinInt))
 	for i := 0; i <= global.MaxAssessTimeLen; i++ {
@@ -119,17 +129,27 @@ func (l *GeneralLogic) BuildGeneralRsp(startTime, endTime int64,
 		// 正常交易时间 9:30 - 11:30    13:00-15:00, 需要剔掉中间不交易的时间
 		tt := cast.ToInt(start[8:])
 		if tt > 1130 {
-			start = time.Unix(startTime, 0).Add(time.Minute * time.Duration(i+89)).Format(global.TimeFormatMinInt)
+			start = time.Unix(startTime, 0).Add(time.Minute * time.Duration(i+90)).Format(global.TimeFormatMinInt)
+			//l.Logger.Info("start:", start)
 		}
 		if cast.ToInt64(start) > end {
 			break
 		}
-		timePoint := GetTimePoint(start)
+		timePoint := tools.GetTimePoint(start)
 		//l.Logger.Info("get time point:", timePoint)
 		if _, exist := m[timePoint]; exist { // 当前时间点有交易数据
+			// 这里需要再判断一下，如果有交易的数据，但是没有行情的数据，也不返回该时间点，否则前端会展示异常
+			if m[timePoint].MkLastPrice <= 0.00 {
+				l.Logger.Info("filter: timepoint:", timePoint, " has no market data, continue")
+				continue
+			}
+			l.Logger.Infof("get timepoint :%s, assess:%+v", timePoint, m[timePoint])
 			data = append(data, m[timePoint])
 			tmpProgress = m[timePoint].DealProgress
 		} else { // 无交易数据，填充0
+			if qRsp.Attrs[cast.ToInt64(start)].GetLastPrice() <= 0 { // 行情都没有数据时，不返回该时间节点
+				continue
+			}
 			data = append(data, MakeEmptyDataRsp(start, qRsp, tmpProgress))
 		}
 	}

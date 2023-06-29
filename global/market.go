@@ -107,6 +107,7 @@ type TagQuoteClientLevel2Data struct {
 	YieldToMaturity   int32               // 到期收益率
 	HighLimited       uint32              // 涨停价
 	LowLimited        uint32              // 跌停价
+	OrigDate          uint32              // 日期
 }
 
 //  TagQuoteClientEntrustData 逐笔委托数据结构

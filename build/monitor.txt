@@ -10,6 +10,7 @@
      Port: 9092
      Path: /metrics
    注意：这里的服务host 指的是prometheus的Host，不是该服务的地址！！端口是上报给prometheus的端口，不是prometheus服务的端口，
+   (其源码实现里就指明Host:port 为需要监听的prometheus的端口号，本质上就是新开了一个协程exporter，用于上报指标）
    每个服务都要自定义一个单独的端口，否则会报冲突
    然后在prometheus配置文件prometheus.yml里加上
      - job_name: 'assess-rpc'

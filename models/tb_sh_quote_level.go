@@ -20,6 +20,7 @@ type TbShQuoteLevel struct {
 	TotalAskVol   int64   `gorm:"column:total_ask_vol;type:bigint(20)" json:"total_ask_vol"`
 	TotalBidVol   int64   `gorm:"column:total_bid_vol;type:bigint(20)" json:"total_bid_vol"`
 	MkVwap        float64 `gorm:"column:mk_vwap;type:decimal(20,4)" json:"mk_vwap"`
+	FixFlag       int     `gorm:"column:fix_flag;type:tinyint(4);comment:修复标识 1-修复数据" json:"fix_flag"`
 }
 
 func (m *TbShQuoteLevel) TableName() string {

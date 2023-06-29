@@ -15,12 +15,18 @@ proto文件里要指定go_package = "proto"，生成的pb.go 文件与proto文�
 在algo-assess目录下执行：
 goctl rpc proto -src .\assess-rpc-server\proto\assess.proto -dir .\assess-rpc-server -style=go_zero
 
+2.1 mornano 服务生成，在项目目录algo-assess下
+在algo-assess目录下执行：
+goctl rpc proto -src .\mornano-rpc-server\proto\mornano.proto -dir .\mornano-rpc-server -style=go_zero
+
 3. assess mq服务的生成，统一在项目目录algo_assess下
 进入assess-mq-server(如无则创建）
 proto与rpc服务保持一致，直接用rpc下面的pb协议即可
 在algo-assess目录下执行：
 goctl rpc proto -src .\assess-mq-server\proto\mqassess.proto -dir .\assess-mq-server -style=go_zero
 生成rpc接口服务
+mq服务下面有总线的Pb协议， order.proto, 这个用单独的protoc 生成就可以
+protoc --go_out=. .\order.proto   (生成目标文件可能需要调整一下目录)
 
 4. market mq 服务生成，统一在algo_assess下
 进入 market-mq-server (如无则创建)
@@ -28,3 +34,6 @@ goctl rpc proto -src .\assess-mq-server\proto\mqassess.proto -dir .\assess-mq-se
 在algo-assess目录下执行：
 goctl rpc proto -src .\market-mq-server\proto\market.proto -dir .\market-mq-server -style=go_zero
 生成rpc服务
+
+5. mq-router-server mq路由服务
+goctl rpc proto -src .\mq-router-server\proto\router.proto -dir .\mq-router-server -style=go_zero

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"algo_assess/assess-mq-server/internal/dao"
 	"algo_assess/assess-mq-server/internal/job"
 	"algo_assess/assess-mq-server/internal/listen"
 	"flag"
@@ -37,6 +38,28 @@ func main() {
 	})
 	//defer s.Stop()
 
+	// 加载DB基础数据
+	if err := dao.Run(c, svcCtx); err != nil {
+		fmt.Println("load data error:", err)
+		// 加载不到基础数据，直接panic掉，防止数据计算错误
+		panic(err)
+	}
+	//dao.GScoreConf.GetProgressScore(30.0)
+
+	// test   facade
+	//dbTask := dao.NewLoadTask()
+	//dbTask.StartLoadTask(svcCtx)
+
+	// 加载二期内存计算数据
+	if err := dao.Reload(c, svcCtx); err != nil {
+		fmt.Println("reload db data error:", err)
+		//
+	}
+
+	if err := dao.SetHeartBeat(svcCtx); err != nil {
+		fmt.Println("set heart beat error:", err)
+	}
+
 	// 加载MQ
 	// log、prometheus、trace、metricsUrl.
 	if err := c.SetUp(); err != nil {
@@ -57,6 +80,9 @@ func main() {
 	defer func() {
 		done <- struct{}{}
 	}()
+
+	go job.StartAsyncJob(c, svcCtx)
+
 	fmt.Printf("Starting assess mq rpc server at %s...\n", c.ListenOn)
 	serviceGroup.Start()
 

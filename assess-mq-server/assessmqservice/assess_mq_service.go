@@ -13,23 +13,63 @@ import (
 )
 
 type (
-	AlgoOrderReq  = proto.AlgoOrderReq
-	AlgoOrderRsp  = proto.AlgoOrderRsp
-	AssessInfo    = proto.AssessInfo
-	GeneralReq    = proto.GeneralReq
-	GeneralRsp    = proto.GeneralRsp
-	MarketDataReq = proto.MarketDataReq
-	MarketDataRsp = proto.MarketDataRsp
+	AlgoConfigReq     = proto.AlgoConfigReq
+	AlgoConfigRsp     = proto.AlgoConfigRsp
+	ApiAlgoOrderReq   = proto.ApiAlgoOrderReq
+	ApiAlgoOrderRsp   = proto.ApiAlgoOrderRsp
+	AssessInfo        = proto.AssessInfo
+	ExportSecurityReq = proto.ExportSecurityReq
+	ExportSecurityRsp = proto.ExportSecurityRsp
+	ExportUserReq     = proto.ExportUserReq
+	ExportUserRsp     = proto.ExportUserRsp
+	GeneralReq        = proto.GeneralReq
+	GeneralRsp        = proto.GeneralRsp
+	GetAlgoConfigReq  = proto.GetAlgoConfigReq
+	GetAlgoConfigRsp  = proto.GetAlgoConfigRsp
+	ImportSecurityReq = proto.ImportSecurityReq
+	ImportSecurityRsp = proto.ImportSecurityRsp
+	ImportUserReq     = proto.ImportUserReq
+	ImportUserRsp     = proto.ImportUserRsp
+	SecurityInfo      = proto.SecurityInfo
+	SecurityListReq   = proto.SecurityListReq
+	SecurityListRsp   = proto.SecurityListRsp
+	SecurityModifyReq = proto.SecurityModifyReq
+	SecurityModifyRsp = proto.SecurityModifyRsp
+	SecurityUpdate    = proto.SecurityUpdate
+	UserInfo          = proto.UserInfo
+	UserListReq       = proto.UserListReq
+	UserListRsp       = proto.UserListRsp
+	UserModifyReq     = proto.UserModifyReq
+	UserModifyRsp     = proto.UserModifyRsp
+	UserUpdate        = proto.UserUpdate
 
 	AssessMqService interface {
-		//  获取绩效概况
+		//  获取绩效概况 （实时数据）
 		GetMqGeneral(ctx context.Context, in *GeneralReq, opts ...grpc.CallOption) (*GeneralRsp, error)
-		//  推送行情数据--深交所
-		PullMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataRsp, error)
-		//  推送上交所行情数据
-		PullShMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataReq, error)
-		//  -----------下面的接口为调试功能，不对外开放
-		GetAlgoOrder(ctx context.Context, in *AlgoOrderReq, opts ...grpc.CallOption) (*AlgoOrderRsp, error)
+		//  配置： 证券列表
+		SecurityList(ctx context.Context, in *SecurityListReq, opts ...grpc.CallOption) (*SecurityListRsp, error)
+		//  配置： 证券属性修改
+		SecurityUpdate(ctx context.Context, in *SecurityModifyReq, opts ...grpc.CallOption) (*SecurityModifyRsp, error)
+		//  配置： 证券信息导入
+		ImportSecurityInfo(ctx context.Context, in *ImportSecurityReq, opts ...grpc.CallOption) (*ImportSecurityRsp, error)
+		//  配置：证券信息导出
+		ExportSecurityInfo(ctx context.Context, in *ExportSecurityReq, opts ...grpc.CallOption) (*ExportSecurityRsp, error)
+		//  配置：用户列表
+		UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListRsp, error)
+		//  配置：用户级别修改
+		UserUpdate(ctx context.Context, in *UserModifyReq, opts ...grpc.CallOption) (*UserModifyRsp, error)
+		//  配置： 用户信息导入
+		ImportUserInfo(ctx context.Context, in *ImportUserReq, opts ...grpc.CallOption) (*ImportUserRsp, error)
+		//  配置： 用户信息导出
+		ExportUserInfo(ctx context.Context, in *ExportUserReq, opts ...grpc.CallOption) (*ExportUserRsp, error)
+		//  配置： 算法配置
+		AlgoConfig(ctx context.Context, in *AlgoConfigReq, opts ...grpc.CallOption) (*AlgoConfigRsp, error)
+		//  配置： 算法配置查询
+		GetAlgoConfig(ctx context.Context, in *GetAlgoConfigReq, opts ...grpc.CallOption) (*GetAlgoConfigRsp, error)
+		//  api测试接口母单
+		SendAlgoOrder(ctx context.Context, in *ApiAlgoOrderReq, opts ...grpc.CallOption) (*ApiAlgoOrderRsp, error)
+		//  api测试接口子单
+		SendChildOrder(ctx context.Context, in *ApiAlgoOrderReq, opts ...grpc.CallOption) (*ApiAlgoOrderRsp, error)
 	}
 
 	defaultAssessMqService struct {
@@ -43,26 +83,80 @@ func NewAssessMqService(cli zrpc.Client) AssessMqService {
 	}
 }
 
-//  获取绩效概况
+//  获取绩效概况 （实时数据）
 func (m *defaultAssessMqService) GetMqGeneral(ctx context.Context, in *GeneralReq, opts ...grpc.CallOption) (*GeneralRsp, error) {
 	client := proto.NewAssessMqServiceClient(m.cli.Conn())
 	return client.GetMqGeneral(ctx, in, opts...)
 }
 
-//  推送行情数据--深交所
-func (m *defaultAssessMqService) PullMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataRsp, error) {
+//  配置： 证券列表
+func (m *defaultAssessMqService) SecurityList(ctx context.Context, in *SecurityListReq, opts ...grpc.CallOption) (*SecurityListRsp, error) {
 	client := proto.NewAssessMqServiceClient(m.cli.Conn())
-	return client.PullMarketData(ctx, in, opts...)
+	return client.SecurityList(ctx, in, opts...)
 }
 
-//  推送上交所行情数据
-func (m *defaultAssessMqService) PullShMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataReq, error) {
+//  配置： 证券属性修改
+func (m *defaultAssessMqService) SecurityUpdate(ctx context.Context, in *SecurityModifyReq, opts ...grpc.CallOption) (*SecurityModifyRsp, error) {
 	client := proto.NewAssessMqServiceClient(m.cli.Conn())
-	return client.PullShMarketData(ctx, in, opts...)
+	return client.SecurityUpdate(ctx, in, opts...)
 }
 
-//  -----------下面的接口为调试功能，不对外开放
-func (m *defaultAssessMqService) GetAlgoOrder(ctx context.Context, in *AlgoOrderReq, opts ...grpc.CallOption) (*AlgoOrderRsp, error) {
+//  配置： 证券信息导入
+func (m *defaultAssessMqService) ImportSecurityInfo(ctx context.Context, in *ImportSecurityReq, opts ...grpc.CallOption) (*ImportSecurityRsp, error) {
 	client := proto.NewAssessMqServiceClient(m.cli.Conn())
-	return client.GetAlgoOrder(ctx, in, opts...)
+	return client.ImportSecurityInfo(ctx, in, opts...)
+}
+
+//  配置：证券信息导出
+func (m *defaultAssessMqService) ExportSecurityInfo(ctx context.Context, in *ExportSecurityReq, opts ...grpc.CallOption) (*ExportSecurityRsp, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.ExportSecurityInfo(ctx, in, opts...)
+}
+
+//  配置：用户列表
+func (m *defaultAssessMqService) UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListRsp, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.UserList(ctx, in, opts...)
+}
+
+//  配置：用户级别修改
+func (m *defaultAssessMqService) UserUpdate(ctx context.Context, in *UserModifyReq, opts ...grpc.CallOption) (*UserModifyRsp, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.UserUpdate(ctx, in, opts...)
+}
+
+//  配置： 用户信息导入
+func (m *defaultAssessMqService) ImportUserInfo(ctx context.Context, in *ImportUserReq, opts ...grpc.CallOption) (*ImportUserRsp, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.ImportUserInfo(ctx, in, opts...)
+}
+
+//  配置： 用户信息导出
+func (m *defaultAssessMqService) ExportUserInfo(ctx context.Context, in *ExportUserReq, opts ...grpc.CallOption) (*ExportUserRsp, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.ExportUserInfo(ctx, in, opts...)
+}
+
+//  配置： 算法配置
+func (m *defaultAssessMqService) AlgoConfig(ctx context.Context, in *AlgoConfigReq, opts ...grpc.CallOption) (*AlgoConfigRsp, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.AlgoConfig(ctx, in, opts...)
+}
+
+//  配置： 算法配置查询
+func (m *defaultAssessMqService) GetAlgoConfig(ctx context.Context, in *GetAlgoConfigReq, opts ...grpc.CallOption) (*GetAlgoConfigRsp, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.GetAlgoConfig(ctx, in, opts...)
+}
+
+//  api测试接口母单
+func (m *defaultAssessMqService) SendAlgoOrder(ctx context.Context, in *ApiAlgoOrderReq, opts ...grpc.CallOption) (*ApiAlgoOrderRsp, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.SendAlgoOrder(ctx, in, opts...)
+}
+
+//  api测试接口子单
+func (m *defaultAssessMqService) SendChildOrder(ctx context.Context, in *ApiAlgoOrderReq, opts ...grpc.CallOption) (*ApiAlgoOrderRsp, error) {
+	client := proto.NewAssessMqServiceClient(m.cli.Conn())
+	return client.SendChildOrder(ctx, in, opts...)
 }

@@ -1,0 +1,73 @@
+syntax = "v1"
+
+info (
+    title: "算法对比基本结构体定义,包括单日分析和多日分析"
+    desc: "二期绩效结构体"
+    author: "hawrk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+    // --------------public begin ---------------
+    AnalyseTimeLine {
+        TimePoint string    `json:"time_point"`   // 时间点
+        Score     int32     `json:"score"`        // 分数
+    }
+
+    AnalyseLine {
+        ProfileType int32  `json:"profile_type"`  //1-经济性，2-完成度，3-风险度，4-算法绩效 5-稳定性
+        Point  []AnalyseTimeLine    `json:"point"`         // 时间曲线
+    }
+
+    AlgoDimension {
+        ProfileType int32  `json:"profile_type"`   //  1-经济性，2-完成度，3-风险度，4-算法绩效 5-稳定性
+        Score  int `json:"score"`                // 分数
+        Desc  string `json:"desc"`               //  评分描述
+    }
+
+    AlgoScore {
+        AlgoName string    `json:"algo_name"`     // 算法名称
+        CompositeScore int32           `json:"composite_score"`       // 总体评分
+        Ranking  int32                  `json:"ranking"`        // 排名
+        Dimension []AlgoDimension `json:"dimension"`    // 各维度列表
+        Data []AnalyseTimeLine              `json:"data"`    // 时间点列表
+    }
+
+    // ---------------public end  ----------//
+
+    AnalyseReq {
+        StartTime       int64       `json:"start_time"`
+        EndTime         int64       `json:"end_time"`
+        AlgoName        string      `json:"algo_name,optional"`
+        UserId          string      `json:"user_id"`
+        UserType        int         `json:"user_type,optional"`
+    }
+
+    AnalyseRsp {
+        Code int                        `json:"code"`
+        Msg  string                     `json:"msg"`
+        CrossDay bool                   `json:"cross_day"`
+        Provider string                 `json:"provider"`
+        AlgoTypeName string             `json:"algo_type_name"`
+        AlgoName     string             `json:"algo_name"`
+        Data []AnalyseLine              `json:"data"`
+    }
+
+    MultiAnalyseReq {
+        StartTime int64         `json:"start_time"`
+        EndTime  int64          `json:"end_time"`
+        UserId   string         `json:"user_id"`
+        UserType  int           `json:"user_type,optional"`
+        AlgoName  []string      `json:"algo_name"`
+    }
+
+    MultiAnalyseRsp {
+        Code int                        `json:"code"`
+        Msg  string                     `json:"msg"`
+        CrossDay bool                   `json:"cross_day"`
+        Provider string                 `json:"provider"`
+        AlgoTypeName string             `json:"algo_type_name"`
+        AlgoName   []string             `json:"algo_name"`
+        List []AlgoScore               `json:"list"`
+    }
+)

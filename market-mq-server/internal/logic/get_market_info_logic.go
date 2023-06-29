@@ -33,57 +33,84 @@ func (l *GetMarketInfoLogic) GetMarketInfo(in *proto.MarkReq) (*proto.MarkRsp, e
 	// 行情的数据源不一样，所以这里要区分一下
 	t := cast.ToString(in.GetStartTime())
 	var hashKey string
-	if in.GetSecSource() == 0 || in.GetSecSource() == 102 {
-		hashKey = fmt.Sprintf("sz:%s:%s", in.GetSecId(), t[:8])
-	} else if in.GetSecSource() == 103 {
+	if in.GetSecId()[:1] == "6" {
 		hashKey = fmt.Sprintf("sh:%s:%s", in.GetSecId(), t[:8])
-	}
-	infos := make(map[int64]*proto.LevelInfo)
-	if true {
-
-		l.Info("get hashKey:", hashKey)
-		m, err := l.svcCtx.RedisClient.Hgetall(hashKey)
-		if err != nil {
-			l.Error("hget all fail:", err)
-		}
-		// 对 value 反序列化
-		for k, v := range m {
-			var out global.QuoteLevel2Data
-			if err := json.Unmarshal(tools.String2Bytes(v), &out); err != nil {
-				l.Error("unnarshal error:", err)
-			}
-			info := &proto.LevelInfo{
-				LastPrice:  out.LastPrice,
-				TradeVol:   out.TotalTradeVol,
-				AskPrice:   out.AskPrice,
-				AskVol:     out.AskVol,
-				BidPrice:   out.BidPrice,
-				BidVol:     out.BidVol,
-				MarketVwap: out.Vwap,
-			}
-			orgiTime := cast.ToInt64(k)
-			infos[orgiTime] = info
-		}
-
 	} else {
-		data, result := l.svcCtx.MarketLevelRepo.GetMarketLevelByTime(l.ctx, hashKey, in.GetStartTime(), in.GetEndTime())
-		if result.Error != nil {
-			l.Logger.Error("get market level error :", result.Error)
-			return nil, result.Error
-		}
-		l.Logger.Info("get market level result num:", result.RowsAffected)
+		hashKey = fmt.Sprintf("sz:%s:%s", in.GetSecId(), t[:8])
+	}
 
-		for _, v := range data {
-			info := &proto.LevelInfo{
-				LastPrice:  v.LastPrice,
-				TradeVol:   v.TotalTradeVol,
-				AskPrice:   v.AskPrice,
-				AskVol:     v.AskVol,
-				BidPrice:   v.BidPrice,
-				BidVol:     v.BidVol,
-				MarketVwap: v.MkVwap,
+	infos := make(map[int64]*proto.LevelInfo)
+
+	l.Info("get hashKey:", hashKey)
+	m, err := l.svcCtx.RedisClient.Hgetall(hashKey)
+	if err != nil {
+		l.Error("hget all fail:", err)
+		return nil, nil
+	}
+	// 对 value 反序列化
+	for k, v := range m {
+		var out global.QuoteLevel2Data
+		if err := json.Unmarshal(tools.String2Bytes(v), &out); err != nil {
+			l.Error("unnarshal error:", err)
+		}
+		info := &proto.LevelInfo{
+			LastPrice:  out.LastPrice,
+			TradeVol:   out.TotalTradeVol,
+			AskPrice:   out.AskPrice,
+			AskVol:     out.AskVol,
+			BidPrice:   out.BidPrice,
+			BidVol:     out.BidVol,
+			MarketVwap: out.Vwap,
+		}
+		orgiTime := cast.ToInt64(k)
+		infos[orgiTime] = info
+	}
+	if len(infos) == 0 { // redis 查不到数据，再去DB表查
+		var dbKey string
+		if in.GetSecId()[:1] == "6" {
+			dbKey = fmt.Sprintf("sh:%s", in.GetSecId())
+			l.Info("get dbKey:", dbKey)
+			data, result := l.svcCtx.ShMarketLevelRepo.GetShMarketLevelByTime(l.ctx, dbKey, in.GetStartTime(), in.GetEndTime())
+			if result.Error != nil {
+				l.Logger.Error("get market level error :", result.Error)
+				return nil, result.Error
 			}
-			infos[v.OrgiTime] = info
+			l.Logger.Info("get sh market level result num:", result.RowsAffected)
+
+			for _, v := range data {
+				info := &proto.LevelInfo{
+					LastPrice:  v.LastPrice,
+					TradeVol:   v.TotalTradeVol,
+					AskPrice:   v.AskPrice,
+					AskVol:     v.AskVol,
+					BidPrice:   v.BidPrice,
+					BidVol:     v.BidVol,
+					MarketVwap: v.MkVwap,
+				}
+				infos[v.OrgiTime] = info
+			}
+		} else {
+			dbKey = fmt.Sprintf("sz:%s", in.GetSecId())
+			l.Info("get dbKey:", dbKey)
+			data, result := l.svcCtx.MarketLevelRepo.GetMarketLevelByTime(l.ctx, dbKey, in.GetStartTime(), in.GetEndTime())
+			if result.Error != nil {
+				l.Logger.Error("get market level error :", result.Error)
+				return nil, result.Error
+			}
+			l.Logger.Info("get sz market level result num:", result.RowsAffected)
+
+			for _, v := range data {
+				info := &proto.LevelInfo{
+					LastPrice:  v.LastPrice,
+					TradeVol:   v.TotalTradeVol,
+					AskPrice:   v.AskPrice,
+					AskVol:     v.AskVol,
+					BidPrice:   v.BidPrice,
+					BidVol:     v.BidVol,
+					MarketVwap: v.MkVwap,
+				}
+				infos[v.OrgiTime] = info
+			}
 		}
 	}
 	l.Info("get market rsp len:", len(infos))

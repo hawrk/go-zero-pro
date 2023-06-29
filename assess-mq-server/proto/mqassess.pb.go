@@ -178,6 +178,7 @@ type GeneralReq struct {
 	OrderStatusType int32  `protobuf:"varint,4,opt,name=order_status_type,json=orderStatusType,proto3" json:"order_status_type,omitempty"`
 	StartTime       int64  `protobuf:"varint,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
 	EndTime         int64  `protobuf:"varint,6,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	UserId          string `protobuf:"bytes,7,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"` // 交易账户ID
 }
 
 func (x *GeneralReq) Reset() {
@@ -254,6 +255,13 @@ func (x *GeneralReq) GetEndTime() int64 {
 	return 0
 }
 
+func (x *GeneralReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
 type GeneralRsp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -317,23 +325,24 @@ func (x *GeneralRsp) GetInfo() []*AssessInfo {
 	return nil
 }
 
-type MarketDataReq struct {
+type SecurityInfo struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	UseculityId      int32  `protobuf:"varint,1,opt,name=useculity_id,json=useculityId,proto3" json:"useculity_id,omitempty"`                    // 证券ID
-	SecId            string `protobuf:"bytes,2,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"`                                       // 证券代码
-	EntrustBidVol    int64  `protobuf:"varint,3,opt,name=entrust_bid_vol,json=entrustBidVol,proto3" json:"entrust_bid_vol,omitempty"`            // 委托买入数量
-	EntrustAskVol    int64  `protobuf:"varint,4,opt,name=entrust_ask_vol,json=entrustAskVol,proto3" json:"entrust_ask_vol,omitempty"`            // 委托买出数量
-	OrgiTime         int64  `protobuf:"varint,5,opt,name=orgi_time,json=orgiTime,proto3" json:"orgi_time,omitempty"`                             // 数据生成时间
-	TotalTradeVol    int64  `protobuf:"varint,6,opt,name=total_trade_vol,json=totalTradeVol,proto3" json:"total_trade_vol,omitempty"`            // 成交总量
-	LastPrice        int64  `protobuf:"varint,7,opt,name=last_price,json=lastPrice,proto3" json:"last_price,omitempty"`                          // 最新价格
-	NetTotalTradeVol int64  `protobuf:"varint,8,opt,name=net_total_trade_vol,json=netTotalTradeVol,proto3" json:"net_total_trade_vol,omitempty"` // 成交增量
+	Id         int64  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	SecId      string `protobuf:"bytes,2,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"`
+	SecName    string `protobuf:"bytes,3,opt,name=sec_name,json=secName,proto3" json:"sec_name,omitempty"`
+	Status     int32  `protobuf:"varint,4,opt,name=status,proto3" json:"status,omitempty"`
+	FundType   int32  `protobuf:"varint,5,opt,name=fund_type,json=fundType,proto3" json:"fund_type,omitempty"`
+	StockType  int32  `protobuf:"varint,6,opt,name=stock_type,json=stockType,proto3" json:"stock_type,omitempty"`
+	UpdateTime string `protobuf:"bytes,7,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	Liquidity  int32  `protobuf:"varint,8,opt,name=liquidity,proto3" json:"liquidity,omitempty"` // 流动性 1-高 2-中3-低
+	Industry   string `protobuf:"bytes,9,opt,name=industry,proto3" json:"industry,omitempty"`    // 行业属性
 }
 
-func (x *MarketDataReq) Reset() {
-	*x = MarketDataReq{}
+func (x *SecurityInfo) Reset() {
+	*x = SecurityInfo{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_mqassess_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -341,13 +350,13 @@ func (x *MarketDataReq) Reset() {
 	}
 }
 
-func (x *MarketDataReq) String() string {
+func (x *SecurityInfo) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MarketDataReq) ProtoMessage() {}
+func (*SecurityInfo) ProtoMessage() {}
 
-func (x *MarketDataReq) ProtoReflect() protoreflect.Message {
+func (x *SecurityInfo) ProtoReflect() protoreflect.Message {
 	mi := &file_mqassess_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -359,77 +368,86 @@ func (x *MarketDataReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use MarketDataReq.ProtoReflect.Descriptor instead.
-func (*MarketDataReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use SecurityInfo.ProtoReflect.Descriptor instead.
+func (*SecurityInfo) Descriptor() ([]byte, []int) {
 	return file_mqassess_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *MarketDataReq) GetUseculityId() int32 {
+func (x *SecurityInfo) GetId() int64 {
 	if x != nil {
-		return x.UseculityId
+		return x.Id
 	}
 	return 0
 }
 
-func (x *MarketDataReq) GetSecId() string {
+func (x *SecurityInfo) GetSecId() string {
 	if x != nil {
 		return x.SecId
 	}
 	return ""
 }
 
-func (x *MarketDataReq) GetEntrustBidVol() int64 {
+func (x *SecurityInfo) GetSecName() string {
 	if x != nil {
-		return x.EntrustBidVol
+		return x.SecName
+	}
+	return ""
+}
+
+func (x *SecurityInfo) GetStatus() int32 {
+	if x != nil {
+		return x.Status
 	}
 	return 0
 }
 
-func (x *MarketDataReq) GetEntrustAskVol() int64 {
+func (x *SecurityInfo) GetFundType() int32 {
 	if x != nil {
-		return x.EntrustAskVol
+		return x.FundType
 	}
 	return 0
 }
 
-func (x *MarketDataReq) GetOrgiTime() int64 {
+func (x *SecurityInfo) GetStockType() int32 {
 	if x != nil {
-		return x.OrgiTime
+		return x.StockType
 	}
 	return 0
 }
 
-func (x *MarketDataReq) GetTotalTradeVol() int64 {
+func (x *SecurityInfo) GetUpdateTime() string {
 	if x != nil {
-		return x.TotalTradeVol
+		return x.UpdateTime
+	}
+	return ""
+}
+
+func (x *SecurityInfo) GetLiquidity() int32 {
+	if x != nil {
+		return x.Liquidity
 	}
 	return 0
 }
 
-func (x *MarketDataReq) GetLastPrice() int64 {
+func (x *SecurityInfo) GetIndustry() string {
 	if x != nil {
-		return x.LastPrice
+		return x.Industry
 	}
-	return 0
+	return ""
 }
 
-func (x *MarketDataReq) GetNetTotalTradeVol() int64 {
-	if x != nil {
-		return x.NetTotalTradeVol
-	}
-	return 0
-}
-
-type MarketDataRsp struct {
+type SecurityListReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Code int32 `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"` // 返回码
+	SecId string `protobuf:"bytes,1,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"` // 证券ID
+	Page  int32  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	Limit int32  `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
 }
 
-func (x *MarketDataRsp) Reset() {
-	*x = MarketDataRsp{}
+func (x *SecurityListReq) Reset() {
+	*x = SecurityListReq{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_mqassess_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -437,13 +455,13 @@ func (x *MarketDataRsp) Reset() {
 	}
 }
 
-func (x *MarketDataRsp) String() string {
+func (x *SecurityListReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MarketDataRsp) ProtoMessage() {}
+func (*SecurityListReq) ProtoMessage() {}
 
-func (x *MarketDataRsp) ProtoReflect() protoreflect.Message {
+func (x *SecurityListReq) ProtoReflect() protoreflect.Message {
 	mi := &file_mqassess_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -455,29 +473,45 @@ func (x *MarketDataRsp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use MarketDataRsp.ProtoReflect.Descriptor instead.
-func (*MarketDataRsp) Descriptor() ([]byte, []int) {
+// Deprecated: Use SecurityListReq.ProtoReflect.Descriptor instead.
+func (*SecurityListReq) Descriptor() ([]byte, []int) {
 	return file_mqassess_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *MarketDataRsp) GetCode() int32 {
+func (x *SecurityListReq) GetSecId() string {
 	if x != nil {
-		return x.Code
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *SecurityListReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
 	}
 	return 0
 }
 
-// ----------------内部调试用-----------------
-type AlgoOrderReq struct {
+func (x *SecurityListReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type SecurityListRsp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AlgoOrderId int32 `protobuf:"varint,1,opt,name=AlgoOrderId,proto3" json:"AlgoOrderId,omitempty"` // 母单号
+	Code  int32           `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string          `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64           `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Infos []*SecurityInfo `protobuf:"bytes,4,rep,name=infos,proto3" json:"infos,omitempty"`
 }
 
-func (x *AlgoOrderReq) Reset() {
-	*x = AlgoOrderReq{}
+func (x *SecurityListRsp) Reset() {
+	*x = SecurityListRsp{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_mqassess_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -485,13 +519,13 @@ func (x *AlgoOrderReq) Reset() {
 	}
 }
 
-func (x *AlgoOrderReq) String() string {
+func (x *SecurityListRsp) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AlgoOrderReq) ProtoMessage() {}
+func (*SecurityListRsp) ProtoMessage() {}
 
-func (x *AlgoOrderReq) ProtoReflect() protoreflect.Message {
+func (x *SecurityListRsp) ProtoReflect() protoreflect.Message {
 	mi := &file_mqassess_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -503,28 +537,54 @@ func (x *AlgoOrderReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AlgoOrderReq.ProtoReflect.Descriptor instead.
-func (*AlgoOrderReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use SecurityListRsp.ProtoReflect.Descriptor instead.
+func (*SecurityListRsp) Descriptor() ([]byte, []int) {
 	return file_mqassess_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *AlgoOrderReq) GetAlgoOrderId() int32 {
+func (x *SecurityListRsp) GetCode() int32 {
 	if x != nil {
-		return x.AlgoOrderId
+		return x.Code
 	}
 	return 0
 }
 
-type AlgoOrderRsp struct {
+func (x *SecurityListRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *SecurityListRsp) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *SecurityListRsp) GetInfos() []*SecurityInfo {
+	if x != nil {
+		return x.Infos
+	}
+	return nil
+}
+
+type SecurityUpdate struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Qty int64 `protobuf:"varint,1,opt,name=Qty,proto3" json:"Qty,omitempty"` // 委托数量
+	SecId     string `protobuf:"bytes,1,opt,name=sec_id,json=secId,proto3" json:"sec_id,omitempty"`
+	SecName   string `protobuf:"bytes,2,opt,name=sec_name,json=secName,proto3" json:"sec_name,omitempty"`
+	FundType  int32  `protobuf:"varint,3,opt,name=fund_type,json=fundType,proto3" json:"fund_type,omitempty"`
+	StockType int32  `protobuf:"varint,4,opt,name=stock_type,json=stockType,proto3" json:"stock_type,omitempty"`
+	Liquidity int32  `protobuf:"varint,5,opt,name=liquidity,proto3" json:"liquidity,omitempty"` // 流动性 1-高 2-中3-低
+	Industry  string `protobuf:"bytes,6,opt,name=industry,proto3" json:"industry,omitempty"`    // 行业属性
 }
 
-func (x *AlgoOrderRsp) Reset() {
-	*x = AlgoOrderRsp{}
+func (x *SecurityUpdate) Reset() {
+	*x = SecurityUpdate{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_mqassess_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -532,13 +592,13 @@ func (x *AlgoOrderRsp) Reset() {
 	}
 }
 
-func (x *AlgoOrderRsp) String() string {
+func (x *SecurityUpdate) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AlgoOrderRsp) ProtoMessage() {}
+func (*SecurityUpdate) ProtoMessage() {}
 
-func (x *AlgoOrderRsp) ProtoReflect() protoreflect.Message {
+func (x *SecurityUpdate) ProtoReflect() protoreflect.Message {
 	mi := &file_mqassess_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -550,16 +610,1291 @@ func (x *AlgoOrderRsp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AlgoOrderRsp.ProtoReflect.Descriptor instead.
-func (*AlgoOrderRsp) Descriptor() ([]byte, []int) {
+// Deprecated: Use SecurityUpdate.ProtoReflect.Descriptor instead.
+func (*SecurityUpdate) Descriptor() ([]byte, []int) {
 	return file_mqassess_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *AlgoOrderRsp) GetQty() int64 {
+func (x *SecurityUpdate) GetSecId() string {
 	if x != nil {
-		return x.Qty
+		return x.SecId
+	}
+	return ""
+}
+
+func (x *SecurityUpdate) GetSecName() string {
+	if x != nil {
+		return x.SecName
+	}
+	return ""
+}
+
+func (x *SecurityUpdate) GetFundType() int32 {
+	if x != nil {
+		return x.FundType
 	}
 	return 0
+}
+
+func (x *SecurityUpdate) GetStockType() int32 {
+	if x != nil {
+		return x.StockType
+	}
+	return 0
+}
+
+func (x *SecurityUpdate) GetLiquidity() int32 {
+	if x != nil {
+		return x.Liquidity
+	}
+	return 0
+}
+
+func (x *SecurityUpdate) GetIndustry() string {
+	if x != nil {
+		return x.Industry
+	}
+	return ""
+}
+
+type SecurityModifyReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OperType int32             `protobuf:"varint,1,opt,name=oper_type,json=operType,proto3" json:"oper_type,omitempty"`
+	List     []*SecurityUpdate `protobuf:"bytes,2,rep,name=list,proto3" json:"list,omitempty"`
+}
+
+func (x *SecurityModifyReq) Reset() {
+	*x = SecurityModifyReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SecurityModifyReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SecurityModifyReq) ProtoMessage() {}
+
+func (x *SecurityModifyReq) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SecurityModifyReq.ProtoReflect.Descriptor instead.
+func (*SecurityModifyReq) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *SecurityModifyReq) GetOperType() int32 {
+	if x != nil {
+		return x.OperType
+	}
+	return 0
+}
+
+func (x *SecurityModifyReq) GetList() []*SecurityUpdate {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+type SecurityModifyRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code   int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg    string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Result int32  `protobuf:"varint,3,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *SecurityModifyRsp) Reset() {
+	*x = SecurityModifyRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SecurityModifyRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SecurityModifyRsp) ProtoMessage() {}
+
+func (x *SecurityModifyRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SecurityModifyRsp.ProtoReflect.Descriptor instead.
+func (*SecurityModifyRsp) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *SecurityModifyRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *SecurityModifyRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *SecurityModifyRsp) GetResult() int32 {
+	if x != nil {
+		return x.Result
+	}
+	return 0
+}
+
+type ImportSecurityReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	List []*SecurityInfo `protobuf:"bytes,1,rep,name=list,proto3" json:"list,omitempty"`
+}
+
+func (x *ImportSecurityReq) Reset() {
+	*x = ImportSecurityReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ImportSecurityReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportSecurityReq) ProtoMessage() {}
+
+func (x *ImportSecurityReq) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportSecurityReq.ProtoReflect.Descriptor instead.
+func (*ImportSecurityReq) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ImportSecurityReq) GetList() []*SecurityInfo {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+type ImportSecurityRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code   int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg    string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Result int32  `protobuf:"varint,3,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *ImportSecurityRsp) Reset() {
+	*x = ImportSecurityRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ImportSecurityRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportSecurityRsp) ProtoMessage() {}
+
+func (x *ImportSecurityRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportSecurityRsp.ProtoReflect.Descriptor instead.
+func (*ImportSecurityRsp) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ImportSecurityRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *ImportSecurityRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *ImportSecurityRsp) GetResult() int32 {
+	if x != nil {
+		return x.Result
+	}
+	return 0
+}
+
+type ExportSecurityReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ExportSecurityReq) Reset() {
+	*x = ExportSecurityReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ExportSecurityReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportSecurityReq) ProtoMessage() {}
+
+func (x *ExportSecurityReq) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportSecurityReq.ProtoReflect.Descriptor instead.
+func (*ExportSecurityReq) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{11}
+}
+
+type ExportSecurityRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Infos []*SecurityInfo `protobuf:"bytes,1,rep,name=infos,proto3" json:"infos,omitempty"`
+}
+
+func (x *ExportSecurityRsp) Reset() {
+	*x = ExportSecurityRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ExportSecurityRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportSecurityRsp) ProtoMessage() {}
+
+func (x *ExportSecurityRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportSecurityRsp.ProtoReflect.Descriptor instead.
+func (*ExportSecurityRsp) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ExportSecurityRsp) GetInfos() []*SecurityInfo {
+	if x != nil {
+		return x.Infos
+	}
+	return nil
+}
+
+type UserInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id         int64  `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	UserId     string `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	UserName   string `protobuf:"bytes,3,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
+	UserType   int32  `protobuf:"varint,4,opt,name=user_type,json=userType,proto3" json:"user_type,omitempty"`
+	UserGrade  string `protobuf:"bytes,5,opt,name=user_grade,json=userGrade,proto3" json:"user_grade,omitempty"`
+	UpdateTime string `protobuf:"bytes,6,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+}
+
+func (x *UserInfo) Reset() {
+	*x = UserInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UserInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserInfo) ProtoMessage() {}
+
+func (x *UserInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserInfo.ProtoReflect.Descriptor instead.
+func (*UserInfo) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *UserInfo) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UserInfo) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *UserInfo) GetUserName() string {
+	if x != nil {
+		return x.UserName
+	}
+	return ""
+}
+
+func (x *UserInfo) GetUserType() int32 {
+	if x != nil {
+		return x.UserType
+	}
+	return 0
+}
+
+func (x *UserInfo) GetUserGrade() string {
+	if x != nil {
+		return x.UserGrade
+	}
+	return ""
+}
+
+func (x *UserInfo) GetUpdateTime() string {
+	if x != nil {
+		return x.UpdateTime
+	}
+	return ""
+}
+
+type UserListReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId string `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Page   int32  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	Limit  int32  `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+}
+
+func (x *UserListReq) Reset() {
+	*x = UserListReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UserListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserListReq) ProtoMessage() {}
+
+func (x *UserListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserListReq.ProtoReflect.Descriptor instead.
+func (*UserListReq) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *UserListReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *UserListReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *UserListReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type UserListRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code  int32       `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg   string      `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Total int64       `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Infos []*UserInfo `protobuf:"bytes,4,rep,name=infos,proto3" json:"infos,omitempty"`
+}
+
+func (x *UserListRsp) Reset() {
+	*x = UserListRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UserListRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserListRsp) ProtoMessage() {}
+
+func (x *UserListRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserListRsp.ProtoReflect.Descriptor instead.
+func (*UserListRsp) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *UserListRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *UserListRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *UserListRsp) GetTotal() int64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *UserListRsp) GetInfos() []*UserInfo {
+	if x != nil {
+		return x.Infos
+	}
+	return nil
+}
+
+type UserUpdate struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId   string `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	UserName string `protobuf:"bytes,2,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
+	Grade    string `protobuf:"bytes,3,opt,name=grade,proto3" json:"grade,omitempty"`
+}
+
+func (x *UserUpdate) Reset() {
+	*x = UserUpdate{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UserUpdate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserUpdate) ProtoMessage() {}
+
+func (x *UserUpdate) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserUpdate.ProtoReflect.Descriptor instead.
+func (*UserUpdate) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *UserUpdate) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *UserUpdate) GetUserName() string {
+	if x != nil {
+		return x.UserName
+	}
+	return ""
+}
+
+func (x *UserUpdate) GetGrade() string {
+	if x != nil {
+		return x.Grade
+	}
+	return ""
+}
+
+type UserModifyReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OperType int32         `protobuf:"varint,1,opt,name=oper_type,json=operType,proto3" json:"oper_type,omitempty"`
+	List     []*UserUpdate `protobuf:"bytes,2,rep,name=list,proto3" json:"list,omitempty"`
+}
+
+func (x *UserModifyReq) Reset() {
+	*x = UserModifyReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UserModifyReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserModifyReq) ProtoMessage() {}
+
+func (x *UserModifyReq) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserModifyReq.ProtoReflect.Descriptor instead.
+func (*UserModifyReq) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *UserModifyReq) GetOperType() int32 {
+	if x != nil {
+		return x.OperType
+	}
+	return 0
+}
+
+func (x *UserModifyReq) GetList() []*UserUpdate {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+type UserModifyRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code   int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg    string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Result int32  `protobuf:"varint,3,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *UserModifyRsp) Reset() {
+	*x = UserModifyRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UserModifyRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UserModifyRsp) ProtoMessage() {}
+
+func (x *UserModifyRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UserModifyRsp.ProtoReflect.Descriptor instead.
+func (*UserModifyRsp) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *UserModifyRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *UserModifyRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *UserModifyRsp) GetResult() int32 {
+	if x != nil {
+		return x.Result
+	}
+	return 0
+}
+
+type ImportUserReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Infos []*UserInfo `protobuf:"bytes,1,rep,name=infos,proto3" json:"infos,omitempty"`
+}
+
+func (x *ImportUserReq) Reset() {
+	*x = ImportUserReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ImportUserReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportUserReq) ProtoMessage() {}
+
+func (x *ImportUserReq) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportUserReq.ProtoReflect.Descriptor instead.
+func (*ImportUserReq) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *ImportUserReq) GetInfos() []*UserInfo {
+	if x != nil {
+		return x.Infos
+	}
+	return nil
+}
+
+type ImportUserRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code   int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg    string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Result int32  `protobuf:"varint,3,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *ImportUserRsp) Reset() {
+	*x = ImportUserRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ImportUserRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportUserRsp) ProtoMessage() {}
+
+func (x *ImportUserRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportUserRsp.ProtoReflect.Descriptor instead.
+func (*ImportUserRsp) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ImportUserRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *ImportUserRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *ImportUserRsp) GetResult() int32 {
+	if x != nil {
+		return x.Result
+	}
+	return 0
+}
+
+type ExportUserReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ExportUserReq) Reset() {
+	*x = ExportUserReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ExportUserReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportUserReq) ProtoMessage() {}
+
+func (x *ExportUserReq) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportUserReq.ProtoReflect.Descriptor instead.
+func (*ExportUserReq) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{21}
+}
+
+type ExportUserRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Infos []*UserInfo `protobuf:"bytes,1,rep,name=infos,proto3" json:"infos,omitempty"`
+}
+
+func (x *ExportUserRsp) Reset() {
+	*x = ExportUserRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ExportUserRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportUserRsp) ProtoMessage() {}
+
+func (x *ExportUserRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportUserRsp.ProtoReflect.Descriptor instead.
+func (*ExportUserRsp) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *ExportUserRsp) GetInfos() []*UserInfo {
+	if x != nil {
+		return x.Infos
+	}
+	return nil
+}
+
+type AlgoConfigReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ProfileType int32  `protobuf:"varint,1,opt,name=profile_type,json=profileType,proto3" json:"profile_type,omitempty"` // 1-经济性 2-完成度 3-风险度 4-绩效 5-稳定性
+	AlgoConfig  string `protobuf:"bytes,2,opt,name=algo_config,json=algoConfig,proto3" json:"algo_config,omitempty"`     // 配置信息json 字符串
+}
+
+func (x *AlgoConfigReq) Reset() {
+	*x = AlgoConfigReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoConfigReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoConfigReq) ProtoMessage() {}
+
+func (x *AlgoConfigReq) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoConfigReq.ProtoReflect.Descriptor instead.
+func (*AlgoConfigReq) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *AlgoConfigReq) GetProfileType() int32 {
+	if x != nil {
+		return x.ProfileType
+	}
+	return 0
+}
+
+func (x *AlgoConfigReq) GetAlgoConfig() string {
+	if x != nil {
+		return x.AlgoConfig
+	}
+	return ""
+}
+
+type AlgoConfigRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code   int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg    string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Result int32  `protobuf:"varint,3,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *AlgoConfigRsp) Reset() {
+	*x = AlgoConfigRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AlgoConfigRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AlgoConfigRsp) ProtoMessage() {}
+
+func (x *AlgoConfigRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AlgoConfigRsp.ProtoReflect.Descriptor instead.
+func (*AlgoConfigRsp) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *AlgoConfigRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *AlgoConfigRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *AlgoConfigRsp) GetResult() int32 {
+	if x != nil {
+		return x.Result
+	}
+	return 0
+}
+
+type GetAlgoConfigReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ProfileType int32 `protobuf:"varint,1,opt,name=profile_type,json=profileType,proto3" json:"profile_type,omitempty"` // 1-经济性 2-完成度 3-风险度 4-绩效 5-稳定性
+}
+
+func (x *GetAlgoConfigReq) Reset() {
+	*x = GetAlgoConfigReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetAlgoConfigReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAlgoConfigReq) ProtoMessage() {}
+
+func (x *GetAlgoConfigReq) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAlgoConfigReq.ProtoReflect.Descriptor instead.
+func (*GetAlgoConfigReq) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *GetAlgoConfigReq) GetProfileType() int32 {
+	if x != nil {
+		return x.ProfileType
+	}
+	return 0
+}
+
+type GetAlgoConfigRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code   int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg    string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Config string `protobuf:"bytes,3,opt,name=config,proto3" json:"config,omitempty"` // json字符串
+}
+
+func (x *GetAlgoConfigRsp) Reset() {
+	*x = GetAlgoConfigRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetAlgoConfigRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAlgoConfigRsp) ProtoMessage() {}
+
+func (x *GetAlgoConfigRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAlgoConfigRsp.ProtoReflect.Descriptor instead.
+func (*GetAlgoConfigRsp) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *GetAlgoConfigRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *GetAlgoConfigRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *GetAlgoConfigRsp) GetConfig() string {
+	if x != nil {
+		return x.Config
+	}
+	return ""
+}
+
+type ApiAlgoOrderReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Value []byte `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"` // 母单序列化后的数据
+}
+
+func (x *ApiAlgoOrderReq) Reset() {
+	*x = ApiAlgoOrderReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[27]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ApiAlgoOrderReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApiAlgoOrderReq) ProtoMessage() {}
+
+func (x *ApiAlgoOrderReq) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[27]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApiAlgoOrderReq.ProtoReflect.Descriptor instead.
+func (*ApiAlgoOrderReq) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *ApiAlgoOrderReq) GetValue() []byte {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+type ApiAlgoOrderRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code int32  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Msg  string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+}
+
+func (x *ApiAlgoOrderRsp) Reset() {
+	*x = ApiAlgoOrderRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_mqassess_proto_msgTypes[28]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ApiAlgoOrderRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApiAlgoOrderRsp) ProtoMessage() {}
+
+func (x *ApiAlgoOrderRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_mqassess_proto_msgTypes[28]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApiAlgoOrderRsp.ProtoReflect.Descriptor instead.
+func (*ApiAlgoOrderRsp) Descriptor() ([]byte, []int) {
+	return file_mqassess_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *ApiAlgoOrderRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *ApiAlgoOrderRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
 }
 
 var File_mqassess_proto protoreflect.FileDescriptor
@@ -595,7 +1930,7 @@ var file_mqassess_proto_rawDesc = []byte{
 	0x61, 0x74, 0x65, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x64, 0x65, 0x61, 0x6c, 0x52,
 	0x61, 0x74, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x64, 0x65, 0x61, 0x6c, 0x5f, 0x70, 0x72, 0x6f, 0x67,
 	0x72, 0x65, 0x73, 0x73, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x64, 0x65, 0x61, 0x6c,
-	0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x22, 0xc9, 0x01, 0x0a, 0x0a, 0x47, 0x65, 0x6e,
+	0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x22, 0xe2, 0x01, 0x0a, 0x0a, 0x47, 0x65, 0x6e,
 	0x65, 0x72, 0x61, 0x6c, 0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x61, 0x6c, 0x67, 0x6f, 0x5f,
 	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x61, 0x6c, 0x67, 0x6f, 0x49, 0x64,
 	0x12, 0x15, 0x0a, 0x06, 0x73, 0x65, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
@@ -608,58 +1943,218 @@ var file_mqassess_proto_rawDesc = []byte{
 	0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09,
 	0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x65, 0x6e, 0x64,
 	0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x65, 0x6e, 0x64,
-	0x54, 0x69, 0x6d, 0x65, 0x22, 0x5c, 0x0a, 0x0a, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x52,
+	0x54, 0x69, 0x6d, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18,
+	0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x5c, 0x0a,
+	0x0a, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12,
+	0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73,
+	0x67, 0x12, 0x28, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x14, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x73, 0x73, 0x65, 0x73,
+	0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0xff, 0x01, 0x0a, 0x0c,
+	0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x0e, 0x0a, 0x02,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x15, 0x0a, 0x06,
+	0x73, 0x65, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x65,
+	0x63, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x65, 0x63, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x65, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16,
+	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06,
+	0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x1b, 0x0a, 0x09, 0x66, 0x75, 0x6e, 0x64, 0x5f, 0x74,
+	0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x66, 0x75, 0x6e, 0x64, 0x54,
+	0x79, 0x70, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x5f, 0x74, 0x79, 0x70,
+	0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x54, 0x79,
+	0x70, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x74, 0x69, 0x6d,
+	0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54,
+	0x69, 0x6d, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x69, 0x74, 0x79,
+	0x18, 0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x69, 0x74,
+	0x79, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x6e, 0x64, 0x75, 0x73, 0x74, 0x72, 0x79, 0x18, 0x09, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6e, 0x64, 0x75, 0x73, 0x74, 0x72, 0x79, 0x22, 0x52, 0x0a,
+	0x0f, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71,
+	0x12, 0x15, 0x0a, 0x06, 0x73, 0x65, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6c,
+	0x69, 0x6d, 0x69, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69,
+	0x74, 0x22, 0x7b, 0x0a, 0x0f, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x4c, 0x69, 0x73,
+	0x74, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f,
+	0x74, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c,
+	0x12, 0x2c, 0x0a, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x16, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x53, 0x65, 0x63, 0x75, 0x72,
+	0x69, 0x74, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x22, 0xb8,
+	0x01, 0x0a, 0x0e, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x12, 0x15, 0x0a, 0x06, 0x73, 0x65, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x65, 0x63, 0x5f,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x65, 0x63, 0x4e,
+	0x61, 0x6d, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x66, 0x75, 0x6e, 0x64, 0x5f, 0x74, 0x79, 0x70, 0x65,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x66, 0x75, 0x6e, 0x64, 0x54, 0x79, 0x70, 0x65,
+	0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x54, 0x79, 0x70, 0x65, 0x12,
+	0x1c, 0x0a, 0x09, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x69, 0x74, 0x79, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x09, 0x6c, 0x69, 0x71, 0x75, 0x69, 0x64, 0x69, 0x74, 0x79, 0x12, 0x1a, 0x0a,
+	0x08, 0x69, 0x6e, 0x64, 0x75, 0x73, 0x74, 0x72, 0x79, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x69, 0x6e, 0x64, 0x75, 0x73, 0x74, 0x72, 0x79, 0x22, 0x5e, 0x0a, 0x11, 0x53, 0x65, 0x63,
+	0x75, 0x72, 0x69, 0x74, 0x79, 0x4d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x52, 0x65, 0x71, 0x12, 0x1b,
+	0x0a, 0x09, 0x6f, 0x70, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x2c, 0x0a, 0x04, 0x6c,
+	0x69, 0x73, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x6d, 0x71, 0x61, 0x73,
+	0x73, 0x65, 0x73, 0x73, 0x2e, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x55, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x52, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x22, 0x51, 0x0a, 0x11, 0x53, 0x65, 0x63,
+	0x75, 0x72, 0x69, 0x74, 0x79, 0x4d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x52, 0x73, 0x70, 0x12, 0x12,
+	0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f,
+	0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x03, 0x6d, 0x73, 0x67, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x3f, 0x0a, 0x11,
+	0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x52, 0x65,
+	0x71, 0x12, 0x2a, 0x0a, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x16, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x53, 0x65, 0x63, 0x75, 0x72,
+	0x69, 0x74, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x22, 0x51, 0x0a,
+	0x11, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x52,
 	0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05,
 	0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x28, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f,
-	0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73,
-	0x73, 0x2e, 0x41, 0x73, 0x73, 0x65, 0x73, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e,
-	0x66, 0x6f, 0x22, 0xac, 0x02, 0x0a, 0x0d, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x75, 0x73, 0x65, 0x63, 0x75, 0x6c, 0x69, 0x74,
-	0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x75, 0x73, 0x65, 0x63,
-	0x75, 0x6c, 0x69, 0x74, 0x79, 0x49, 0x64, 0x12, 0x15, 0x0a, 0x06, 0x73, 0x65, 0x63, 0x5f, 0x69,
-	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x65, 0x63, 0x49, 0x64, 0x12, 0x26,
-	0x0a, 0x0f, 0x65, 0x6e, 0x74, 0x72, 0x75, 0x73, 0x74, 0x5f, 0x62, 0x69, 0x64, 0x5f, 0x76, 0x6f,
-	0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x65, 0x6e, 0x74, 0x72, 0x75, 0x73, 0x74,
-	0x42, 0x69, 0x64, 0x56, 0x6f, 0x6c, 0x12, 0x26, 0x0a, 0x0f, 0x65, 0x6e, 0x74, 0x72, 0x75, 0x73,
-	0x74, 0x5f, 0x61, 0x73, 0x6b, 0x5f, 0x76, 0x6f, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52,
-	0x0d, 0x65, 0x6e, 0x74, 0x72, 0x75, 0x73, 0x74, 0x41, 0x73, 0x6b, 0x56, 0x6f, 0x6c, 0x12, 0x1b,
-	0x0a, 0x09, 0x6f, 0x72, 0x67, 0x69, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x08, 0x6f, 0x72, 0x67, 0x69, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x26, 0x0a, 0x0f, 0x74,
-	0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x74, 0x72, 0x61, 0x64, 0x65, 0x5f, 0x76, 0x6f, 0x6c, 0x18, 0x06,
-	0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x54, 0x72, 0x61, 0x64, 0x65,
-	0x56, 0x6f, 0x6c, 0x12, 0x1d, 0x0a, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x70, 0x72, 0x69, 0x63,
-	0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x50, 0x72, 0x69,
-	0x63, 0x65, 0x12, 0x2d, 0x0a, 0x13, 0x6e, 0x65, 0x74, 0x5f, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f,
-	0x74, 0x72, 0x61, 0x64, 0x65, 0x5f, 0x76, 0x6f, 0x6c, 0x18, 0x08, 0x20, 0x01, 0x28, 0x03, 0x52,
-	0x10, 0x6e, 0x65, 0x74, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x54, 0x72, 0x61, 0x64, 0x65, 0x56, 0x6f,
-	0x6c, 0x22, 0x23, 0x0a, 0x0d, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52,
+	0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74,
+	0x22, 0x13, 0x0a, 0x11, 0x45, 0x78, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69,
+	0x74, 0x79, 0x52, 0x65, 0x71, 0x22, 0x41, 0x0a, 0x11, 0x45, 0x78, 0x70, 0x6f, 0x72, 0x74, 0x53,
+	0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x52, 0x73, 0x70, 0x12, 0x2c, 0x0a, 0x05, 0x69, 0x6e,
+	0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x6d, 0x71, 0x61, 0x73,
+	0x73, 0x65, 0x73, 0x73, 0x2e, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x22, 0xad, 0x01, 0x0a, 0x08, 0x55, 0x73, 0x65,
+	0x72, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x02, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1b,
+	0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08,
+	0x75, 0x73, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x75, 0x73, 0x65, 0x72,
+	0x5f, 0x67, 0x72, 0x61, 0x64, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x75, 0x73,
+	0x65, 0x72, 0x47, 0x72, 0x61, 0x64, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x75, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x75, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x50, 0x0a, 0x0b, 0x55, 0x73, 0x65, 0x72,
+	0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64,
+	0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04,
+	0x70, 0x61, 0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x05, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x22, 0x73, 0x0a, 0x0b, 0x55, 0x73,
+	0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a,
+	0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12,
+	0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05,
+	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x28, 0x0a, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x04,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e,
+	0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x22,
+	0x58, 0x0a, 0x0a, 0x55, 0x73, 0x65, 0x72, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x17, 0x0a,
+	0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x4e,
+	0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x67, 0x72, 0x61, 0x64, 0x65, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x67, 0x72, 0x61, 0x64, 0x65, 0x22, 0x56, 0x0a, 0x0d, 0x55, 0x73, 0x65,
+	0x72, 0x4d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x52, 0x65, 0x71, 0x12, 0x1b, 0x0a, 0x09, 0x6f, 0x70,
+	0x65, 0x72, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x6f,
+	0x70, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x28, 0x0a, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x18,
+	0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x55, 0x73, 0x65, 0x72, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52, 0x04, 0x6c, 0x69, 0x73,
+	0x74, 0x22, 0x4d, 0x0a, 0x0d, 0x55, 0x73, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x52,
 	0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05,
-	0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22, 0x30, 0x0a, 0x0c, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72,
-	0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72,
-	0x64, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x41, 0x6c, 0x67,
-	0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x49, 0x64, 0x22, 0x20, 0x0a, 0x0c, 0x41, 0x6c, 0x67, 0x6f,
-	0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x73, 0x70, 0x12, 0x10, 0x0a, 0x03, 0x51, 0x74, 0x79, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x03, 0x51, 0x74, 0x79, 0x32, 0x97, 0x02, 0x0a, 0x0f, 0x41,
-	0x73, 0x73, 0x65, 0x73, 0x73, 0x4d, 0x71, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3a,
-	0x0a, 0x0c, 0x47, 0x65, 0x74, 0x4d, 0x71, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x12, 0x14,
-	0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61,
-	0x6c, 0x52, 0x65, 0x71, 0x1a, 0x14, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e,
-	0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x52, 0x73, 0x70, 0x12, 0x42, 0x0a, 0x0e, 0x50, 0x75,
-	0x6c, 0x6c, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x44, 0x61, 0x74, 0x61, 0x12, 0x17, 0x2e, 0x6d,
-	0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x44, 0x61,
-	0x74, 0x61, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
-	0x2e, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x73, 0x70, 0x12, 0x44,
-	0x0a, 0x10, 0x50, 0x75, 0x6c, 0x6c, 0x53, 0x68, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x44, 0x61,
-	0x74, 0x61, 0x12, 0x17, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4d, 0x61,
-	0x72, 0x6b, 0x65, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e, 0x6d, 0x71,
-	0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x65, 0x71, 0x12, 0x3e, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x67, 0x6f, 0x4f,
-	0x72, 0x64, 0x65, 0x72, 0x12, 0x16, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e,
-	0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x1a, 0x16, 0x2e, 0x6d,
-	0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65,
-	0x72, 0x52, 0x73, 0x70, 0x42, 0x07, 0x5a, 0x05, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74,
+	0x22, 0x39, 0x0a, 0x0d, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65,
+	0x71, 0x12, 0x28, 0x0a, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x12, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x55, 0x73, 0x65, 0x72,
+	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x22, 0x4d, 0x0a, 0x0d, 0x49,
+	0x6d, 0x70, 0x6f, 0x72, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d,
+	0x73, 0x67, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x0f, 0x0a, 0x0d, 0x45, 0x78,
+	0x70, 0x6f, 0x72, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x22, 0x39, 0x0a, 0x0d, 0x45,
+	0x78, 0x70, 0x6f, 0x72, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x73, 0x70, 0x12, 0x28, 0x0a, 0x05,
+	0x69, 0x6e, 0x66, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x6d, 0x71,
+	0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x52,
+	0x05, 0x69, 0x6e, 0x66, 0x6f, 0x73, 0x22, 0x53, 0x0a, 0x0d, 0x41, 0x6c, 0x67, 0x6f, 0x43, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x72, 0x6f, 0x66, 0x69,
+	0x6c, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x70,
+	0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x61, 0x6c,
+	0x67, 0x6f, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x61, 0x6c, 0x67, 0x6f, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x22, 0x4d, 0x0a, 0x0d, 0x41,
+	0x6c, 0x67, 0x6f, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d,
+	0x73, 0x67, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x35, 0x0a, 0x10, 0x47, 0x65,
+	0x74, 0x41, 0x6c, 0x67, 0x6f, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x12, 0x21,
+	0x0a, 0x0c, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x54, 0x79, 0x70,
+	0x65, 0x22, 0x50, 0x0a, 0x10, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x67, 0x6f, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x52, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x16, 0x0a, 0x06, 0x63,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x63, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x22, 0x27, 0x0a, 0x0f, 0x41, 0x70, 0x69, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72,
+	0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x37, 0x0a, 0x0f,
+	0x41, 0x70, 0x69, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x73, 0x70, 0x12,
+	0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63,
+	0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x03, 0x6d, 0x73, 0x67, 0x32, 0x99, 0x07, 0x0a, 0x0f, 0x41, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x4d, 0x71, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3a, 0x0a, 0x0c, 0x47, 0x65, 0x74,
+	0x4d, 0x71, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x12, 0x14, 0x2e, 0x6d, 0x71, 0x61, 0x73,
+	0x73, 0x65, 0x73, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x52, 0x65, 0x71, 0x1a,
+	0x14, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72,
+	0x61, 0x6c, 0x52, 0x73, 0x70, 0x12, 0x44, 0x0a, 0x0c, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74,
+	0x79, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x19, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73,
+	0x2e, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71,
+	0x1a, 0x19, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x53, 0x65, 0x63, 0x75,
+	0x72, 0x69, 0x74, 0x79, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x73, 0x70, 0x12, 0x4a, 0x0a, 0x0e, 0x53,
+	0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x2e,
+	0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74,
+	0x79, 0x4d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x52, 0x65, 0x71, 0x1a, 0x1b, 0x2e, 0x6d, 0x71, 0x61,
+	0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x4d, 0x6f,
+	0x64, 0x69, 0x66, 0x79, 0x52, 0x73, 0x70, 0x12, 0x4e, 0x0a, 0x12, 0x49, 0x6d, 0x70, 0x6f, 0x72,
+	0x74, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x1b, 0x2e,
+	0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x53,
+	0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x1a, 0x1b, 0x2e, 0x6d, 0x71, 0x61,
+	0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x65, 0x63, 0x75,
+	0x72, 0x69, 0x74, 0x79, 0x52, 0x73, 0x70, 0x12, 0x4e, 0x0a, 0x12, 0x45, 0x78, 0x70, 0x6f, 0x72,
+	0x74, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x1b, 0x2e,
+	0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x45, 0x78, 0x70, 0x6f, 0x72, 0x74, 0x53,
+	0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x1a, 0x1b, 0x2e, 0x6d, 0x71, 0x61,
+	0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x45, 0x78, 0x70, 0x6f, 0x72, 0x74, 0x53, 0x65, 0x63, 0x75,
+	0x72, 0x69, 0x74, 0x79, 0x52, 0x73, 0x70, 0x12, 0x38, 0x0a, 0x08, 0x55, 0x73, 0x65, 0x72, 0x4c,
+	0x69, 0x73, 0x74, 0x12, 0x15, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x55,
+	0x73, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x15, 0x2e, 0x6d, 0x71, 0x61,
+	0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x73,
+	0x70, 0x12, 0x3e, 0x0a, 0x0a, 0x55, 0x73, 0x65, 0x72, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12,
+	0x17, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x4d,
+	0x6f, 0x64, 0x69, 0x66, 0x79, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73,
+	0x65, 0x73, 0x73, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x4d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x52, 0x73,
+	0x70, 0x12, 0x42, 0x0a, 0x0e, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x55, 0x73, 0x65, 0x72, 0x49,
+	0x6e, 0x66, 0x6f, 0x12, 0x17, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x49,
+	0x6d, 0x70, 0x6f, 0x72, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e, 0x6d,
+	0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x49, 0x6d, 0x70, 0x6f, 0x72, 0x74, 0x55, 0x73,
+	0x65, 0x72, 0x52, 0x73, 0x70, 0x12, 0x42, 0x0a, 0x0e, 0x45, 0x78, 0x70, 0x6f, 0x72, 0x74, 0x55,
+	0x73, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x17, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65,
+	0x73, 0x73, 0x2e, 0x45, 0x78, 0x70, 0x6f, 0x72, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71,
+	0x1a, 0x17, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x45, 0x78, 0x70, 0x6f,
+	0x72, 0x74, 0x55, 0x73, 0x65, 0x72, 0x52, 0x73, 0x70, 0x12, 0x3e, 0x0a, 0x0a, 0x41, 0x6c, 0x67,
+	0x6f, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x17, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65,
+	0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71,
+	0x1a, 0x17, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x6c, 0x67, 0x6f,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x73, 0x70, 0x12, 0x47, 0x0a, 0x0d, 0x47, 0x65, 0x74,
+	0x41, 0x6c, 0x67, 0x6f, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x1a, 0x2e, 0x6d, 0x71, 0x61,
+	0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x67, 0x6f, 0x43, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x1a, 0x1a, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73,
+	0x73, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x67, 0x6f, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52,
+	0x73, 0x70, 0x12, 0x45, 0x0a, 0x0d, 0x53, 0x65, 0x6e, 0x64, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72,
+	0x64, 0x65, 0x72, 0x12, 0x19, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41,
+	0x70, 0x69, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x1a, 0x19,
+	0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x70, 0x69, 0x41, 0x6c, 0x67,
+	0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x73, 0x70, 0x12, 0x46, 0x0a, 0x0e, 0x53, 0x65, 0x6e,
+	0x64, 0x43, 0x68, 0x69, 0x6c, 0x64, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x19, 0x2e, 0x6d, 0x71,
+	0x61, 0x73, 0x73, 0x65, 0x73, 0x73, 0x2e, 0x41, 0x70, 0x69, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72,
+	0x64, 0x65, 0x72, 0x52, 0x65, 0x71, 0x1a, 0x19, 0x2e, 0x6d, 0x71, 0x61, 0x73, 0x73, 0x65, 0x73,
+	0x73, 0x2e, 0x41, 0x70, 0x69, 0x41, 0x6c, 0x67, 0x6f, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x52, 0x73,
+	0x70, 0x42, 0x07, 0x5a, 0x05, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -674,31 +2169,79 @@ func file_mqassess_proto_rawDescGZIP() []byte {
 	return file_mqassess_proto_rawDescData
 }
 
-var file_mqassess_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_mqassess_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_mqassess_proto_goTypes = []interface{}{
-	(*AssessInfo)(nil),    // 0: mqassess.AssessInfo
-	(*GeneralReq)(nil),    // 1: mqassess.GeneralReq
-	(*GeneralRsp)(nil),    // 2: mqassess.GeneralRsp
-	(*MarketDataReq)(nil), // 3: mqassess.MarketDataReq
-	(*MarketDataRsp)(nil), // 4: mqassess.MarketDataRsp
-	(*AlgoOrderReq)(nil),  // 5: mqassess.AlgoOrderReq
-	(*AlgoOrderRsp)(nil),  // 6: mqassess.AlgoOrderRsp
+	(*AssessInfo)(nil),        // 0: mqassess.AssessInfo
+	(*GeneralReq)(nil),        // 1: mqassess.GeneralReq
+	(*GeneralRsp)(nil),        // 2: mqassess.GeneralRsp
+	(*SecurityInfo)(nil),      // 3: mqassess.SecurityInfo
+	(*SecurityListReq)(nil),   // 4: mqassess.SecurityListReq
+	(*SecurityListRsp)(nil),   // 5: mqassess.SecurityListRsp
+	(*SecurityUpdate)(nil),    // 6: mqassess.SecurityUpdate
+	(*SecurityModifyReq)(nil), // 7: mqassess.SecurityModifyReq
+	(*SecurityModifyRsp)(nil), // 8: mqassess.SecurityModifyRsp
+	(*ImportSecurityReq)(nil), // 9: mqassess.ImportSecurityReq
+	(*ImportSecurityRsp)(nil), // 10: mqassess.ImportSecurityRsp
+	(*ExportSecurityReq)(nil), // 11: mqassess.ExportSecurityReq
+	(*ExportSecurityRsp)(nil), // 12: mqassess.ExportSecurityRsp
+	(*UserInfo)(nil),          // 13: mqassess.UserInfo
+	(*UserListReq)(nil),       // 14: mqassess.UserListReq
+	(*UserListRsp)(nil),       // 15: mqassess.UserListRsp
+	(*UserUpdate)(nil),        // 16: mqassess.UserUpdate
+	(*UserModifyReq)(nil),     // 17: mqassess.UserModifyReq
+	(*UserModifyRsp)(nil),     // 18: mqassess.UserModifyRsp
+	(*ImportUserReq)(nil),     // 19: mqassess.ImportUserReq
+	(*ImportUserRsp)(nil),     // 20: mqassess.ImportUserRsp
+	(*ExportUserReq)(nil),     // 21: mqassess.ExportUserReq
+	(*ExportUserRsp)(nil),     // 22: mqassess.ExportUserRsp
+	(*AlgoConfigReq)(nil),     // 23: mqassess.AlgoConfigReq
+	(*AlgoConfigRsp)(nil),     // 24: mqassess.AlgoConfigRsp
+	(*GetAlgoConfigReq)(nil),  // 25: mqassess.GetAlgoConfigReq
+	(*GetAlgoConfigRsp)(nil),  // 26: mqassess.GetAlgoConfigRsp
+	(*ApiAlgoOrderReq)(nil),   // 27: mqassess.ApiAlgoOrderReq
+	(*ApiAlgoOrderRsp)(nil),   // 28: mqassess.ApiAlgoOrderRsp
 }
 var file_mqassess_proto_depIdxs = []int32{
-	0, // 0: mqassess.GeneralRsp.info:type_name -> mqassess.AssessInfo
-	1, // 1: mqassess.AssessMqService.GetMqGeneral:input_type -> mqassess.GeneralReq
-	3, // 2: mqassess.AssessMqService.PullMarketData:input_type -> mqassess.MarketDataReq
-	3, // 3: mqassess.AssessMqService.PullShMarketData:input_type -> mqassess.MarketDataReq
-	5, // 4: mqassess.AssessMqService.GetAlgoOrder:input_type -> mqassess.AlgoOrderReq
-	2, // 5: mqassess.AssessMqService.GetMqGeneral:output_type -> mqassess.GeneralRsp
-	4, // 6: mqassess.AssessMqService.PullMarketData:output_type -> mqassess.MarketDataRsp
-	3, // 7: mqassess.AssessMqService.PullShMarketData:output_type -> mqassess.MarketDataReq
-	6, // 8: mqassess.AssessMqService.GetAlgoOrder:output_type -> mqassess.AlgoOrderRsp
-	5, // [5:9] is the sub-list for method output_type
-	1, // [1:5] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0,  // 0: mqassess.GeneralRsp.info:type_name -> mqassess.AssessInfo
+	3,  // 1: mqassess.SecurityListRsp.infos:type_name -> mqassess.SecurityInfo
+	6,  // 2: mqassess.SecurityModifyReq.list:type_name -> mqassess.SecurityUpdate
+	3,  // 3: mqassess.ImportSecurityReq.list:type_name -> mqassess.SecurityInfo
+	3,  // 4: mqassess.ExportSecurityRsp.infos:type_name -> mqassess.SecurityInfo
+	13, // 5: mqassess.UserListRsp.infos:type_name -> mqassess.UserInfo
+	16, // 6: mqassess.UserModifyReq.list:type_name -> mqassess.UserUpdate
+	13, // 7: mqassess.ImportUserReq.infos:type_name -> mqassess.UserInfo
+	13, // 8: mqassess.ExportUserRsp.infos:type_name -> mqassess.UserInfo
+	1,  // 9: mqassess.AssessMqService.GetMqGeneral:input_type -> mqassess.GeneralReq
+	4,  // 10: mqassess.AssessMqService.SecurityList:input_type -> mqassess.SecurityListReq
+	7,  // 11: mqassess.AssessMqService.SecurityUpdate:input_type -> mqassess.SecurityModifyReq
+	9,  // 12: mqassess.AssessMqService.ImportSecurityInfo:input_type -> mqassess.ImportSecurityReq
+	11, // 13: mqassess.AssessMqService.ExportSecurityInfo:input_type -> mqassess.ExportSecurityReq
+	14, // 14: mqassess.AssessMqService.UserList:input_type -> mqassess.UserListReq
+	17, // 15: mqassess.AssessMqService.UserUpdate:input_type -> mqassess.UserModifyReq
+	19, // 16: mqassess.AssessMqService.ImportUserInfo:input_type -> mqassess.ImportUserReq
+	21, // 17: mqassess.AssessMqService.ExportUserInfo:input_type -> mqassess.ExportUserReq
+	23, // 18: mqassess.AssessMqService.AlgoConfig:input_type -> mqassess.AlgoConfigReq
+	25, // 19: mqassess.AssessMqService.GetAlgoConfig:input_type -> mqassess.GetAlgoConfigReq
+	27, // 20: mqassess.AssessMqService.SendAlgoOrder:input_type -> mqassess.ApiAlgoOrderReq
+	27, // 21: mqassess.AssessMqService.SendChildOrder:input_type -> mqassess.ApiAlgoOrderReq
+	2,  // 22: mqassess.AssessMqService.GetMqGeneral:output_type -> mqassess.GeneralRsp
+	5,  // 23: mqassess.AssessMqService.SecurityList:output_type -> mqassess.SecurityListRsp
+	8,  // 24: mqassess.AssessMqService.SecurityUpdate:output_type -> mqassess.SecurityModifyRsp
+	10, // 25: mqassess.AssessMqService.ImportSecurityInfo:output_type -> mqassess.ImportSecurityRsp
+	12, // 26: mqassess.AssessMqService.ExportSecurityInfo:output_type -> mqassess.ExportSecurityRsp
+	15, // 27: mqassess.AssessMqService.UserList:output_type -> mqassess.UserListRsp
+	18, // 28: mqassess.AssessMqService.UserUpdate:output_type -> mqassess.UserModifyRsp
+	20, // 29: mqassess.AssessMqService.ImportUserInfo:output_type -> mqassess.ImportUserRsp
+	22, // 30: mqassess.AssessMqService.ExportUserInfo:output_type -> mqassess.ExportUserRsp
+	24, // 31: mqassess.AssessMqService.AlgoConfig:output_type -> mqassess.AlgoConfigRsp
+	26, // 32: mqassess.AssessMqService.GetAlgoConfig:output_type -> mqassess.GetAlgoConfigRsp
+	28, // 33: mqassess.AssessMqService.SendAlgoOrder:output_type -> mqassess.ApiAlgoOrderRsp
+	28, // 34: mqassess.AssessMqService.SendChildOrder:output_type -> mqassess.ApiAlgoOrderRsp
+	22, // [22:35] is the sub-list for method output_type
+	9,  // [9:22] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_mqassess_proto_init() }
@@ -744,7 +2287,7 @@ func file_mqassess_proto_init() {
 			}
 		}
 		file_mqassess_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MarketDataReq); i {
+			switch v := v.(*SecurityInfo); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -756,7 +2299,7 @@ func file_mqassess_proto_init() {
 			}
 		}
 		file_mqassess_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MarketDataRsp); i {
+			switch v := v.(*SecurityListReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -768,7 +2311,7 @@ func file_mqassess_proto_init() {
 			}
 		}
 		file_mqassess_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AlgoOrderReq); i {
+			switch v := v.(*SecurityListRsp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -780,7 +2323,271 @@ func file_mqassess_proto_init() {
 			}
 		}
 		file_mqassess_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AlgoOrderRsp); i {
+			switch v := v.(*SecurityUpdate); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SecurityModifyReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SecurityModifyRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ImportSecurityReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ImportSecurityRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ExportSecurityReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ExportSecurityRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UserInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UserListReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UserListRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UserUpdate); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UserModifyReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UserModifyRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ImportUserReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ImportUserRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ExportUserReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ExportUserRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoConfigReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AlgoConfigRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetAlgoConfigReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetAlgoConfigRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ApiAlgoOrderReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_mqassess_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ApiAlgoOrderRsp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -798,7 +2605,7 @@ func file_mqassess_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_mqassess_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -824,15 +2631,32 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type AssessMqServiceClient interface {
-	// 获取绩效概况
+	// 获取绩效概况 （实时数据）
 	GetMqGeneral(ctx context.Context, in *GeneralReq, opts ...grpc.CallOption) (*GeneralRsp, error)
-	// 推送行情数据--深交所
-	PullMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataRsp, error)
-	// 推送上交所行情数据
-	PullShMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataReq, error)
-	// -----------下面的接口为调试功能，不对外开放
-	// 查询本地缓存母单信息
-	GetAlgoOrder(ctx context.Context, in *AlgoOrderReq, opts ...grpc.CallOption) (*AlgoOrderRsp, error)
+	// 配置： 证券列表
+	SecurityList(ctx context.Context, in *SecurityListReq, opts ...grpc.CallOption) (*SecurityListRsp, error)
+	// 配置： 证券属性修改
+	SecurityUpdate(ctx context.Context, in *SecurityModifyReq, opts ...grpc.CallOption) (*SecurityModifyRsp, error)
+	// 配置： 证券信息导入
+	ImportSecurityInfo(ctx context.Context, in *ImportSecurityReq, opts ...grpc.CallOption) (*ImportSecurityRsp, error)
+	// 配置：证券信息导出
+	ExportSecurityInfo(ctx context.Context, in *ExportSecurityReq, opts ...grpc.CallOption) (*ExportSecurityRsp, error)
+	// 配置：用户列表
+	UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListRsp, error)
+	// 配置：用户级别修改
+	UserUpdate(ctx context.Context, in *UserModifyReq, opts ...grpc.CallOption) (*UserModifyRsp, error)
+	// 配置： 用户信息导入
+	ImportUserInfo(ctx context.Context, in *ImportUserReq, opts ...grpc.CallOption) (*ImportUserRsp, error)
+	// 配置： 用户信息导出
+	ExportUserInfo(ctx context.Context, in *ExportUserReq, opts ...grpc.CallOption) (*ExportUserRsp, error)
+	// 配置： 算法配置
+	AlgoConfig(ctx context.Context, in *AlgoConfigReq, opts ...grpc.CallOption) (*AlgoConfigRsp, error)
+	// 配置： 算法配置查询
+	GetAlgoConfig(ctx context.Context, in *GetAlgoConfigReq, opts ...grpc.CallOption) (*GetAlgoConfigRsp, error)
+	// api测试接口母单
+	SendAlgoOrder(ctx context.Context, in *ApiAlgoOrderReq, opts ...grpc.CallOption) (*ApiAlgoOrderRsp, error)
+	// api测试接口子单
+	SendChildOrder(ctx context.Context, in *ApiAlgoOrderReq, opts ...grpc.CallOption) (*ApiAlgoOrderRsp, error)
 }
 
 type assessMqServiceClient struct {
@@ -852,27 +2676,108 @@ func (c *assessMqServiceClient) GetMqGeneral(ctx context.Context, in *GeneralReq
 	return out, nil
 }
 
-func (c *assessMqServiceClient) PullMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataRsp, error) {
-	out := new(MarketDataRsp)
-	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/PullMarketData", in, out, opts...)
+func (c *assessMqServiceClient) SecurityList(ctx context.Context, in *SecurityListReq, opts ...grpc.CallOption) (*SecurityListRsp, error) {
+	out := new(SecurityListRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/SecurityList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *assessMqServiceClient) PullShMarketData(ctx context.Context, in *MarketDataReq, opts ...grpc.CallOption) (*MarketDataReq, error) {
-	out := new(MarketDataReq)
-	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/PullShMarketData", in, out, opts...)
+func (c *assessMqServiceClient) SecurityUpdate(ctx context.Context, in *SecurityModifyReq, opts ...grpc.CallOption) (*SecurityModifyRsp, error) {
+	out := new(SecurityModifyRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/SecurityUpdate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *assessMqServiceClient) GetAlgoOrder(ctx context.Context, in *AlgoOrderReq, opts ...grpc.CallOption) (*AlgoOrderRsp, error) {
-	out := new(AlgoOrderRsp)
-	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/GetAlgoOrder", in, out, opts...)
+func (c *assessMqServiceClient) ImportSecurityInfo(ctx context.Context, in *ImportSecurityReq, opts ...grpc.CallOption) (*ImportSecurityRsp, error) {
+	out := new(ImportSecurityRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/ImportSecurityInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessMqServiceClient) ExportSecurityInfo(ctx context.Context, in *ExportSecurityReq, opts ...grpc.CallOption) (*ExportSecurityRsp, error) {
+	out := new(ExportSecurityRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/ExportSecurityInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessMqServiceClient) UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListRsp, error) {
+	out := new(UserListRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/UserList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessMqServiceClient) UserUpdate(ctx context.Context, in *UserModifyReq, opts ...grpc.CallOption) (*UserModifyRsp, error) {
+	out := new(UserModifyRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/UserUpdate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessMqServiceClient) ImportUserInfo(ctx context.Context, in *ImportUserReq, opts ...grpc.CallOption) (*ImportUserRsp, error) {
+	out := new(ImportUserRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/ImportUserInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessMqServiceClient) ExportUserInfo(ctx context.Context, in *ExportUserReq, opts ...grpc.CallOption) (*ExportUserRsp, error) {
+	out := new(ExportUserRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/ExportUserInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessMqServiceClient) AlgoConfig(ctx context.Context, in *AlgoConfigReq, opts ...grpc.CallOption) (*AlgoConfigRsp, error) {
+	out := new(AlgoConfigRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/AlgoConfig", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessMqServiceClient) GetAlgoConfig(ctx context.Context, in *GetAlgoConfigReq, opts ...grpc.CallOption) (*GetAlgoConfigRsp, error) {
+	out := new(GetAlgoConfigRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/GetAlgoConfig", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessMqServiceClient) SendAlgoOrder(ctx context.Context, in *ApiAlgoOrderReq, opts ...grpc.CallOption) (*ApiAlgoOrderRsp, error) {
+	out := new(ApiAlgoOrderRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/SendAlgoOrder", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assessMqServiceClient) SendChildOrder(ctx context.Context, in *ApiAlgoOrderReq, opts ...grpc.CallOption) (*ApiAlgoOrderRsp, error) {
+	out := new(ApiAlgoOrderRsp)
+	err := c.cc.Invoke(ctx, "/mqassess.AssessMqService/SendChildOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -881,15 +2786,32 @@ func (c *assessMqServiceClient) GetAlgoOrder(ctx context.Context, in *AlgoOrderR
 
 // AssessMqServiceServer is the server API for AssessMqService service.
 type AssessMqServiceServer interface {
-	// 获取绩效概况
+	// 获取绩效概况 （实时数据）
 	GetMqGeneral(context.Context, *GeneralReq) (*GeneralRsp, error)
-	// 推送行情数据--深交所
-	PullMarketData(context.Context, *MarketDataReq) (*MarketDataRsp, error)
-	// 推送上交所行情数据
-	PullShMarketData(context.Context, *MarketDataReq) (*MarketDataReq, error)
-	// -----------下面的接口为调试功能，不对外开放
-	// 查询本地缓存母单信息
-	GetAlgoOrder(context.Context, *AlgoOrderReq) (*AlgoOrderRsp, error)
+	// 配置： 证券列表
+	SecurityList(context.Context, *SecurityListReq) (*SecurityListRsp, error)
+	// 配置： 证券属性修改
+	SecurityUpdate(context.Context, *SecurityModifyReq) (*SecurityModifyRsp, error)
+	// 配置： 证券信息导入
+	ImportSecurityInfo(context.Context, *ImportSecurityReq) (*ImportSecurityRsp, error)
+	// 配置：证券信息导出
+	ExportSecurityInfo(context.Context, *ExportSecurityReq) (*ExportSecurityRsp, error)
+	// 配置：用户列表
+	UserList(context.Context, *UserListReq) (*UserListRsp, error)
+	// 配置：用户级别修改
+	UserUpdate(context.Context, *UserModifyReq) (*UserModifyRsp, error)
+	// 配置： 用户信息导入
+	ImportUserInfo(context.Context, *ImportUserReq) (*ImportUserRsp, error)
+	// 配置： 用户信息导出
+	ExportUserInfo(context.Context, *ExportUserReq) (*ExportUserRsp, error)
+	// 配置： 算法配置
+	AlgoConfig(context.Context, *AlgoConfigReq) (*AlgoConfigRsp, error)
+	// 配置： 算法配置查询
+	GetAlgoConfig(context.Context, *GetAlgoConfigReq) (*GetAlgoConfigRsp, error)
+	// api测试接口母单
+	SendAlgoOrder(context.Context, *ApiAlgoOrderReq) (*ApiAlgoOrderRsp, error)
+	// api测试接口子单
+	SendChildOrder(context.Context, *ApiAlgoOrderReq) (*ApiAlgoOrderRsp, error)
 }
 
 // UnimplementedAssessMqServiceServer can be embedded to have forward compatible implementations.
@@ -899,14 +2821,41 @@ type UnimplementedAssessMqServiceServer struct {
 func (*UnimplementedAssessMqServiceServer) GetMqGeneral(context.Context, *GeneralReq) (*GeneralRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMqGeneral not implemented")
 }
-func (*UnimplementedAssessMqServiceServer) PullMarketData(context.Context, *MarketDataReq) (*MarketDataRsp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PullMarketData not implemented")
+func (*UnimplementedAssessMqServiceServer) SecurityList(context.Context, *SecurityListReq) (*SecurityListRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SecurityList not implemented")
 }
-func (*UnimplementedAssessMqServiceServer) PullShMarketData(context.Context, *MarketDataReq) (*MarketDataReq, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PullShMarketData not implemented")
+func (*UnimplementedAssessMqServiceServer) SecurityUpdate(context.Context, *SecurityModifyReq) (*SecurityModifyRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SecurityUpdate not implemented")
 }
-func (*UnimplementedAssessMqServiceServer) GetAlgoOrder(context.Context, *AlgoOrderReq) (*AlgoOrderRsp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAlgoOrder not implemented")
+func (*UnimplementedAssessMqServiceServer) ImportSecurityInfo(context.Context, *ImportSecurityReq) (*ImportSecurityRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportSecurityInfo not implemented")
+}
+func (*UnimplementedAssessMqServiceServer) ExportSecurityInfo(context.Context, *ExportSecurityReq) (*ExportSecurityRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExportSecurityInfo not implemented")
+}
+func (*UnimplementedAssessMqServiceServer) UserList(context.Context, *UserListReq) (*UserListRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserList not implemented")
+}
+func (*UnimplementedAssessMqServiceServer) UserUpdate(context.Context, *UserModifyReq) (*UserModifyRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserUpdate not implemented")
+}
+func (*UnimplementedAssessMqServiceServer) ImportUserInfo(context.Context, *ImportUserReq) (*ImportUserRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportUserInfo not implemented")
+}
+func (*UnimplementedAssessMqServiceServer) ExportUserInfo(context.Context, *ExportUserReq) (*ExportUserRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExportUserInfo not implemented")
+}
+func (*UnimplementedAssessMqServiceServer) AlgoConfig(context.Context, *AlgoConfigReq) (*AlgoConfigRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AlgoConfig not implemented")
+}
+func (*UnimplementedAssessMqServiceServer) GetAlgoConfig(context.Context, *GetAlgoConfigReq) (*GetAlgoConfigRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAlgoConfig not implemented")
+}
+func (*UnimplementedAssessMqServiceServer) SendAlgoOrder(context.Context, *ApiAlgoOrderReq) (*ApiAlgoOrderRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendAlgoOrder not implemented")
+}
+func (*UnimplementedAssessMqServiceServer) SendChildOrder(context.Context, *ApiAlgoOrderReq) (*ApiAlgoOrderRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendChildOrder not implemented")
 }
 
 func RegisterAssessMqServiceServer(s *grpc.Server, srv AssessMqServiceServer) {
@@ -931,56 +2880,218 @@ func _AssessMqService_GetMqGeneral_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AssessMqService_PullMarketData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MarketDataReq)
+func _AssessMqService_SecurityList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SecurityListReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AssessMqServiceServer).PullMarketData(ctx, in)
+		return srv.(AssessMqServiceServer).SecurityList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/mqassess.AssessMqService/PullMarketData",
+		FullMethod: "/mqassess.AssessMqService/SecurityList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssessMqServiceServer).PullMarketData(ctx, req.(*MarketDataReq))
+		return srv.(AssessMqServiceServer).SecurityList(ctx, req.(*SecurityListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AssessMqService_PullShMarketData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MarketDataReq)
+func _AssessMqService_SecurityUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SecurityModifyReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AssessMqServiceServer).PullShMarketData(ctx, in)
+		return srv.(AssessMqServiceServer).SecurityUpdate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/mqassess.AssessMqService/PullShMarketData",
+		FullMethod: "/mqassess.AssessMqService/SecurityUpdate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssessMqServiceServer).PullShMarketData(ctx, req.(*MarketDataReq))
+		return srv.(AssessMqServiceServer).SecurityUpdate(ctx, req.(*SecurityModifyReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AssessMqService_GetAlgoOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AlgoOrderReq)
+func _AssessMqService_ImportSecurityInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportSecurityReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AssessMqServiceServer).GetAlgoOrder(ctx, in)
+		return srv.(AssessMqServiceServer).ImportSecurityInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/mqassess.AssessMqService/GetAlgoOrder",
+		FullMethod: "/mqassess.AssessMqService/ImportSecurityInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssessMqServiceServer).GetAlgoOrder(ctx, req.(*AlgoOrderReq))
+		return srv.(AssessMqServiceServer).ImportSecurityInfo(ctx, req.(*ImportSecurityReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessMqService_ExportSecurityInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportSecurityReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessMqServiceServer).ExportSecurityInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mqassess.AssessMqService/ExportSecurityInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessMqServiceServer).ExportSecurityInfo(ctx, req.(*ExportSecurityReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessMqService_UserList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessMqServiceServer).UserList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mqassess.AssessMqService/UserList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessMqServiceServer).UserList(ctx, req.(*UserListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessMqService_UserUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserModifyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessMqServiceServer).UserUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mqassess.AssessMqService/UserUpdate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessMqServiceServer).UserUpdate(ctx, req.(*UserModifyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessMqService_ImportUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessMqServiceServer).ImportUserInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mqassess.AssessMqService/ImportUserInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessMqServiceServer).ImportUserInfo(ctx, req.(*ImportUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessMqService_ExportUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessMqServiceServer).ExportUserInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mqassess.AssessMqService/ExportUserInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessMqServiceServer).ExportUserInfo(ctx, req.(*ExportUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessMqService_AlgoConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AlgoConfigReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessMqServiceServer).AlgoConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mqassess.AssessMqService/AlgoConfig",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessMqServiceServer).AlgoConfig(ctx, req.(*AlgoConfigReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessMqService_GetAlgoConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAlgoConfigReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessMqServiceServer).GetAlgoConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mqassess.AssessMqService/GetAlgoConfig",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessMqServiceServer).GetAlgoConfig(ctx, req.(*GetAlgoConfigReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessMqService_SendAlgoOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApiAlgoOrderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessMqServiceServer).SendAlgoOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mqassess.AssessMqService/SendAlgoOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessMqServiceServer).SendAlgoOrder(ctx, req.(*ApiAlgoOrderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssessMqService_SendChildOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApiAlgoOrderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssessMqServiceServer).SendChildOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/mqassess.AssessMqService/SendChildOrder",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssessMqServiceServer).SendChildOrder(ctx, req.(*ApiAlgoOrderReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -994,16 +3105,52 @@ var _AssessMqService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _AssessMqService_GetMqGeneral_Handler,
 		},
 		{
-			MethodName: "PullMarketData",
-			Handler:    _AssessMqService_PullMarketData_Handler,
+			MethodName: "SecurityList",
+			Handler:    _AssessMqService_SecurityList_Handler,
 		},
 		{
-			MethodName: "PullShMarketData",
-			Handler:    _AssessMqService_PullShMarketData_Handler,
+			MethodName: "SecurityUpdate",
+			Handler:    _AssessMqService_SecurityUpdate_Handler,
 		},
 		{
-			MethodName: "GetAlgoOrder",
-			Handler:    _AssessMqService_GetAlgoOrder_Handler,
+			MethodName: "ImportSecurityInfo",
+			Handler:    _AssessMqService_ImportSecurityInfo_Handler,
+		},
+		{
+			MethodName: "ExportSecurityInfo",
+			Handler:    _AssessMqService_ExportSecurityInfo_Handler,
+		},
+		{
+			MethodName: "UserList",
+			Handler:    _AssessMqService_UserList_Handler,
+		},
+		{
+			MethodName: "UserUpdate",
+			Handler:    _AssessMqService_UserUpdate_Handler,
+		},
+		{
+			MethodName: "ImportUserInfo",
+			Handler:    _AssessMqService_ImportUserInfo_Handler,
+		},
+		{
+			MethodName: "ExportUserInfo",
+			Handler:    _AssessMqService_ExportUserInfo_Handler,
+		},
+		{
+			MethodName: "AlgoConfig",
+			Handler:    _AssessMqService_AlgoConfig_Handler,
+		},
+		{
+			MethodName: "GetAlgoConfig",
+			Handler:    _AssessMqService_GetAlgoConfig_Handler,
+		},
+		{
+			MethodName: "SendAlgoOrder",
+			Handler:    _AssessMqService_SendAlgoOrder_Handler,
+		},
+		{
+			MethodName: "SendChildOrder",
+			Handler:    _AssessMqService_SendChildOrder_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

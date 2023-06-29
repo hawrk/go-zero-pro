@@ -25,6 +25,24 @@ message MarkRsp {
   map<int64, LevelInfo> attrs = 3;
 }
 
+// 行情修复接口
+// 正常行情推送采用二进制格式推送，忽略该接口
+// 数据修复时，api解析行情文件后，采用pb格式推送，这里同步该pb格式进行解析处理
+message QuoteLevel {
+  int64 id = 1;//'自增ID'
+  string seculityId = 2;// '证券ID'
+  int64 orgiTime = 3; //'快照时间',
+  int64 lastPrice = 4;// '最新价',
+  string askPrice = 5;// '申卖价',
+  string askVol = 6;//'申卖量',
+  string bidPrice = 7;// '申买价',
+  string bidVol = 8;// '申买量',
+  int64 totalTradeVol = 9;// '成交总量',
+  int64 totalAskVol = 10;
+  int64 totalBidVol = 11;
+  float mkVwap = 12;   // 废弃
+}
+
 service MarketService {
   // 获取行情价格数量信息
   rpc GetMarketInfo(MarkReq) returns (MarkRsp);

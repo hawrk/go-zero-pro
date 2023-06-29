@@ -1,0 +1,63 @@
+syntax = "v1"
+
+info(
+    title: "胜率分析接口定义"
+    desc: "高阶分析下胜率分析接口描述"
+    author: "hawrk2012"
+    email: "hawrk2012@163.com"
+)
+
+type (
+    RatioHeader {
+        AlgoName string         `json:"algo_name"`                    // 算法名称
+        StartTime string        `json:"start_time"`                  // 开始时间
+        EndTime string          `json:"end_time"`                   //  结束时间
+        TradeDays int           `json:"trade_days"`                  // 交易天数
+        AvgDailyProfit float64         `json:"avg_daily_profit"`   // 日均收益
+        AnnualizedProfit float64        `json:"annualized_profit"`  // 年化收益
+        TotalProfit  float64    `json:"total_profit"`                // 累计收益
+        MaxWithDraw  float64    `json:"max_withdraw"`                //  最大回撤
+        MaxWithDrawDays   int   `json:"max_withdraw_days"`           //  最大回撤天数
+        DailyProgress       float64  `json:"daily_progress"`         //  日均完成率
+        DailyStocks      int    `json:"daily_stocks"`                //  日均股数
+        ProfitDays       int   `json:"profit_days"`                  //  盈利天数
+        ProfitDaysRate    float64  `json:"profit_days_rate"`         //  盈利天占比
+    }
+
+    WR {
+        Day string  `json:"day"`
+        WinRatio   float64   `json:"win_ratio"`
+    }
+
+    Odds {
+        Day string `json:"day"`
+        OddsRatio float64  `json:"odds_ratio"`
+    }
+
+    Profit {
+        Day string `json:"day"`
+        ProfitRatio float64  `json:"profit_ratio"`
+    }
+
+    WinRatioReq {
+        Provider string  `json:"provider,optional"`
+        AlgoTypeName string `json:"algo_type_name,optional"`
+        AlgoName string     `json:"algo_name,optional"`
+        UserId     string `json:"user_id, optional"`     // 用户ID
+        UserType   int  `json:"user_type,optional"`
+        StartTime  int64 `json:"start_time,optional"`
+        EndTime     int64 `json:"end_time,optional"`
+    }
+
+    WinRatioRsp {
+        Code  int               `json:"code"`
+        Msg   string            `json:"msg"`
+        Provider string                 `json:"provider"`     // 默认填充字段
+        AlgoTypeName string             `json:"algo_type_name"`
+        AlgoName     string             `json:"algo_name"`
+        Head  RatioHeader       `json:"head"`
+        WinRatio []WR       `json:"win_ratio"`
+        OddsRatio  []Odds  `json:"odds_ratio"`
+        ProfitRatio []Profit `json:"profit_ratio"`
+    }
+)

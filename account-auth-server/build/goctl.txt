@@ -1,0 +1,3 @@
+1. 根据 api生成框架文件
+在account-auth 下执行：
+goctl api go -api .\account-auth-server\api\auth.api -dir .\account-auth-server -style=go_zero

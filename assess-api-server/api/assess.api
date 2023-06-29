@@ -1,49 +1,76 @@
 syntax = "v1"
 
-info (
+info(
 	title: "算法平台绩效服务"
 	desc: "算法平台绩效服务,api服务用于web端http服务接入，rpc服务用于处理后台逻辑处理"
 	author: "hawrk2012"
 	email: "hawrk2012@163.com"
 )
 
-// 绩效汇总
+import (
+	"base/algo.api"
+	"base/profile.api"
+	"base/dashboard.api"
+	"base/dynamic.api"
+	"base/analyse.api"
+	"base/optimization.api"
+	"base/optimizatie.api"
+	"base/rank.api"
+	"base/userprofile.api"
+	"base/security.api"
+	"base/userconfig.api"
+	"base/performance.api"
+	"base/algoconfig.api"
+	"base/winratio.api"
+	"base/signal.api"
+)
+
+// 算法条件查询接口
 type (
-	GeneralData {
-		TransTime    string  `json:"trans_time"`
-		OrderQty     int64   `json:"order_qty"`
-		LastQty      int64   `json:"last_qty"`
-		CancelQty    int64   `json:"cancel_qty"`
-		RejectQty    int64   `json:"reject_qty"`
-		Vwap         float64 `json:"vwap"`
-		VwapDev      float64 `json:"vwap_dev"`
-		LastPrice    float64 `json:"last_price"`
-		ArriPrice    float64 `json:"arri_price"`
-		ArriPriceDev float64 `json:"arri_price_dev"`
-		MarketRate   float64 `json:"market_rate"`
-		DealRate     float64 `json:"deal_rate"`
-		DealProgress float64 `json:"deal_progress"`
-		MkLastPrice  float64 `json:"mk_last_price"`
-		MkTradeVol   int64   `json:"mk_trade_vol"`
-		AskPrice     string  `json:"ask_price"`
-		AskVol       string  `json:"ask_vol"`
-		BidPrice     string  `json:"bid_price"`
-		BidVol       string  `json:"bid_vol"`
+	AlgoSelectReq {
+		ChooseType int32 `json:"choose_type"` // 筛选类型 1-拉取厂商列表  2-拉取算法类型列表  3-拉取算法名称列表 4-根据算法名称反查算法ID 5-拉取所有算法类型(dashboard的bar)
+		// 6-根据算法类型名称反查算法类型 7-根据算法类型查询所有算法名称 8- 根据算法类型查询当天有交易的算法列表(查汇总表）
+		// 9-根据算法名称查询其厂商名称和算法类型名称（算法动态下拉框）
+		Provider string `json:"provider,optional"`
+		AlgoType string `json:"algo_type,optional"`
+		AlgoName string `json:"algo_name,optional"`
+		Date     int64  `json:"date,optional"`
+		UserId   string `json:"user_id,optional"` //用户ID
+		UserType int    `json:"user_type,optional"`
 	}
-	GeneralReq {
-		AlgoId          int32  `json:"algo_id"`
-		SecId           string `json:"sec_id"`
-		SecSource       int32  `json:"sec_source,optional"`
-		TimeDemension   int32  `json:"time_demension,range=[1:6]"`
-		OrderStatusType int32  `json:"order_status_type,optional"`
-		StartTime       int64  `json:"start_time"`
-		EndTime         int64  `json:"end_time"`
-		WebSocket       int32  `json:"web_socket,optional"`
+
+	AlgoSelectRsp {
+		Code     int      `json:"code"`
+		Msg      string   `json:"msg"`
+		Provider []string `json:"provider"`
+		AlgoType []string `json:"algo_type"`
+		AlgoName []string `json:"algo_name"`
 	}
-	GeneralRsp {
-		Code int           `json:"code"`
-		Msg  string        `json:"msg"`
-		Data []GeneralData `json:"data"`
+
+	// 登陆校验接口
+	LoginReq {
+		UserName string `json:"user_name"` // 这里应该是用户ID，名称有歧义
+		Passwd   string `json:"password"`
+	}
+
+	LoginRsp {
+		Code     int    `json:"code"`
+		Msg      string `json:"msg"`
+		Allow    int    `json:"allow"`     // 0-不允许,1-允许登陆 2-首次登陆或密码已过期，需要修改密码
+		Role     int    `json:"role"`      // 角色：1-普通用户 2-算法厂商  3-管理员
+		Token    string `json:"token"`     // token
+		Expire   int64  `json:"expire"`    // token过期时间
+		UserType int    `json:"user_type"` // 用户类型： 1-权限组超级管理员，2-其他普通用户
+	}
+	// 登陆退出
+	LogoutReq {
+		UserName string `json:"user_name"`
+	}
+
+	LogoutRsp {
+		Code   int    `json:"code"`
+		Msg    string `json:"msg"`
+		Result int    `json:"result"` // 1-退出成功
 	}
 )
 
@@ -54,6 +81,174 @@ type (
 service assess-api {
 	@doc "算法绩效汇总"
 	@handler General
-	post /assess/general(GeneralReq) returns(GeneralRsp)
+	post /assess/general (GeneralReq) returns (GeneralRsp)
+	
+	@doc "算法画像明细"
+	@handler Profile
+	post /assess/profile (ProfileReq) returns (ProfileRsp)
+	
+	@doc "算法dashboard汇总"
+	@handler Summary
+	post /dashboard/summary (AlgoComsumReq) returns (AlgoComsumRsp)
+	
+	@doc "算法dashboard算法列表"
+	@handler AlgoList
+	post /dashboard/algolist (AlgoListReq) returns (AlgoListRsp)
+	
+	@doc "算法动态页面"
+	@handler AlgoDynamic
+	post /assess/dynamic (DynamicReq) returns (DynamicRsp)
+	
+	@doc "算法单日/多日分析"
+	@handler AlgoAnalyse
+	post /assess/analyse (AnalyseReq) returns (AnalyseRsp)
+	
+	@doc "多算法对比分析"
+	@handler MultiAlgoAnalyse
+	post /assess/mulit-analyse (MultiAnalyseReq) returns (MultiAnalyseRsp)
+	
+	@doc "一键优选"
+	@handler AlgoOptimize
+	post /assess/optimize (OptimizeReq) returns (OptimizeRsp)
+	
+	@doc "一键优选基础信息新增"
+	@handler AddAlgoOptimizeBase
+	post /assess/add-optimize-base (AddOptimizeBaseReq) returns (OptimizeBaseRsp)
+	
+	@doc "一键优选基础信息修改"
+	@handler UpdateAlgoOptimizeBase
+	post /assess/update-optimize-base (UpdateOptimizeBaseReq) returns (OptimizeBaseRsp)
+	
+	@doc "一键优选基础信息删除"
+	@handler DeleteAlgoOptimizeBase
+	post /assess/delete-optimize-base (DeleteOptimizeBaseReq) returns (OptimizeBaseRsp)
+	
+	@doc "一键优选基础信息查询"
+	@handler selectAlgoOptimizeBase
+	post /assess/select-optimize-base (SelectOptimizeBaseReq) returns (SelectOptimizeBaseRsp)
+	
+	@doc "一键优选基础信息导出"
+	@handler downloadAlgoOptimizeBase
+	get /assess/download-optimize-base
+	
+	@doc "一键优选基础信息导入"
+	@handler uploadAlgoOptimizeBase
+	post /assess/upload-optimize-base returns (OptimizeBaseRsp)
+	
+	@doc "算法筛选条件"
+	@handler AlgoSelect
+	post /assess/select (AlgoSelectReq) returns (AlgoSelectRsp)
+	
+	@doc "算法总评分排名"
+	@handler ScoreRanking
+	post /assess/ranking (RankingReq) returns (RankingRsp)
+	
+	@doc "登陆校验接口"
+	@handler Login
+	post /assess/login (LoginReq) returns (LoginRsp)
+	
+	@doc "登陆退出"
+	@handler Logout
+	post /assess/logout (LogoutReq) returns (LogoutRsp)
+	
+	@doc "用户画像"
+	@handler UserProfile
+	post /user/profile (UserSummaryReq) returns (UserSummaryRsp)
+	
+	@doc "用户画像数据导出"
+	@handler UserProfileExport
+	get /profile/export (ProfileExportReq)
+	
+	@doc "配置菜单：算法配置"
+	@handler  AlgoConfig
+	post /assess/algoconfig (AlgoConfigReq) returns (AlgoConfigRsp)
+	
+	@doc "配置菜单：算法配置查询"
+	@handler AlgoConfigQuery
+	post /assess/query-algoconfig (QueryAlgoConfigReq) returns (QueryAlgoConfigRsp)
+	
+	@doc "配置菜单：证券列表"
+	@handler SecurityList
+	post /assess/security-list (ListSecurityReq) returns (ListSecurityRsp)
+	
+	@doc "配置菜单：修改证券属性"
+	@handler SecurityModify
+	post /config/security/update (ModifySecurityReq) returns (ModifySecurityRsp)
+	
+	@doc "配置菜单：证券信息导入"
+	@handler ImportSecurity
+	post /config/security/import returns (ImportSecurityRsp)
+	
+	@doc "配置菜单：证券信息导出"
+	@handler ExportSecurity
+	post /config/security/export
+	
+	@doc "配置菜单：用户列表"
+	@handler UserList
+	post /config/user/list (ListUserReq) returns (ListUserRsp)
+	
+	@doc "配置菜单：修改用户级别"
+	@handler UserModify
+	post /config/user/update (ModifyUserReq) returns (ModifyUserRsp)
+	
+	@doc "配置菜单：用户信息导入"
+	@handler ImportUser
+	post /config/user/import returns (ImportUserRsp)
+	
+	@doc "配置菜单：用户信息导出"
+	@handler ExportUser
+	post /config/user/export
+	
+	@doc "母单修复&母单订单导入"
+	@handler AlgoFix
+	post /assess/performance/algo-fix  returns (BaseRsp)
+	
+	@doc "母单信息查询"
+	@handler QueryAlgo
+	post /assess/performance/query-algo (ReqQueryAlgoOrder) returns (RespQueryAlgoOrder)
+	
+	@doc "子单修复&子单订单导入"
+	@handler ChildFix
+	post /assess/performance/child-fix  returns (BaseRsp)
+	
+	@doc "子单信息查询"
+	@handler QueryChild
+	post /assess/performance/query-child (ReqQueryChildOrder) returns (RespQueryChildOrder)
+	
+	@doc "沪市信息"
+	@handler QueryShQuoteLevel
+	post /assess/performance/query-sh-level (ReqShQuoteLevel) returns (RespShQuoteLevel)
+	
+	@doc "沪市信息导入"
+	@handler ShQuoteLevelUpload
+	post /assess/upload-sh-level returns (BaseRsp)
+	
+	@doc "深市信息"
+	@handler QuerySzQuoteLevel
+	post /assess/performance/query-sz-level (ReqSzQuoteLevel) returns (RespSzQuoteLevel)
+	
+	@doc "深市信息导入"
+	@handler SzQuoteLevelUpload
+	post /assess/upload-sz-level returns (BaseRsp)
+	
+	@doc "数据修复母单子单模板导出"
+	@handler TemplateExport
+	get /assess/template-export (TemplateExpReq)
+	
+	@doc "高阶分析：胜率分析"
+	@handler WinRatioAnalyse
+	post /assess/win-ratio-analyse (WinRatioReq) returns (WinRatioRsp)
+	
+	@doc "高阶分析：信号分析"
+	@handler SignalAnalyse
+	post /assess/signal-analyse (SignalReq) returns (SignalRsp)
+	
+	@doc "原始订单分析"
+	@handler OrigOrderAnalyse
+	post /assess/orig-order-analyse (OrigAnalyseReq) returns (OrigAnalyseResp)
+	
+	@doc "交易订单导出"
+	@handler ExportTradeOrder
+	post /assess/export-trade-order (TradeOrderReq)
 	
 }

@@ -30,10 +30,26 @@ func StartOrderJob(c config.Config, d chan struct{}) {
 	//}()
 
 	job := newCronCnf()
-	spec := "0 */1 * * * ?"
+	spec := "0 */1 * * * ?"          // 每一分钟落地一期绩效数据
+	spec2 := "0 0 20 * * ?"          // 每天晚上20点清除缓存数据
+	exceptionSpec := "0 */5 * * * ?" // 每五分钟扫描异常队列中的数据
+	heatBeatSpec := "*/30 * * * ?"   // 每30秒同步一次心跳数据
+	// 一期实时计算数据落DB
 	_, err := job.AddFunc(spec, func() {
 		//order.GetAssessWithCalcute()
 		order.GetAssessWithCache()
+	})
+	// 清除二期本地缓存数据
+	_, err = job.AddFunc(spec2, func() {
+		order.ClearLocalCache()
+	})
+	// 二期 异常处理落表失败,定时Job
+	_, err = job.AddFunc(exceptionSpec, func() {
+		order.DealDBException()
+	})
+
+	_, err = job.AddFunc(heatBeatSpec, func() {
+		order.KeepHeartBeat()
 	})
 	if err != nil {
 		fmt.Println("add cron error:", err)

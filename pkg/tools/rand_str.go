@@ -40,3 +40,52 @@ func IntToBytes(n uint64) []byte {
 	binary.Write(bytebuf, binary.BigEndian, n)
 	return bytebuf.Bytes()
 }
+
+// MinInt 取两个整型中的最小值
+func MinInt(x, y int64) int64 {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+func MinFloat(x, y float64) float64 {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+// MaxInt 取两个整型中的最大值
+func MaxInt(x, y int64) int64 {
+	if x > y {
+		return x
+	}
+	return y
+}
+
+// BinarySearch 二分查找
+func BinarySearch(arr []int, start, end int, ele int) int {
+	if start > end {
+		return 0
+	}
+	middle := (start + end) / 2
+	if arr[ele] > ele {
+		BinarySearch(arr, start, middle-1, ele)
+	} else if arr[ele] < ele {
+		BinarySearch(arr, middle+1, end, ele)
+	} else {
+		return middle
+	}
+	return 0
+}
+
+// GetRanking 取排名, arr 为倒序排列的分数列表，  score为分数， 返回值为第几位
+func GetRanking(arr []int, score int) int32 {
+	for k, v := range arr {
+		if score == v {
+			return int32(k) + 1
+		}
+	}
+	return 0
+}
